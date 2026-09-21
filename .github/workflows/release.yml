@@ -1,40 +1,242 @@
 name: release
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "bind/**"
-      - "cmd/**"
-      - "internal/**"
-      - "pkg/**"
-      - "ui/**"
-      - ".github/workflows/release.yml"
-      - ".github/release-drafter.yml"
-      - "go.mod"
-      - "go.sum"
-      - "Dockerfile"
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to build, e.g. v1.0.20260921"
+        required: false
+        default: "v1.0.20260921"
 
 env:
   GO_VERSION: "1.25.4"
+  FLUTTER_VERSION: "3.41.6"
+  TAG: ${{ github.event.release.tag_name || inputs.tag || 'v1.0.20260921' }}
 
 permissions:
   contents: write
 
 jobs:
-  release:
-    runs-on: ubuntu-latest
-    outputs:
-      tag_name: ${{ steps.create_release.outputs.tag_name }}
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
-
+  windows:
+    name: Windows x64 NSIS installer
+    runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+
       - uses: actions/setup-go@v5
         with:
           go-version: ${{ env.GO_VERSION }}
-      - uses: release-drafter/release-drafter@v5
-        id: create_release
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Build Windows app
+        shell: pwsh
+        run: |
+          $version = $env:TAG -replace '^v', ''
+          $ldflags = "-w -s -X github.com/GopeedLab/gopeed/pkg/base.Version=$version"
+          go build -tags nosqlite -ldflags="$ldflags" -buildmode=c-shared -o ui/flutter/windows/libgopeed.dll github.com/GopeedLab/gopeed/bind/desktop
+          go build -ldflags="$ldflags" -o ui/flutter/assets/exec/host.exe github.com/GopeedLab/gopeed/cmd/host
+          go build -ldflags="$ldflags" -o ui/flutter/assets/exec/updater.exe github.com/GopeedLab/gopeed/cmd/updater
+
+          cd ui/flutter
+          flutter build windows --release --dart-define=UPDATE_CHANNEL=windowsInstaller
+
+          $release = Join-Path (Get-Location) 'build\windows\x64\runner\Release'
+          $runtimeDlls = @(
+            "$env:ProgramFiles\Git\mingw64\bin\libstdc++-6.dll",
+            "$env:ProgramFiles\Git\mingw64\bin\libgcc_s_seh-1.dll",
+            "$env:ProgramFiles\Git\mingw64\bin\libwinpthread-1.dll",
+            "$env:SystemRoot\System32\msvcp140.dll",
+            "$env:SystemRoot\System32\vcruntime140.dll",
+            "$env:SystemRoot\System32\vcruntime140_1.dll"
+          )
+          foreach ($dll in $runtimeDlls) {
+            if (Test-Path $dll) {
+              Copy-Item $dll $release -Force
+            }
+          }
+
+          New-Item -ItemType Directory -Force -Path "build\windows\Output" | Out-Null
+
+      - name: Install NSIS
+        shell: pwsh
+        run: choco install nsis -y --no-progress
+
+      - name: Build NSIS installer
+        shell: pwsh
+        run: |
+          $version = $env:TAG -replace '^v', ''
+          $root = Get-Location
+          $release = Join-Path $root 'ui\flutter\build\windows\x64\runner\Release'
+          $output = Join-Path $root 'ui\flutter\build\windows\Output'
+          $icon = Join-Path $root 'ui\flutter\assets\icon\icon.ico'
+          $makensis = Get-Command makensis -ErrorAction SilentlyContinue
+          if ($makensis) {
+            $makensisPath = $makensis.Source
+          } else {
+            $makensisPath = "${env:ProgramFiles(x86)}\NSIS\makensis.exe"
+          }
+          & $makensisPath "/DVERSION=$version" "/DRELEASE_DIR=$release" "/DOUTPUT_DIR=$output" "/DICON_FILE=$icon" "ui\flutter\windows\installer\ponydownloader.nsi"
+          Get-ChildItem $output
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: ui/flutter/build/windows/Output/
+
+  macos:
+    name: macOS universal DMG (ad-hoc)
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Build universal Go libraries
+        run: |
+          set -euo pipefail
+          version="${TAG#v}"
+          mkdir -p ui/flutter/.temp ui/flutter/macos/Frameworks ui/flutter/assets/exec
+          export CGO_ENABLED=1
+          GOARCH=amd64 go build -tags nosqlite -ldflags="-w -s -X github.com/GopeedLab/gopeed/pkg/base.Version=${version}" -buildmode=c-shared -o ui/flutter/.temp/libgopeed.amd64.dylib github.com/GopeedLab/gopeed/bind/desktop
+          GOARCH=arm64 go build -tags nosqlite -ldflags="-w -s -X github.com/GopeedLab/gopeed/pkg/base.Version=${version}" -buildmode=c-shared -o ui/flutter/.temp/libgopeed.arm64.dylib github.com/GopeedLab/gopeed/bind/desktop
+          lipo -create -output ui/flutter/macos/Frameworks/libgopeed.dylib ui/flutter/.temp/libgopeed.amd64.dylib ui/flutter/.temp/libgopeed.arm64.dylib
+
+          GOARCH=amd64 go build -ldflags="-w -s" -o ui/flutter/.temp/host.amd64 github.com/GopeedLab/gopeed/cmd/host
+          GOARCH=arm64 go build -ldflags="-w -s" -o ui/flutter/.temp/host.arm64 github.com/GopeedLab/gopeed/cmd/host
+          lipo -create -output ui/flutter/assets/exec/host ui/flutter/.temp/host.amd64 ui/flutter/.temp/host.arm64
+
+          GOARCH=amd64 go build -ldflags="-w -s" -o ui/flutter/.temp/updater.amd64 github.com/GopeedLab/gopeed/cmd/updater
+          GOARCH=arm64 go build -ldflags="-w -s" -o ui/flutter/.temp/updater.arm64 github.com/GopeedLab/gopeed/cmd/updater
+          lipo -create -output ui/flutter/assets/exec/updater ui/flutter/.temp/updater.amd64 ui/flutter/.temp/updater.arm64
+
+      - name: Build macOS app
+        run: |
+          cd ui/flutter
+          flutter build macos --release --universal --dart-define=UPDATE_CHANNEL=macosDmg
+
+      - name: Ad-hoc sign and create DMG
+        run: |
+          set -euo pipefail
+          version="${TAG#v}"
+          products=ui/flutter/build/macos/Build/Products/Release
+          app="$products/PonyDownloader.app"
+          codesign --force --deep --sign - --timestamp=none "$app"
+          codesign --verify --deep --strict "$app"
+
+          cd "$products"
+          dmg_root=PonyDownloaderDmgRoot
+          rm -rf "$dmg_root"
+          mkdir -p "$dmg_root"
+          cp -R PonyDownloader.app "$dmg_root/"
+          ln -s /Applications "$dmg_root/Applications"
+          hdiutil create -volname PonyDownloader -srcfolder "$dmg_root" -ov -format UDZO "PonyDownloader-v${version}-macos-universal.dmg"
+          codesign --sign - "PonyDownloader-v${version}-macos-universal.dmg"
+          rm -rf "$dmg_root"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: macos-dmg
+          path: ui/flutter/build/macos/Build/Products/Release/PonyDownloader-*.dmg
+
+  linux:
+    name: Linux AppImage (${{ matrix.arch }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-22.04
+            arch: amd64
+          - os: ubuntu-22.04-arm
+            arch: arm64
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+
+      - name: Install Linux dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y ninja-build libgtk-3-dev libwebkit2gtk-4.1-dev libayatana-appindicator3-dev libkeybinder-3.0-dev patchelf libfuse2 xz-utils zip unzip
+
+      - name: Install appimagetool
+        run: |
+          set -euo pipefail
+          arch=$(uname -m)
+          wget -qO appimagetool "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${arch}.AppImage"
+          chmod +x appimagetool
+          sudo mv appimagetool /usr/local/bin/
+
+      - name: Build AppImage
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ARCH: ${{ matrix.arch }}
+        run: |
+          set -euo pipefail
+          version="${TAG#v}"
+          go build -tags nosqlite -ldflags="-w -s -X github.com/GopeedLab/gopeed/pkg/base.Version=${version}" -buildmode=c-shared -o ui/flutter/linux/bundle/lib/libgopeed.so github.com/GopeedLab/gopeed/bind/desktop
+          go build -ldflags="-w -s" -o ui/flutter/assets/exec/host github.com/GopeedLab/gopeed/cmd/host
+          go build -ldflags="-w -s" -o ui/flutter/assets/exec/updater github.com/GopeedLab/gopeed/cmd/updater
+
+          cd ui/flutter
+          cat > distribute_options.yaml <<'EOF'
+          output: dist/
+          releases:
+            - name: linux
+              jobs:
+                - name: appimage
+                  package:
+                    platform: linux
+                    target: appimage
+                    build_args:
+                      dart-define:
+                        UPDATE_CHANNEL: linuxAppImage
+          EOF
+          dart pub global activate -sgit https://github.com/GopeedLab/flutter_distributor.git --git-path packages/flutter_distributor
+          flutter_distributor release --name linux
+          cd dist/*
+          mv ./*-linux.AppImage "PonyDownloader-v${version}-linux-${ARCH}.AppImage"
+          ls -la
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: linux-appimage-${{ matrix.arch }}
+          path: ui/flutter/dist/*/PonyDownloader-*.AppImage
+
+  publish:
+    name: Publish release assets
+    runs-on: ubuntu-latest
+    needs: [windows, macos, linux]
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: release-assets
+          merge-multiple: true
+
+      - name: List release assets
+        run: find release-assets -type f | sort
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.TAG }}
+          files: release-assets/*
+          overwrite: true

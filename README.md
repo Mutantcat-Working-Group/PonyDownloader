@@ -1,205 +1,92 @@
-# [![](_docs/img/banner.svg)](https://gopeed.com)
-
-[![Test Status](https://github.com/GopeedLab/gopeed/workflows/test/badge.svg)](https://github.com/GopeedLab/gopeed/actions?query=workflow%3Atest)
-[![Codecov](https://codecov.io/gh/GopeedLab/gopeed/branch/main/graph/badge.svg)](https://codecov.io/gh/GopeedLab/gopeed)
-[![Release](https://img.shields.io/github/release/GopeedLab/gopeed.svg)](https://github.com/GopeedLab/gopeed/releases)
-[![Download](https://img.shields.io/github/downloads/GopeedLab/gopeed/total.svg)](https://github.com/GopeedLab/gopeed/releases)
-[![Donate](https://img.shields.io/badge/%24-donate-ff69b4.svg)](https://gopeed.com/docs/donate)
-[![WeChat](https://img.shields.io/badge/WeChat%20Official%20Account-07C160?logo=wechat&logoColor=white)](https://raw.githubusercontent.com/GopeedLab/gopeed/main/_docs/img/weixin.png)
-[![Discord](https://img.shields.io/discord/1037992631881449472?label=Discord&logo=discord&style=social)](https://discord.gg/ZUJqJrwCGB)
-
-<a href="https://trendshift.io/repositories/7953" target="_blank"><img src="https://trendshift.io/api/badge/repositories/7953" alt="GopeedLab%2Fgopeed | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-
-[English](/README.md) | [中文](/README_zh-CN.md) | [日本語](/README_ja-JP.md) | [正體中文](/README_zh-TW.md) | [Tiếng Việt](/README_vi-VN.md)
-
-## 🚀 Introduction
-
-Gopeed (short for **Go Speed**) is a fast, modern, free, and open-source download manager built with Go and Flutter. It supports HTTP, HTTPS, BitTorrent, magnet links, and ed2k on desktop, mobile, and the web.
-
-Beyond core download management, Gopeed offers browser integration, JavaScript extensions, a REST API, a CLI, and a self-hosted web UI for customization and automation.
-
-Visit ✈ [Official Website](https://gopeed.com)
-
-![Application screenshot](_docs/img/ui-concept-en.png)
-
-## ✨ Features
-
-- ⚡ **High-speed downloads** — combine concurrent tasks, multi-connection HTTP transfers, and peer-to-peer BitTorrent downloads to make the most of your bandwidth.
-- 🧲 **Multiple protocols** — download HTTP/HTTPS files, torrents, magnet links, and ed2k resources from a single app.
-- 🌱 **Full-featured BitTorrent** — use DHT peer discovery, uTP transport, Web Seeds, selective file downloads, tracker management, peer and piece statistics, and ratio- or time-based seeding limits.
-- 📋 **Flexible task management** — pause, resume, retry, run batch operations, search, filter by status, organize with categories, and recover tasks after a restart.
-- 🪶 **Lightweight native experience** — the main interface is rendered natively with Flutter. No Electron. No WebView shell. Enjoy a smaller footprint, lower overhead, and responsive performance.
-- 💻 **Cross-platform** — available for Windows, macOS, Linux, Android, iOS, and the web, with Docker and QNAP deployment options.
-- 🎨 **Customizable appearance** — follow your system theme or choose light or dark mode, with eight accent colors.
-- 📐 **Responsive interface** — task lists, navigation, settings, and detail views adapt to phones, tablets, and resizable desktop windows.
-- 🗣️ **Available in 20+ languages** — including English, Simplified and Traditional Chinese, Japanese, Korean, and many more.
-- 🌐 **Browser integration** — send downloads from Chrome, Edge, Firefox, and other compatible browsers directly to Gopeed.
-- 🧩 **JavaScript extensions** — add support for video platforms, AI model hubs, cloud storage services, and other download sources.
-- 🤖 **AI integration** — use Gopeed's MCP endpoint to connect compatible AI agents and create, inspect, or manage downloads with natural language.
-- 🔌 **Automation-ready** — integrate with Gopeed through its REST API, CLI, authenticated web UI, webhooks, and post-download scripts.
-- 🛠️ **Built-in essentials** — customize headers and the User-Agent, use proxies and GitHub mirrors, receive notifications, and extract archives automatically.
-
-## 🤖 AI Integration
-
-Connect Gopeed to an AI agent and manage downloads with natural language. For example, you can say:
-
-> Download the latest Gopeed client for Windows.
-
-| Tool | Description |
-| --- | --- |
-| `resolve_task` | Resolve a download URL or URI and return its resource metadata and files before creating a task. |
-| `create_task` | Create and start a task from a resolved resource ID or a direct download request. |
-| `list_tasks` | List tasks, optionally filtering them by ID or status. |
-| `get_task` | Get the request, resource, options, and current progress for one task. |
-| `get_task_status` | Get lightweight runtime status and per-file progress for one task. |
-| `get_task_stats` | Get protocol-specific statistics, including HTTP connections or BitTorrent peers and seeding data. |
-| `pause_task` | Pause a task. |
-| `continue_task` | Continue a paused or failed task. |
-| `delete_task` | Delete a task, optionally deleting its downloaded files. |
-
-## ⬇️ Download
-
-### 🧪 Gopeed 2.0.0 Beta
-
-Gopeed 2.0.0 is currently in public beta, introducing a redesigned interface, a native communication architecture that connects desktop and mobile clients directly to the Go core through FFI, a more consistent cross-platform experience, improved task management, more flexible API support, and MCP-based AI agent integration. Some features may still be incomplete or unstable, so please try it and report any issues you encounter.
-
-- [Download Gopeed 2.0.0 Beta 3](https://github.com/GopeedLab/gopeed/releases/tag/v2.0.0-beta.3)
-
-Once the features and stability meet our release standards, we will publish the official Gopeed 2.0.0 release. Beta users will be able to upgrade directly to the final release, while existing stable users will not be automatically moved onto the beta channel.
-
-### Stable release
-
-- [Official Download](https://gopeed.com)
-- [GitHub Releases](https://github.com/GopeedLab/gopeed/releases/latest)
-
-### 🛠️ Command-line tool
-
-Install the CLI with `go install`:
-
-```bash
-go install github.com/GopeedLab/gopeed/cmd/gopeed@latest
-```
-
-## 🔌 Browser Extension
-
-Use the Gopeed browser extension to send downloads from Chrome, Edge, Firefox, and other compatible browsers directly to Gopeed: [GopeedLab/browser-extension](https://github.com/GopeedLab/browser-extension)
-
-## 📱 WeChat Official Account
-
-Follow Gopeed's official WeChat account for updates and news.
-
-<img src="_docs/img/weixin.png" width="200" />
-
-## 💝 Donate
-
-If Gopeed is useful to you, please consider [supporting its development](https://gopeed.com/docs/donate). Thank you!
-
-## 👨‍💻 Development
-
-Gopeed consists of a Flutter front end and a Go back end. They communicate over HTTP, using Unix sockets on Unix-like systems and TCP on Windows.
-
-> The front-end source is located in the `ui/flutter` directory.
-
-### 🌍 Environment
-
-1. Go 1.25+
-2. Flutter 3.41+
-
-### 📋 Clone
-
-```bash
-git clone git@github.com:GopeedLab/gopeed.git
-```
-
-### 🤝 Contributing
-
-See [CONTRIBUTING.md](/CONTRIBUTING.md).
-
-### 🏗️ Build
-
-#### Desktop
-
-Set up Flutter desktop development using the official [Flutter desktop guide](https://docs.flutter.dev/development/platform-integration/desktop), and make sure a working C toolchain is available for cgo. Then run the commands for your platform.
-
-Commands:
-
-- Windows
-
-```bash
-go build -tags nosqlite -ldflags="-w -s" -buildmode=c-shared -o ui/flutter/windows/libgopeed.dll github.com/GopeedLab/gopeed/bind/desktop
-cd ui/flutter
-flutter build windows
-```
-
-- macOS
-
-```bash
-go build -tags nosqlite -ldflags="-w -s" -buildmode=c-shared -o ui/flutter/macos/Frameworks/libgopeed.dylib github.com/GopeedLab/gopeed/bind/desktop
-cd ui/flutter
-flutter build macos
-```
-
-- Linux
-
-```bash
-go build -tags nosqlite -ldflags="-w -s" -buildmode=c-shared -o ui/flutter/linux/bundle/lib/libgopeed.so github.com/GopeedLab/gopeed/bind/desktop
-cd ui/flutter
-flutter build linux
-```
-
-#### Mobile
-
-Mobile builds also require a working cgo toolchain. Install and initialize `gomobile`:
-
-```bash
-go install golang.org/x/mobile/cmd/gomobile@latest
-go get golang.org/x/mobile/bind
-gomobile init
-```
-
-Commands:
-
-- Android
-
-```bash
-gomobile bind -tags nosqlite -ldflags="-w -s -checklinkname=0" -o ui/flutter/android/app/libs/libgopeed.aar -target=android -androidapi 21 -javapkg="com.gopeed" github.com/GopeedLab/gopeed/bind/mobile
-cd ui/flutter
-flutter build apk
-```
-
-- iOS
-
-```bash
-gomobile bind -tags nosqlite -ldflags="-w -s" -o ui/flutter/ios/Frameworks/Libgopeed.xcframework -target=ios github.com/GopeedLab/gopeed/bind/mobile
-cd ui/flutter
-flutter build ios --no-codesign
-```
-
-#### Web
-
-Build the web app and server:
-
-```bash
-cd ui/flutter
-flutter build web
-cd ../../
-rm -rf cmd/web/dist
-cp -r ui/flutter/build/web cmd/web/dist
-go build -tags nosqlite,web -ldflags="-s -w" -o bin/ github.com/GopeedLab/gopeed/cmd/web
-```
-
-## ❤️ Credits
-
-### 👥 Contributors
-
-<a href="https://github.com/GopeedLab/gopeed/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=GopeedLab/gopeed" />
-</a>
-
-### 🏢 JetBrains
-
-[![goland](_docs/img/goland.svg)](https://www.jetbrains.com/?from=gopeed)
-
-## 📄 License
-
-[GPLv3](LICENSE)
+<div align=center>
+<img src="icon.png" style="width:100px;" width="100"/>
+<h2>PonyDownloader</h2>
+</div>
+
+[English](/README.md) | [简体中文](/README_zh-CN.md) | [繁體中文](/README_zh-TW.md) | [日本語](/README_ja-JP.md) | [Tiếng Việt](/README_vi-VN.md)
+
+### 1. Overview
+- A fast, modern, free and open-source download manager built with Go and Flutter, supporting HTTP, HTTPS, BitTorrent, magnet links and ed2k.
+- Available on Windows, macOS, Linux, Android, iOS and the Web, with native desktop and mobile clients plus a self-hostable web management UI.
+- Multi-task concurrency, multi-connection HTTP transfers, BitTorrent DHT discovery, uTP transport, Web Seeds, selective file downloads, tracker management and seeding limits.
+- REST API, CLI, JavaScript extensions, browser integration, webhooks and an MCP endpoint for automation and AI-agent integration.
+- Follows the system theme, supports light/dark mode, multiple accent colors and 20+ UI languages.
+
+### 2. Deployment
+1. Desktop and mobile: download the installer for your platform from [GitHub Releases](https://github.com/Mutantcat-Working-Group/PonyDownloader/releases) and install it.
+2. Self-hosted Web service: run the Web binary from the release package. It listens on `0.0.0.0:9999` by default, then visit `http://localhost:9999` in your browser.
+   ```
+   Optional flags:
+   -A bind address (default 0.0.0.0)
+   -P bind port (default 9999)
+   -u Web login username
+   -p Web login password (Web auth stays disabled when empty)
+   -T API token (required for the HTTP API when Web auth is enabled)
+   -d storage directory
+   ```
+3. Docker: the `docker-compose.yml` in the repo root maps port 9999 and mounts a download directory; run `docker compose up -d`.
+4. Build from source: Go 1.25+ and Flutter 3.41+ are required; build the backend with `go build` and the frontend with `flutter build`.
+
+### 3. Usage
+1. Desktop and mobile: create a task, paste an HTTP/HTTPS URL, magnet link or torrent file, choose a save directory and start downloading.
+2. Web UI: open `http://localhost:9999` to create tasks, view progress, manage categories and change settings; sign in when authentication is enabled.
+3. Task management: pause, resume, retry, batch operations, status filtering and categories are supported, and unfinished tasks are recovered after a restart.
+4. Browser integration: send download requests from compatible browsers directly to PonyDownloader through the browser extension.
+5. AI integration: enable MCP with `--mcp-enable`, then AI agents can manage tasks through `http://localhost:9999/mcp` in natural language.
+
+### 4. API Documentation
+1. Service info - `GET /api/v1/info`
+   - Returns basic information such as version, runtime, OS and architecture.
+2. Resolve a resource - `POST /api/v1/resolve`
+   - Request example:
+   ```json
+   {
+       "req": {
+           "url": "https://example.com/file.zip"
+       }
+   }
+   ```
+   - Returns resource metadata and the file list; resolve before creating a task when needed.
+3. Create a task - `POST /api/v1/tasks`
+   - Request example:
+   ```json
+   {
+       "req": {
+           "url": "https://example.com/file.zip",
+           "extra": {
+               "connections": 16
+           }
+       },
+       "opts": {
+           "path": "/downloads"
+       }
+   }
+   ```
+   - You can also pass the resource ID returned by resolve as `rid`.
+4. Query tasks - `GET /api/v1/tasks`
+   - Supports filtering by task ID or status, for example `GET /api/v1/tasks?status=running`.
+5. Pause and continue - `PUT /api/v1/tasks/{id}/pause` and `PUT /api/v1/tasks/{id}/continue`
+6. Delete a task - `DELETE /api/v1/tasks/{id}`, with optional `?force=true` to remove files as well.
+7. MCP endpoint - `POST /mcp`
+   - Connect AI agents to manage downloads with natural language after MCP is enabled.
+
+### 5. Focus
+- Fully use bandwidth by combining multi-task concurrency, multi-connection HTTP downloads and BitTorrent P2P downloads.
+- Manage multiple protocols through one entry: HTTP/HTTPS, BitTorrent, magnet links and ed2k in the same interface.
+- Native cross-platform experience: rendered natively with Flutter instead of an Electron shell, with a lighter package and lower overhead.
+- Open automation capabilities: REST API, CLI, webhooks, post-download scripts, JavaScript extensions and MCP.
+- Lightweight self-hosting: a single Web binary can be deployed and run on servers or NAS devices for long periods.
+
+### 6. Roadmap
+- [X] HTTP/HTTPS multi-connection downloads
+- [X] BitTorrent and magnet links
+- [X] ed2k downloads
+- [X] Task management (pause, resume, retry, batch, filtering, categories)
+- [X] Resume and startup recovery
+- [X] Web management UI with account authentication
+- [X] REST API with API token
+- [X] MCP / AI-agent integration
+- [X] Browser integration
+- [X] JavaScript extensions
+- [X] Docker deployment
+- [ ] Stable release and complete automated tests

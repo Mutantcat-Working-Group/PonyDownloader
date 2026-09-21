@@ -36,7 +36,7 @@ class LoginBrandArt extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Gopeed',
+                  'PonyDownloader',
                   style: TextStyle(
                     color: palette.textPrimary,
                     fontSize: compact ? 17 : 19,

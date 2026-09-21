@@ -1,4 +1,4 @@
-package com.gopeed.gopeed
+package org.mutantcat.ponydownloader
 
 import com.gopeed.libgopeed.Libgopeed
 import com.gopeed.libgopeed.InvokeResultListener

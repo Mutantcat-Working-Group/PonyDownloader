@@ -83,7 +83,7 @@ class AppDeepLinkController extends AsyncNotifier<AppDeepLinkState> {
   }
 
   Future<void> _handleUri(Uri uri) async {
-    if (uri.scheme == 'gopeed') {
+    if (uri.scheme == 'ponydownloader') {
       await _handleGopeedUri(uri);
       return;
     }
@@ -181,9 +181,9 @@ Uri? sharedMediaUri(SharedMedia media) {
   return Uri.tryParse(content);
 }
 
-/// Gopeed's established links use `gopeed:///create`, where the action is the
+/// PonyDownloader's established links use `ponydownloader:///create`, where the action is the
 /// URI path. Do not interpret the URI host as an action: the host-style
-/// `gopeed://create` form is intentionally unsupported.
+/// `ponydownloader://create` form is intentionally unsupported.
 String gopeedDeepLinkRoute(Uri uri) {
   return uri.path;
 }

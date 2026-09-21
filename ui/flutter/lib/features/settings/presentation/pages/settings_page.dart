@@ -385,14 +385,10 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   if (Util.isIOS())
                     SettingsItem(
                       title: context.l10n.backgroundContinuedProcessing,
-                      subtitle:
-                          context.l10n.backgroundContinuedProcessingDescription,
+                      subtitle: context.l10n.backgroundContinuedProcessingDescription,
                       child: shad.Switch(
-                        value:
-                            config.extra.backgroundContinuedProcessing,
-                        onChanged: (value) => unawaited(
-                          _setBackgroundContinuedProcessing(value),
-                        ),
+                        value: config.extra.backgroundContinuedProcessing,
+                        onChanged: (value) => unawaited(_setBackgroundContinuedProcessing(value)),
                       ),
                     ),
                 ],
@@ -405,17 +401,21 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                   SettingsItem(
                     title: context.l10n.homepage,
                     child: _ExternalTextLink(
-                      key: const ValueKey('gopeed-homepage'),
-                      label: 'gopeed.com',
-                      onPressed: () => unawaited(_openExternalUri(Uri.parse('https://gopeed.com'))),
+                      key: const ValueKey('ponydownloader-homepage'),
+                      label: 'github.com/Mutantcat-Working-Group/PonyDownloader',
+                      onPressed: () => unawaited(
+                        _openExternalUri(Uri.parse('https://github.com/Mutantcat-Working-Group/PonyDownloader')),
+                      ),
                     ),
                   ),
                   SettingsItem(
                     title: 'GitHub',
                     child: _ExternalTextLink(
-                      key: const ValueKey('gopeed-github'),
-                      label: 'github.com/GopeedLab/gopeed',
-                      onPressed: () => unawaited(_openExternalUri(Uri.parse('https://github.com/GopeedLab/gopeed'))),
+                      key: const ValueKey('ponydownloader-github'),
+                      label: 'github.com/Mutantcat-Working-Group/PonyDownloader',
+                      onPressed: () => unawaited(
+                        _openExternalUri(Uri.parse('https://github.com/Mutantcat-Working-Group/PonyDownloader')),
+                      ),
                     ),
                   ),
                   SettingsItem(
@@ -425,7 +425,9 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                       key: const ValueKey('gopeed-contributors'),
                       label: context.l10n.viewContributors,
                       onPressed: () => unawaited(
-                        _openExternalUri(Uri.parse('https://github.com/GopeedLab/gopeed/graphs/contributors')),
+                        _openExternalUri(
+                          Uri.parse('https://github.com/Mutantcat-Working-Group/PonyDownloader/graphs/contributors'),
+                        ),
                       ),
                     ),
                   ),
@@ -1295,42 +1297,25 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
     _mutateConfig((config) => config.extra.backgroundLocationKeepAlive = enabled);
     await LocationKeepAliveCoordinator.instance.reconcile(enabled: enabled);
   }
-  Future<void>
-  _setBackgroundContinuedProcessing(
-    bool enabled,
-  ) async {
-    if (enabled &&
-        !await ContinuedProcessing.isSupported()) {
+
+  Future<void> _setBackgroundContinuedProcessing(bool enabled) async {
+    if (enabled && !await ContinuedProcessing.isSupported()) {
       if (mounted) {
-        _toast(
-          context.l10n
-              .backgroundContinuedProcessingUnsupported,
-        );
+        _toast(context.l10n.backgroundContinuedProcessingUnsupported);
       }
       return;
     }
 
-    final applied =
-        await ContinuedProcessing.setEnabled(
-      enabled,
-    );
+    final applied = await ContinuedProcessing.setEnabled(enabled);
 
     if (enabled && !applied) {
       if (mounted) {
-        _toast(
-          context.l10n
-              .backgroundContinuedProcessingUnsupported,
-        );
+        _toast(context.l10n.backgroundContinuedProcessingUnsupported);
       }
       return;
     }
 
-    _mutateConfig(
-      (config) =>
-          config.extra
-                  .backgroundContinuedProcessing =
-              enabled,
-    );
+    _mutateConfig((config) => config.extra.backgroundContinuedProcessing = enabled);
   }
 
   List<String> _lines(String text) {

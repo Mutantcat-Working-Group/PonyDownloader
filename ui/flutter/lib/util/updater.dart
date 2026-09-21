@@ -47,7 +47,8 @@ UpdateChannel? get updateChannel {
 String get _updaterBinaryName => 'updater${Util.isWindows() ? '.exe' : ''}';
 
 const _releasePageSize = 10;
-const _githubReleasesUrl = 'https://api.github.com/repos/GopeedLab/gopeed/releases?per_page=$_releasePageSize';
+const _githubReleasesUrl =
+    'https://api.github.com/repos/Mutantcat-Working-Group/PonyDownloader/releases?per_page=$_releasePageSize';
 
 class VersionInfo {
   const VersionInfo({required this.version, required this.changeLog, required this.releaseUrl});
@@ -145,7 +146,10 @@ VersionInfo? selectUpdateRelease(List<dynamic> releases, String currentVersionTe
   return VersionInfo(
     version: _versionText(tagName),
     changeLog: (selectedRelease['body'] ?? '').toString(),
-    releaseUrl: (selectedRelease['html_url'] ?? 'https://github.com/GopeedLab/gopeed/releases/tag/$tagName').toString(),
+    releaseUrl:
+        (selectedRelease['html_url'] ??
+                'https://github.com/Mutantcat-Working-Group/PonyDownloader/releases/tag/$tagName')
+            .toString(),
   );
 }
 
@@ -183,7 +187,8 @@ Future<void> updateApp(
   var assetPath = '';
 
   if (assetName.isNotEmpty) {
-    final rawUrl = 'https://github.com/GopeedLab/gopeed/releases/download/v${versionInfo.version}/$assetName';
+    final rawUrl =
+        'https://github.com/Mutantcat-Working-Group/PonyDownloader/releases/download/v${versionInfo.version}/$assetName';
     assetPath = path.join((await getTemporaryDirectory()).path, assetName);
     final downloadUrl = await githubAutoMirror(rawUrl, MirrorType.githubRelease, config: githubMirror);
     final client = Dio();
@@ -245,10 +250,10 @@ String updateAssetName(String version, {UpdateChannel? channel, Architecture? ar
   };
 
   return switch (targetChannel) {
-    UpdateChannel.windowsInstaller => 'Gopeed-v$version-windows-${commonArchName()}.zip',
-    UpdateChannel.windowsPortable => 'Gopeed-v$version-windows-${commonArchName()}-portable.zip',
-    UpdateChannel.macosDmg => 'Gopeed-v$version-macos-${commonArchName()}.dmg',
-    UpdateChannel.linuxDeb => 'Gopeed-v$version-linux-${commonArchName()}.deb',
+    UpdateChannel.windowsInstaller => 'PonyDownloader-v$version-windows-${commonArchName()}.exe',
+    UpdateChannel.windowsPortable => 'PonyDownloader-v$version-windows-${commonArchName()}-portable.zip',
+    UpdateChannel.macosDmg => 'PonyDownloader-v$version-macos-universal.dmg',
+    UpdateChannel.linuxDeb => 'PonyDownloader-v$version-linux-${commonArchName()}.deb',
     UpdateChannel.androidApk => _androidAssetName(version, arch),
     _ => '',
   };
@@ -261,5 +266,5 @@ String _androidAssetName(String version, Architecture arch) {
     Architecture.x64 => 'x86_64',
     _ => null,
   };
-  return 'Gopeed-v$version-android${archName == null ? '' : '-$archName'}.apk';
+  return 'PonyDownloader-v$version-android${archName == null ? '' : '-$archName'}.apk';
 }

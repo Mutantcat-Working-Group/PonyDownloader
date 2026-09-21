@@ -15,7 +15,7 @@ class AppStartupOptions {
 }
 
 bool isSilentGopeedWakeUri(Uri uri) {
-  if (uri.scheme.toLowerCase() != 'gopeed' || uri.queryParameters['hidden'] != 'true') {
+  if (uri.scheme.toLowerCase() != 'ponydownloader' || uri.queryParameters['hidden'] != 'true') {
     return false;
   }
   return uri.path.isEmpty || uri.path == '/';

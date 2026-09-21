@@ -11,7 +11,7 @@ class GopeedAppMark extends StatelessWidget {
   Widget build(BuildContext context) {
     final palette = AppPalette.of(context);
     return Semantics(
-      label: 'Gopeed',
+      label: 'PonyDownloader',
       image: true,
       child: SizedBox.square(
         dimension: size,

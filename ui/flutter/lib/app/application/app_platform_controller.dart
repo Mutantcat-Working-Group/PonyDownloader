@@ -156,7 +156,7 @@ class AppPlatformController extends AsyncNotifier<AppPlatformState> with WindowL
     } else if (Util.isMacos()) {
       await trayManager.setIcon('assets/tray_icon/icon_mac.png', isTemplate: true);
     } else if (Platform.environment.containsKey('FLATPAK_ID') || Platform.environment.containsKey('SNAP')) {
-      await trayManager.setIcon('com.gopeed.Gopeed');
+      await trayManager.setIcon('org.mutantcat.ponydownloader');
     } else {
       await trayManager.setIcon('assets/tray_icon/icon.png');
     }
@@ -188,7 +188,7 @@ class AppPlatformController extends AsyncNotifier<AppPlatformState> with WindowL
     );
 
     if (!Util.isLinux()) {
-      await trayManager.setToolTip('Gopeed');
+      await trayManager.setToolTip('PonyDownloader');
     }
     await trayManager.setContextMenu(menu);
     trayManager.removeListener(this);
@@ -225,7 +225,7 @@ class AppPlatformController extends AsyncNotifier<AppPlatformState> with WindowL
 
   Future<void> _initDesktopIntegrations() async {
     try {
-      registerUrlScheme('gopeed');
+      registerUrlScheme('ponydownloader');
       final runtime = ref.read(appRuntimeControllerProvider).value;
       if (runtime?.downloaderConfig.extra.defaultBtClient == true) {
         registerDefaultTorrentClient();

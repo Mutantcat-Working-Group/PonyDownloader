@@ -15,7 +15,7 @@ func install(killSignalChan chan<- any, updateChannel, packagePath, destDir stri
 
 // installByDmg handles macOS dmg package installation
 func installByDmg(killSignalChan chan<- any, packagePath, destDir string) error {
-	// /Applications/Gopeed.app/Contents/MacOS -> /Applications
+	// /Applications/PonyDownloader.app/Contents/MacOS -> /Applications
 	appPath := getParentDir(getParentDir(getParentDir(destDir)))
 	output, err := exec.Command("hdiutil", "attach", packagePath, "-nobrowse").Output()
 	if err != nil {
@@ -26,8 +26,8 @@ func installByDmg(killSignalChan chan<- any, packagePath, destDir string) error 
 	for _, line := range strings.Split(string(output), "\n") {
 		if strings.Contains(line, "/Volumes/") {
 			// Find the /Volumes/ path in the line
-			// hdiutil output format: /dev/disk4s1  Apple_HFS  /Volumes/Gopeed
-			// or with sequence number: /dev/disk4s1  Apple_HFS  /Volumes/Gopeed 1
+			// hdiutil output format: /dev/disk4s1  Apple_HFS  /Volumes/PonyDownloader
+			// or with sequence number: /dev/disk4s1  Apple_HFS  /Volumes/PonyDownloader 1
 			idx := strings.Index(line, "/Volumes/")
 			if idx != -1 {
 				// Extract everything from /Volumes/ onwards and trim whitespace
@@ -55,7 +55,7 @@ func installByDmg(killSignalChan chan<- any, packagePath, destDir string) error 
 	killSignalChan <- nil
 
 	// Copy the new app to the destination
-	// cp -Rf /Volumes/GoPeed/GoPeed.app /Applications
+	// cp -Rf /Volumes/PonyDownloader/PonyDownloader.app /Applications
 	if err := exec.Command("cp", "-Rf", matches[0], appPath).Run(); err != nil {
 		return err
 	}

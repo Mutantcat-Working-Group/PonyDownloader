@@ -12,7 +12,7 @@ val apkKeyPassword = System.getenv("APK_KEY_PASSWORD")
 val apkStorePassword = System.getenv("APK_STORE_PASSWORD")
 
 android {
-    namespace = "com.gopeed.gopeed"
+    namespace = "org.mutantcat.ponydownloader"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.gopeed.gopeed"
+        applicationId = "org.mutantcat.ponydownloader"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion

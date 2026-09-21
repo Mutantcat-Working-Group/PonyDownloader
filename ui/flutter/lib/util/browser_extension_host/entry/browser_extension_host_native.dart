@@ -10,7 +10,7 @@ import '../browser_extension_host.dart';
 
 final _hostExecName = 'host${Platform.isWindows ? '.exe' : ''}';
 
-const _hostName = 'com.gopeed.gopeed';
+const _hostName = 'org.mutantcat.ponydownloader';
 const _chromeExtensionId = 'mijpgljlfcapndmchhjffkpckknofcnd';
 const _edgeExtensionId = 'dkajnckekendchdleoaenoophcobooce';
 const _firefoxExtensionId = '{c5d69a8f-2ed0-46a7-afa4-b3a00dc58088}';
@@ -263,7 +263,7 @@ Future<String> _getManifestContent(Browser browser) async {
   final hostPath = await Util.homePathJoin(_hostExecName);
   final manifest = {
     'name': _hostName,
-    'description': 'Gopeed browser extension host',
+    'description': 'PonyDownloader browser extension host',
     'path': hostPath,
     'type': 'stdio',
     if (browser != Browser.firefox)

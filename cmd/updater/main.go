@@ -50,7 +50,7 @@ func main() {
 
 	// Restart the application
 	if restart {
-		browser.OpenURL("gopeed:///")
+		browser.OpenURL("ponydownloader:///")
 	}
 
 	// Delete package asset

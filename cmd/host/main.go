@@ -43,7 +43,7 @@ func wakeup(hidden bool) error {
 		return nil
 	}
 
-	uri := "gopeed:"
+	uri := "ponydownloader:"
 	if hidden {
 		uri = uri + "?hidden=true"
 	}
@@ -57,7 +57,7 @@ func wakeup(hidden bool) error {
 		}
 		time.Sleep(1 * time.Second)
 	}
-	return fmt.Errorf("start gopeed failed")
+	return fmt.Errorf("start ponydownloader failed")
 }
 
 // postToFlutter sends a POST request to Flutter RPC server

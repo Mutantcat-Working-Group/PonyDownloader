@@ -75,7 +75,7 @@ func (f *Fetcher) initClient() (err error) {
 	cfg = torrent.NewDefaultClientConfig()
 	cfg.Seed = true
 	cfg.Bep20 = fmt.Sprintf("-GP%s-", parseBep20())
-	cfg.ExtendedHandshakeClientVersion = fmt.Sprintf("Gopeed %s", base.Version)
+	cfg.ExtendedHandshakeClientVersion = fmt.Sprintf("PonyDownloader %s", base.Version)
 	cfg.ListenPort = f.config.ListenPort
 	cfg.HTTPProxy = f.ctl.GetProxy(f.meta.Req.Proxy)
 	dnsResolver := &DnsCacheResolver{RefreshTimeout: 5 * time.Minute}

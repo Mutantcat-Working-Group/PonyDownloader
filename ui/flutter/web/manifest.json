@@ -1,6 +1,6 @@
 {
-    "name": "Gopeed",
-    "short_name": "Gopeed",
+    "name": "PonyDownloader",
+    "short_name": "PonyDownloader",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,201 +1,94 @@
-# [![](_docs/img/banner.svg)](https://gopeed.com)
-
-[![Test Status](https://github.com/GopeedLab/gopeed/workflows/test/badge.svg)](https://github.com/GopeedLab/gopeed/actions?query=workflow%3Atest)
-[![Codecov](https://codecov.io/gh/GopeedLab/gopeed/branch/main/graph/badge.svg)](https://codecov.io/gh/GopeedLab/gopeed)
-[![Release](https://img.shields.io/github/release/GopeedLab/gopeed.svg)](https://github.com/GopeedLab/gopeed/releases)
-[![Download](https://img.shields.io/github/downloads/GopeedLab/gopeed/total.svg)](https://github.com/GopeedLab/gopeed/releases)
-[![Donate](https://img.shields.io/badge/%24-donate-ff69b4.svg)](https://gopeed.com/docs/donate)
-[![WeChat](https://img.shields.io/badge/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7-07C160?logo=wechat&logoColor=white)](https://raw.githubusercontent.com/GopeedLab/gopeed/main/_docs/img/weixin.png)
-[![Discord](https://img.shields.io/discord/1037992631881449472?label=Discord&logo=discord&style=social)](https://discord.gg/ZUJqJrwCGB)
-
-<a href="https://trendshift.io/repositories/7953" target="_blank"><img src="https://trendshift.io/api/badge/repositories/7953" alt="GopeedLab%2Fgopeed | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-
-[English](/README.md) | [中文](/README_zh-CN.md) | [日本語](/README_ja-JP.md) | [正體中文](/README_zh-TW.md) | [Tiếng Việt](/README_vi-VN.md)
-
-## 🚀 簡介
-
-Gopeed（**Go Speed** 的縮寫）是一款以 Go 與 Flutter 開發的高速、現代化、免費開源下載器，支援 HTTP、HTTPS、BitTorrent、磁力連結與 ed2k，並涵蓋桌面、行動裝置及 Web。
-
-除了日常任務管理，Gopeed 也提供瀏覽器整合、JavaScript 擴充、REST API、命令列工具及可自行託管的 Web UI，方便進階使用者擴充與自動化下載流程。
-
-瀏覽 ✈ [官方網站](https://gopeed.com)
-
-![應用程式截圖](_docs/img/ui-concept-en.png)
-
-## ✨ 主要功能
-
-- ⚡ **高速下載** — 多任務並行、HTTP 多連線分段傳輸與 BitTorrent P2P 下載，充分利用可用頻寬。
-- 🧲 **多協定支援** — 在同一介面管理 HTTP、HTTPS、BitTorrent、磁力連結與 ed2k。
-- 🌱 **完整 BT 功能** — 支援 DHT 節點探索、uTP 傳輸、Web Seed、逐檔選擇、Tracker 管理、Peer/分片統計，以及依分享率或時間控制做種。
-- 📋 **實用任務管理** — 暫停、續傳、重試、批次操作、搜尋、狀態篩選、分類及啟動恢復。
-- 🪶 **輕量原生體驗** — 主介面使用 Flutter 原生渲染，非 Electron，非 WebView 套殼，安裝包更輕量、執行開銷更低、操作回應更流暢。
-- 💻 **跨平台** — 支援 Windows、macOS、Linux、Android、iOS、Web、Docker 與 QNAP。
-- 🎨 **個人化主題** — 支援跟隨系統、淺色、深色模式及 8 種主題強調色。
-- 📐 **響應式介面** — 任務列表、導覽、設定與詳細資訊會配合手機、平板及可調整大小的桌面視窗自動配置。
-- 🗣️ **20+ 種介面語言** — 支援繁體中文、簡體中文、英文、日文、韓文等多種語言。
-- 🌐 **瀏覽器整合** — 可接管 Chrome、Edge、Firefox 等相容瀏覽器的下載。
-- 🧩 **JavaScript 擴充** — 新增影音網站、AI 模型平台、雲端儲存等下載來源。
-- 🤖 **AI 整合** — 提供 MCP 介面，可串接相容的 AI Agent，以自然語言建立、查詢及管理下載任務。
-- 🔌 **開放介面** — 支援 REST API、CLI、認證 Web UI、Webhook 及下載後腳本。
-- 🛠️ **實用內建能力** — 自訂 Header/User-Agent、Proxy、GitHub 鏡像、通知及自動解壓縮。
-
-## 🤖 AI 整合
-
-將 Gopeed 與 AI Agent 串接後，即可透過自然語言管理下載。例如，直接對 AI Agent 說：
-
-> 幫我下載最新的 Gopeed Windows 用戶端
-
-| Tool | 功能說明 |
-| --- | --- |
-| `resolve_task` | 解析下載 URL 或 URI，在建立任務前回傳資源資訊及檔案清單。 |
-| `create_task` | 使用已解析的資源 ID 或直接下載請求建立並啟動任務。 |
-| `list_tasks` | 查詢任務清單，並可依任務 ID 或狀態篩選。 |
-| `get_task` | 取得單一任務的請求、資源、選項及目前進度等完整資訊。 |
-| `get_task_status` | 取得單一任務的簡要執行狀態及各檔案下載進度。 |
-| `get_task_stats` | 取得協定相關統計資訊，包括 HTTP 連線或 BitTorrent Peer 與做種資料。 |
-| `pause_task` | 暫停任務。 |
-| `continue_task` | 繼續已暫停或失敗的任務。 |
-| `delete_task` | 刪除任務，並可選擇同時刪除已下載檔案。 |
-
-## ⬇️ 下載
-
-### 🧪 Gopeed 2.0.0 Beta
-
-Gopeed 2.0.0 目前處於公開 Beta 測試階段，引入了全新介面、透過 FFI 直連 Go 核心的原生通訊架構、更一致的跨平台體驗、更完善的任務管理、更靈活的 API，以及透過 MCP 串接 AI Agent 的能力。部分功能仍可能不夠完善或穩定，歡迎搶先體驗並向我們回報問題。
-
-- [下載 Gopeed 2.0.0 Beta 3](https://github.com/GopeedLab/gopeed/releases/tag/v2.0.0-beta.3)
-
-當功能完整度與穩定性達到正式發布標準後，我們會發布 Gopeed 2.0.0 正式版。已安裝 Beta 版本的使用者可以直接升級至最終正式版，現有穩定版使用者則不會被自動切換至 Beta 頻道。
-
-### 正式穩定版
-
-- [官方網站下載](https://gopeed.com)
-- [GitHub Releases](https://github.com/GopeedLab/gopeed/releases/latest)
-
-### 🛠️ 使用 CLI 安裝
-
-使用`go install`安裝：
-
-```bash
-go install github.com/GopeedLab/gopeed/cmd/gopeed@latest
-```
-
-## 📱 微信公眾號
-
-關注公眾號獲取項目最新動態和資訊。
-
-<img src="_docs/img/weixin.png" width="200" />
-
-## 💝 贊助
-
-如果你認為該項目對你有所幫助，請考慮[贊助](https://gopeed.com/docs/donate)以支持該項目的持續發展，謝謝！
-
-## 👨‍💻 開發
-
-該項目分為前端與後端，前端使用`flutter`編寫，後端使用`Golang`編寫，兩邊通過`http`協定進行通訊，在 unix 系統下，則使用`unix socket`，在 windows 系統下，則使用`tcp`協定。
-
-> 前端代碼位於`ui/flutter`目錄內。
-
-### 🌍 開發環境
-
-1. Golang 1.25+
-2. Flutter 3.41+
-
-### 📋 克隆項目
-
-```bash
-git clone git@github.com:GopeedLab/gopeed.git
-```
-
-### 🤝 協助開發
-
-請參考[協助指南](CONTRIBUTING_zh-TW.md)
-
-### 🏗️ 編譯
-
-#### 桌面端
-
-首先需要按照[flutter desktop 官方文檔](https://docs.flutter.dev/development/platform-integration/desktop)配置開發環境，並準備好`cgo`環境，具體方法可以自行搜索。
-
-組建指令：
-
-- windows
-
-```bash
-go build -tags nosqlite -ldflags="-w -s" -buildmode=c-shared -o ui/flutter/windows/libgopeed.dll github.com/GopeedLab/gopeed/bind/desktop
-cd ui/flutter
-flutter build windows
-```
-
-- macos
-
-```bash
-go build -tags nosqlite -ldflags="-w -s" -buildmode=c-shared -o ui/flutter/macos/Frameworks/libgopeed.dylib github.com/GopeedLab/gopeed/bind/desktop
-cd ui/flutter
-flutter build macos
-```
-
-- linux
-
-```bash
-go build -tags nosqlite -ldflags="-w -s" -buildmode=c-shared -o ui/flutter/linux/bundle/lib/libgopeed.so github.com/GopeedLab/gopeed/bind/desktop
-cd ui/flutter
-flutter build linux
-```
-
-#### 移動設備
-
-需要`cgo`環境，並安裝`gomobile`：
-
-```bash
-go install golang.org/x/mobile/cmd/gomobile@latest
-go get golang.org/x/mobile/bind
-gomobile init
-```
-
-組建指令：
-
-- android
-
-```bash
-gomobile bind -tags nosqlite -ldflags="-w -s -checklinkname=0" -o ui/flutter/android/app/libs/libgopeed.aar -target=android -androidapi 21 -javapkg="com.gopeed" github.com/GopeedLab/gopeed/bind/mobile
-cd ui/flutter
-flutter build apk
-```
-
-- ios
-
-```bash
-gomobile bind -tags nosqlite -ldflags="-w -s" -o ui/flutter/ios/Frameworks/Libgopeed.xcframework -target=ios github.com/GopeedLab/gopeed/bind/mobile
-cd ui/flutter
-flutter build ios --no-codesign
-```
-
-#### 網頁端
-
-組建指令：
-
-```bash
-cd ui/flutter
-flutter build web
-cd ../../
-rm -rf cmd/web/dist
-cp -r ui/flutter/build/web cmd/web/dist
-go build -tags nosqlite,web -ldflags="-s -w" -o bin/ github.com/GopeedLab/gopeed/cmd/web
-```
-
-## ❤️ 感謝
-
-### 貢獻者
-
-<a href="https://github.com/GopeedLab/gopeed/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=GopeedLab/gopeed" />
-</a>
-
-### JetBrains
-
-[![goland](_docs/img/goland.svg)](https://www.jetbrains.com/?from=gopeed)
-
-## 軟體許可
-
-該軟體遵循 [GPLv3](LICENSE) 。
+<div align=center>
+<img src="icon.png" style="width:100px;" width="100"/>
+<h2>PonyDownloader</h2>
+</div>
+
+[English](/README.md) | [简体中文](/README_zh-CN.md) | [繁體中文](/README_zh-TW.md) | [日本語](/README_ja-JP.md) | [Tiếng Việt](/README_vi-VN.md)
+
+### 一、功能簡述
+- 一款使用 Go 與 Flutter 打造的高速、現代、免費開源下載器，支援 HTTP、HTTPS、BitTorrent、磁力連結與 ed2k 等協定。
+- 覆蓋 Windows、macOS、Linux、Android、iOS 與 Web 平台，提供原生桌面端、行動端以及可自行架設的 Web 管理介面。
+- 支援多任務並行、HTTP 多連線分段傳輸、BT DHT 節點發現、uTP 傳輸、Web Seed、按檔案選擇下載、Tracker 管理與做種限制。
+- 提供 REST API、命令列工具、JavaScript 擴充套件、瀏覽器接管、Webhook 與 MCP 介面，可自由擴充並讓 AI Agent 以自然語言管理下載。
+- 支援跟隨系統、淺色與深色主題，多種強調色與 20+ 種介面語言。
+
+### 二、部署方式
+1. 桌面端與行動端：從 [GitHub Releases](https://github.com/Mutantcat-Working-Group/PonyDownloader/releases) 下載對應平台安裝包，安裝後即可使用。
+2. 自行架設 Web 服務：啟動發佈包中的 Web 程式，預設監聽 `0.0.0.0:9999`，瀏覽器開啟 `http://localhost:9999` 即可進入管理介面。
+   ```
+   可選啟動參數：
+   -A 綁定位址（預設 0.0.0.0）
+   -P 綁定埠號（預設 9999）
+   -u Web 登入使用者名稱
+   -p Web 登入密碼（未設定則不啟用 Web 認證）
+   -T API Token（啟用 Web 認證後呼叫 HTTP API 時必填）
+   -d 儲存目錄
+   ```
+3. Docker 部署：倉庫根目錄提供 `docker-compose.yml`，對映 9999 埠號並掛載下載目錄，執行 `docker compose up -d` 即可。
+4. 開發者自行編譯：需要 Go 1.25+ 與 Flutter 3.41+，後端使用 `go build`，前端使用 `flutter build`。
+
+### 三、使用教學
+1. 桌面端/行動端：開啟應用程式，點選新增任務，貼上 HTTP/HTTPS 連結、磁力連結或種子檔，選擇儲存目錄後開始下載。
+2. Web 管理介面：開啟 `http://localhost:9999`，可以建立任務、查看進度、管理分類與設定；設定帳號密碼後需登入使用。
+3. 批次與續傳：支援暫停、繼續、重試、批次操作、依狀態篩選與分類管理，程式重新啟動後會自動恢復未完成任務。
+4. 瀏覽器接管：安裝相容的瀏覽器擴充套件後，可將網頁下載請求直接送到 PonyDownloader。
+5. AI 接入：啟用 MCP（`--mcp-enable`）後，AI Agent 可透過 `http://localhost:9999/mcp` 建立、查詢與管理下載任務。
+
+### 四、API 文件
+1. 取得服務資訊 - `GET /api/v1/info`
+   ```
+   回傳版本、執行環境、系統架構等基礎資訊。
+   ```
+2. 解析下載資源 - `POST /api/v1/resolve`
+   - 請求範例：
+   ```json
+   {
+       "req": {
+           "url": "https://example.com/file.zip"
+       }
+   }
+   ```
+   - 回傳資源中繼資料與檔案清單，建立任務前可先解析。
+3. 建立下載任務 - `POST /api/v1/tasks`
+   - 請求範例：
+   ```json
+   {
+       "req": {
+           "url": "https://example.com/file.zip",
+           "extra": {
+               "connections": 16
+           }
+       },
+       "opts": {
+           "path": "/downloads"
+       }
+   }
+   ```
+   - 也可使用解析得到的資源 ID 作為 `rid`。
+4. 查詢任務 - `GET /api/v1/tasks`
+   - 支援依任務 ID 或狀態篩選，例如 `GET /api/v1/tasks?status=running`。
+5. 暫停與繼續 - `PUT /api/v1/tasks/{id}/pause`、`PUT /api/v1/tasks/{id}/continue`
+6. 刪除任務 - `DELETE /api/v1/tasks/{id}`，可加 `?force=true` 同時刪除檔案。
+7. MCP 介面 - `POST /mcp`
+   - 啟用 MCP 後可接入 AI Agent，以自然語言管理下載任務。
+
+### 五、專注的重點
+- 充分利用頻寬：多任務並行、HTTP 多連線分段下載與 BitTorrent P2P 下載相結合。
+- 一個入口管理多種協定：HTTP/HTTPS、BitTorrent、磁力連結、ed2k 統一在一個介面中處理。
+- 原生跨平台體驗：使用 Flutter 原生渲染，非 Electron 套殼，安裝包更輕、佔用更低、回應更快。
+- 開放的自動化能力：REST API、CLI、Webhook、下載後指令碼、JavaScript 擴充套件與 MCP 皆可用於自動化。
+- 輕量自行架設：單一 Web 程式即可部署，適合放在伺服器或 NAS 上長期執行。
+
+### 六、開發進度
+- [X] HTTP/HTTPS 多連線下載
+- [X] BitTorrent / 磁力連結
+- [X] ed2k 下載
+- [X] 任務管理（暫停、繼續、重試、批次、篩選、分類）
+- [X] 斷點續傳與啟動恢復
+- [X] Web 管理介面與帳號認證
+- [X] REST API 與 API Token
+- [X] MCP / AI Agent 接入
+- [X] 瀏覽器接管
+- [X] JavaScript 擴充套件
+- [X] Docker 部署
+- [ ] 正式版本發佈與自動化測試完善

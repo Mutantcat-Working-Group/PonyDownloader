@@ -12,7 +12,7 @@ final class GopeedContinuedProcessingManager: NSObject {
     // MARK: - Worker / state synchronization
 
     private let workerQueue = DispatchQueue(
-        label: "com.gopeed.continued-processing",
+        label: "org.mutantcat.ponydownloader.continued-processing",
         qos: .userInitiated
     )
 
@@ -1167,7 +1167,7 @@ final class GopeedContinuedProcessingManager: NSObject {
 
         let bundleID =
             Bundle.main.bundleIdentifier
-            ?? "com.gopeed.gopeed"
+            ?? "org.mutantcat.ponydownloader"
 
         let safeID =
             taskID.replacingOccurrences(

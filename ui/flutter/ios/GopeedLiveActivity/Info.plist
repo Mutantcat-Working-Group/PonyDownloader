@@ -6,7 +6,7 @@
 <dict>
 
     <key>CFBundleDisplayName</key>
-    <string>Gopeed</string>
+    <string>PonyDownloader</string>
 
     <key>CFBundleShortVersionString</key>
     <string>$(MARKETING_VERSION)</string>

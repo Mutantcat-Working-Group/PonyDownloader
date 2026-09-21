@@ -46,7 +46,7 @@ void main() {
                 'peers': [
                   {
                     'address': '127.0.0.1:6881',
-                    'client': 'Gopeed',
+                    'client': 'PonyDownloader',
                     'downloadSpeed': 2048,
                     'uploadSpeed': 1024,
                     'pieceCount': 12,

@@ -646,9 +646,9 @@ String _agentSnippet(_McpAgent agent, {required String endpoint, required String
     _McpAgent.codex => _codexSnippet(endpoint: endpoint, apiToken: apiToken),
     _McpAgent.claudeCode =>
       apiToken.isNotEmpty
-          ? 'claude mcp add --transport http gopeed $endpoint \\\n'
+          ? 'claude mcp add --transport http ponydownloader $endpoint \\\n'
                 "  --header ${_shellSingleQuote('Authorization: Bearer $apiToken')}"
-          : 'claude mcp add --transport http gopeed $endpoint',
+          : 'claude mcp add --transport http ponydownloader $endpoint',
     _McpAgent.githubCopilot => _mcpServersSnippet(
       rootKey: 'servers',
       type: 'http',
@@ -680,10 +680,10 @@ String _agentSnippet(_McpAgent agent, {required String endpoint, required String
 
 String _codexSnippet({required String endpoint, required String apiToken}) {
   if (apiToken.isEmpty) {
-    return 'codex mcp add gopeed --url ${_shellSingleQuote(endpoint)}';
+    return 'codex mcp add ponydownloader --url ${_shellSingleQuote(endpoint)}';
   }
   return 'export GOPEED_API_TOKEN=${_shellSingleQuote(apiToken)}\n\n'
-      'codex mcp add gopeed --url ${_shellSingleQuote(endpoint)} \\\n'
+      'codex mcp add ponydownloader --url ${_shellSingleQuote(endpoint)} \\\n'
       '  --bearer-token-env-var GOPEED_API_TOKEN';
 }
 
@@ -705,7 +705,7 @@ String _mcpServersSnippet({
   }
   server.addAll(extra);
   return const JsonEncoder.withIndent('  ').convert(<String, Object>{
-    rootKey: <String, Object>{'gopeed': server},
+    rootKey: <String, Object>{'ponydownloader': server},
   });
 }
 
@@ -717,7 +717,7 @@ String _openCodeSnippet({required String endpoint, required String apiToken}) {
   return const JsonEncoder.withIndent('  ').convert(<String, Object>{
     r'$schema': 'https://opencode.ai/config.json',
     'mcp': <String, Object>{
-      'servers': <String, Object>{'gopeed': server},
+      'servers': <String, Object>{'ponydownloader': server},
     },
   });
 }
@@ -726,10 +726,10 @@ String _deepSeekHarnessSnippet({required String endpoint, required String apiTok
   final headers = apiToken.isNotEmpty
       ? '\n        headers:\n          Authorization: ${jsonEncode('Bearer $apiToken')}'
       : '\n        headers: {}';
-  return '- id: mcp-gopeed\n'
+  return '- id: mcp-ponydownloader\n'
       "  name: '@deepseek-ai/dsh-mcp-client'\n"
       '  config:\n'
-      '    serverName: gopeed\n'
+      '    serverName: ponydownloader\n'
       '    transport: streamable-http\n'
       '    url: $endpoint$headers';
 }

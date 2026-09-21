@@ -1446,8 +1446,8 @@ void main() {
     expect(find.text('Check for Updates'), findsOneWidget);
     expect(find.text('Usage Analytics'), findsOneWidget);
     expect(find.text('Contributors'), findsOneWidget);
-    expect(find.byKey(const ValueKey('gopeed-homepage')), findsOneWidget);
-    expect(find.byKey(const ValueKey('gopeed-github')), findsOneWidget);
+    expect(find.byKey(const ValueKey('ponydownloader-homepage')), findsOneWidget);
+    expect(find.byKey(const ValueKey('ponydownloader-github')), findsOneWidget);
     expect(find.byKey(const ValueKey('gopeed-contributors')), findsOneWidget);
     final aboutOrder = [
       'Homepage',
@@ -1459,8 +1459,8 @@ void main() {
     ].map((label) => tester.getTopLeft(find.text(label)).dy).toList();
     expect(aboutOrder, orderedEquals([...aboutOrder]..sort()));
     for (final (key, label) in [
-      ('gopeed-homepage', 'gopeed.com'),
-      ('gopeed-github', 'github.com/GopeedLab/gopeed'),
+      ('ponydownloader-homepage', 'github.com/Mutantcat-Working-Group/PonyDownloader'),
+      ('ponydownloader-github', 'github.com/Mutantcat-Working-Group/PonyDownloader'),
       ('gopeed-contributors', 'View contributors'),
     ]) {
       final link = find.byKey(ValueKey(key));
@@ -1662,8 +1662,8 @@ void main() {
     DownloadDirectoryPicker.debugAndroidLocationsLoader = () async {
       calls.add('getLocations');
       return <String, String>{
-        'application': '/storage/emulated/0/Android/data/com.gopeed.gopeed/files',
-        'downloads': '/storage/emulated/0/Download/Gopeed',
+        'application': '/storage/emulated/0/Android/data/org.mutantcat.ponydownloader/files',
+        'downloads': '/storage/emulated/0/Download/PonyDownloader',
       };
     };
     DownloadDirectoryPicker.debugDownloadsPreparer = (path) async {
@@ -1674,7 +1674,9 @@ void main() {
       DownloadDirectoryPicker.debugAndroidLocationsLoader = null;
       DownloadDirectoryPicker.debugDownloadsPreparer = null;
     });
-    final controller = TextEditingController(text: '/storage/emulated/0/Android/data/com.gopeed.gopeed/files');
+    final controller = TextEditingController(
+      text: '/storage/emulated/0/Android/data/org.mutantcat.ponydownloader/files',
+    );
     addTearDown(controller.dispose);
 
     await tester.pumpWidget(
@@ -1697,11 +1699,11 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('android-download-directory-dialog')), findsOneWidget);
     expect(find.text('App storage'), findsOneWidget);
-    expect(find.text('Download/Gopeed'), findsOneWidget);
+    expect(find.text('Download/PonyDownloader'), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('android-downloads-directory-option')));
     await tester.pumpAndSettle();
-    expect(controller.text, '/storage/emulated/0/Download/Gopeed');
+    expect(controller.text, '/storage/emulated/0/Download/PonyDownloader');
     expect(calls, ['getLocations', 'prepareDownloads']);
     expect(find.byKey(const ValueKey('android-download-directory-dialog')), findsNothing);
     expect(tester.takeException(), isNull);
@@ -2160,7 +2162,7 @@ void main() {
     await tester.tap(find.text('Open'));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('mcp-not-running-hint')), findsNothing);
-    expect(find.textContaining('codex mcp add gopeed --url'), findsOneWidget);
+    expect(find.textContaining('codex mcp add ponydownloader --url'), findsOneWidget);
   });
 
   testWidgets('disabling the API server requires confirmation and keeps listener fields visible', (
@@ -2649,7 +2651,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('settings-language-select')));
     await tester.pumpAndSettle();
     expect(find.text('English'), findsOneWidget);
-    expect(SettingsLanguageSelect.supportedValues, hasLength(21));
+    expect(SettingsLanguageSelect.supportedValues, hasLength(22));
     expect(SettingsLanguageSelect.supportedValues, containsAll(<String>['zh', 'zh_TW', 'pt']));
     expect(SettingsLanguageSelect.supportedValues, isNot(contains('zh_CN')));
     expect(SettingsLanguageSelect.supportedValues, isNot(contains('pt_BR')));
@@ -4764,7 +4766,7 @@ void main() {
             peers: [
               TaskPeerStats(
                 address: '127.0.0.1:6881',
-                client: 'Gopeed',
+                client: 'PonyDownloader',
                 downloadSpeed: 2048,
                 uploadSpeed: 1024,
                 pieceCount: 3,
@@ -4775,7 +4777,7 @@ void main() {
               ),
               TaskPeerStats(
                 address: '127.0.0.2:6881',
-                client: 'Gopeed',
+                client: 'PonyDownloader',
                 downloadSpeed: 1024,
                 uploadSpeed: 512,
                 pieceCount: 8,
@@ -5203,7 +5205,7 @@ void main() {
     await tester.tap(find.text('Open delete dialog'));
     await tester.pumpAndSettle();
     expect(find.text('Delete 2 tasks?'), findsOneWidget);
-    expect(find.text('Only remove the task record from Gopeed'), findsNothing);
+    expect(find.text('Only remove the task record from PonyDownloader'), findsNothing);
     expect(find.byKey(const ValueKey('task-delete-dialog-icon')), findsOneWidget);
     expect(find.byKey(const ValueKey('task-delete-keep-files-option')), findsOneWidget);
     final keepFilesSwitch = find.byKey(const ValueKey('task-delete-keep-files-switch'));
@@ -5697,7 +5699,7 @@ class FakeExtensionsController extends ExtensionsController {
     final installed = api_extension.Extension(
       identity: 'extension-0',
       name: 'extension-0',
-      author: 'Gopeed',
+      author: 'PonyDownloader',
       title: 'Extension 0',
       description: 'Installed extension',
       icon: '',
@@ -5717,7 +5719,7 @@ class FakeExtensionsController extends ExtensionsController {
           repoFullName: 'gopeed/extension-$index',
           repoUrl: 'https://github.com/gopeed/extension-$index',
           name: 'extension-$index',
-          author: 'Gopeed',
+          author: 'PonyDownloader',
           title: 'Extension $index',
           description: 'Extension description $index',
           readme: '# Extension $index README\n\nExtension details for testing.',
@@ -5757,7 +5759,7 @@ class CrowdedExtensionCardController extends ExtensionsController {
         api_extension.Extension(
             identity: 'crowded-extension',
             name: 'crowded-extension',
-            author: 'Gopeed',
+            author: 'PonyDownloader',
             title: 'Crowded extension',
             description: 'An extension with every available card action.',
             icon: '',
@@ -5782,7 +5784,7 @@ class CrowdedExtensionCardController extends ExtensionsController {
       repoFullName: 'GopeedLab/gopeed',
       repoUrl: 'https://github.com/GopeedLab/gopeed',
       name: 'crowded-extension',
-      author: 'Gopeed',
+      author: 'PonyDownloader',
       title: 'Crowded extension',
       description: 'An extension with every available card action.',
       readme: '# Crowded extension',

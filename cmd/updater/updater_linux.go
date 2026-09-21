@@ -61,7 +61,7 @@ func installByDeb(packagePath string) error {
 
 // installByFlathub updates the application via Flathub
 func installByFlathub() error {
-	command := "flatpak update com.gopeed.Gopeed -y"
+	command := "flatpak update org.mutantcat.ponydownloader -y"
 	return executeInTerminal(command)
 }
 

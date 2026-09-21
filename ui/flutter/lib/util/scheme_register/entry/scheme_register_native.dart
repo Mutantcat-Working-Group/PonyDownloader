@@ -6,7 +6,7 @@ import 'package:win32_registry/win32_registry.dart';
 import '../../util.dart';
 import '../../win32.dart';
 
-const _linuxDesktopFileName = 'com.gopeed.Gopeed.desktop';
+const _linuxDesktopFileName = 'org.mutantcat.ponydownloader.desktop';
 
 void doRegisterUrlScheme(String scheme) {
   if (Util.isWindows()) {
@@ -36,7 +36,7 @@ void doUnregisterUrlScheme(String scheme) {
 }
 
 const _torrentRegKey = 'Software\\Classes\\.torrent';
-const _torrentRegValue = 'Gopeed_torrent';
+const _torrentRegValue = 'PonyDownloader_torrent';
 const _torrentAppRegKey = 'Software\\Classes\\$_torrentRegValue';
 
 /// Register as the system's default torrent client
@@ -84,17 +84,17 @@ void _installLinuxDesktopEntry({required Set<String> mimeTypes}) {
 
   final desktopFile = File(path.join(applicationsDir, _linuxDesktopFileName));
   final existingMimeTypes = _readLinuxDesktopMimeTypes(desktopFile);
-  final allMimeTypes = <String>{'x-scheme-handler/gopeed', ...existingMimeTypes, ...mimeTypes};
+  final allMimeTypes = <String>{'x-scheme-handler/ponydownloader', ...existingMimeTypes, ...mimeTypes};
 
   desktopFile.parent.createSync(recursive: true);
   desktopFile.writeAsStringSync('''
 [Desktop Entry]
-Name=Gopeed
+Name=PonyDownloader
 GenericName=Download Manager
 Comment=A modern download manager for all platforms
 Terminal=false
 Exec=${Platform.resolvedExecutable} %U
-Icon=com.gopeed.Gopeed
+Icon=org.mutantcat.ponydownloader
 Type=Application
 Categories=Utility;Network;
 Keywords=Bittorrent;Downloader;

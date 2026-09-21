@@ -79,7 +79,7 @@ class _GopeedAppState extends ConsumerState<GopeedApp> with WidgetsBindingObserv
     return shad.ShadcnApp.router(
       debugShowCheckedModeBanner: false,
       disableBrowserContextMenu: false,
-      title: 'Gopeed',
+      title: 'PonyDownloader',
       theme: AppTheme.light(themeColor),
       darkTheme: AppTheme.dark(themeColor),
       materialTheme: isLightTheme ? AppTheme.materialLight(themeColor) : AppTheme.materialDark(themeColor),

@@ -16,7 +16,7 @@ class AppWindowBootstrap {
     await windowManager.ensureInitialized();
 
     final windowOptions = WindowOptions(
-      title: 'Gopeed',
+      title: 'PonyDownloader',
       size: const Size(1024, 768),
       center: true,
       skipTaskbar: false,
@@ -75,8 +75,8 @@ class AppWindowBootstrap {
 
   static String subWindowTitle(AppWindowType type, AppLocalizations l10n) {
     return switch (type) {
-      AppWindowType.createTask => 'Gopeed - ${l10n.create}',
-      _ => 'Gopeed',
+      AppWindowType.createTask => 'PonyDownloader - ${l10n.create}',
+      _ => 'PonyDownloader',
     };
   }
 

@@ -1,195 +1,92 @@
-# [![](_docs/img/banner.svg)](https://gopeed.com)
-
-[![Test Status](https://github.com/GopeedLab/gopeed/workflows/test/badge.svg)](https://github.com/GopeedLab/gopeed/actions?query=workflow%3Atest)
-[![Codecov](https://codecov.io/gh/GopeedLab/gopeed/branch/main/graph/badge.svg)](https://codecov.io/gh/GopeedLab/gopeed)
-[![Release](https://img.shields.io/github/release/GopeedLab/gopeed.svg)](https://github.com/GopeedLab/gopeed/releases)
-[![Download](https://img.shields.io/github/downloads/GopeedLab/gopeed/total.svg)](https://github.com/GopeedLab/gopeed/releases)
-[![Donate](https://img.shields.io/badge/%24-donate-ff69b4.svg)](https://gopeed.com/docs/donate)
-[![WeChat](https://img.shields.io/badge/WeChat%20Official%20Account-07C160?logo=wechat&logoColor=white)](https://raw.githubusercontent.com/GopeedLab/gopeed/main/_docs/img/weixin.png)
-[![Discord](https://img.shields.io/discord/1037992631881449472?label=Discord&logo=discord&style=social)](https://discord.gg/ZUJqJrwCGB)
-
-<a href="https://trendshift.io/repositories/7953" target="_blank"><img src="https://trendshift.io/api/badge/repositories/7953" alt="GopeedLab%2Fgopeed | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-
-[English](/README.md) | [中文](/README_zh-CN.md) | [日本語](/README_ja-JP.md) | [正體中文](/README_zh-TW.md) | [Tiếng Việt](/README_vi-VN.md)
-
-## 🚀 はじめに
-
-Gopeed（**Go Speed** の略）は、Go と Flutter で開発された高速でモダンな無料オープンソース・ダウンロードマネージャーです。HTTP、HTTPS、BitTorrent、Magnet、ed2k に対応し、デスクトップ、モバイル、Web で利用できます。
-
-ブラウザー連携、JavaScript 拡張、REST API、CLI、セルフホスト可能な Web UI により、日常利用から高度な自動化まで幅広く対応します。
-
-✈ [公式サイト](https://gopeed.com)
-
-![アプリのスクリーンショット](_docs/img/ui-concept-en.png)
-
-## ✨ 主な機能
-
-- ⚡ **高速ダウンロード** — 複数タスク、HTTP のマルチ接続分割転送、BitTorrent の P2P ダウンロードで帯域を最大限に活用します。
-- 🧲 **マルチプロトコル** — HTTP、HTTPS、BitTorrent、Magnet、ed2k を一つの画面で管理します。
-- 🌱 **充実した BT 機能** — DHT によるピア検出、uTP 転送、Web Seed、ファイル選択、Tracker 管理、Peer/ピース統計、共有率または時間によるシード制御。
-- 📋 **タスク管理** — 一時停止、再開、再試行、一括操作、検索、状態フィルター、カテゴリ、起動時復元。
-- 🪶 **軽量なネイティブ体験** — メイン UI は Flutter でネイティブ描画。Electron 非採用。WebView ラッパーでもありません。パッケージサイズと実行時オーバーヘッドを抑え、軽快な応答性を実現します。
-- 💻 **クロスプラットフォーム** — Windows、macOS、Linux、Android、iOS、Web、Docker、QNAP に対応。
-- 🎨 **カスタマイズ可能なテーマ** — システム連動、ライト、ダークの各モードと 8 色のアクセントカラーに対応。
-- 📐 **レスポンシブ UI** — タスクリスト、ナビゲーション、設定、詳細画面がスマートフォン、タブレット、サイズ変更可能なデスクトップウィンドウに適応。
-- 🗣️ **20 以上の UI 言語** — 日本語、英語、簡体字・繁体字中国語、韓国語など多くの言語に対応。
-- 🌐 **ブラウザー連携** — Chrome、Edge、Firefox などのダウンロードを Gopeed に送信できます。
-- 🧩 **JavaScript 拡張** — 動画サイト、AI モデルハブ、クラウドストレージなどのダウンロード元を追加できます。
-- 🤖 **AI 連携** — MCP インターフェースを通じて対応する AI Agent と連携し、自然言語でダウンロードタスクを作成・確認・管理できます。
-- 🔌 **オープンなインターフェース** — REST API、CLI、認証付き Web UI、Webhook、完了後スクリプトに対応。
-- 🛠️ **便利な内蔵機能** — カスタム Header/User-Agent、Proxy、GitHub ミラー、通知、自動展開。
-
-## 🤖 AI 連携
-
-Gopeed を AI Agent と連携すると、自然言語でダウンロードを管理できます。たとえば、AI Agent に次のように依頼できます：
-
-> 最新の Gopeed Windows クライアントをダウンロードして
-
-| Tool | 説明 |
-| --- | --- |
-| `resolve_task` | ダウンロード URL または URI を解析し、タスク作成前にリソース情報とファイル一覧を返します。 |
-| `create_task` | 解析済みのリソース ID または直接のダウンロードリクエストからタスクを作成して開始します。 |
-| `list_tasks` | タスクを一覧表示し、必要に応じて ID または状態で絞り込みます。 |
-| `get_task` | 一つのタスクについて、リクエスト、リソース、オプション、現在の進捗を取得します。 |
-| `get_task_status` | 一つのタスクの簡易的な実行状態とファイル別の進捗を取得します。 |
-| `get_task_stats` | HTTP 接続数や BitTorrent の Peer・シード情報など、プロトコル固有の統計を取得します。 |
-| `pause_task` | タスクを一時停止します。 |
-| `continue_task` | 一時停止または失敗したタスクを再開します。 |
-| `delete_task` | タスクを削除し、必要に応じてダウンロード済みファイルも削除します。 |
-
-## ⬇️ インストール
-
-### 🧪 Gopeed 2.0.0 Beta
-
-Gopeed 2.0.0 は現在パブリックベータ版です。刷新されたインターフェース、デスクトップおよびモバイルから FFI で Go コアへ直接接続するネイティブ通信アーキテクチャ、より統一されたクロスプラットフォーム体験、強化されたタスク管理、より柔軟な API、MCP による AI Agent 連携機能を導入しています。一部の機能はまだ不完全または不安定な場合がありますので、ぜひお試しいただき、問題があればフィードバックをお寄せください。
-
-- [Gopeed 2.0.0 Beta 3 をダウンロード](https://github.com/GopeedLab/gopeed/releases/tag/v2.0.0-beta.3)
-
-機能と安定性が正式リリースの基準に達した時点で、Gopeed 2.0.0 正式版を公開します。ベータ版のユーザーは正式版へ直接アップデートできます。既存の安定版ユーザーが自動的にベータチャンネルへ移行することはありません。
-
-### 安定版
-
-- [公式サイトからダウンロード](https://gopeed.com)
-- [GitHub Releases](https://github.com/GopeedLab/gopeed/releases/latest)
-
-### 🛠️ コマンドツール
-
-## 📱 WeChat 公式アカウント
-
-公式アカウントをフォローして、最新のアップデートやニュースを入手してください。
-
-<img src="_docs/img/weixin.png" width="200" />
-
-## 💝 寄付
-
-もしこのプロジェクトがお気に召しましたら、このプロジェクトの発展を支援するために[寄付](https://gopeed.com/docs/donate)をご検討ください！
-
-## 👨‍💻 開発
-
-このプロジェクトは二つの部分に分かれており、フロントエンドでは `flutter` を、バックエンドでは `Golang` を使用し、両者は `http` プロトコルで通信する。ユニックスシステムでは `unix socket` を、ウィンドウズシステムでは `tcp` プロトコルを使用します。
-
-> フロントコードは `ui/flutter` ディレクトリにあります。
-
-### 🌍 環境
-
-1. Go 言語 1.25+
-2. Flutter 3.41+
-
-### 📋 クローン
-
-```bash
-git clone git@github.com:GopeedLab/gopeed.git
-```
-
-### 🤝 コントリビュート
-
-[CONTRIBUTING.md](/CONTRIBUTING_ja-JP.md) をご参照ください
-
-### 🏗️ ビルド
-
-#### デスクトップ
-
-まず、[flutter デスクトップ公式サイトドキュメント](https://docs.flutter.dev/development/platform-integration/desktop)に従って環境を設定し、自分で検索できる `cgo` 環境を用意します。
-
-コマンド:
-
-- windows
-
-```bash
-go build -tags nosqlite -ldflags="-w -s" -buildmode=c-shared -o ui/flutter/windows/libgopeed.dll github.com/GopeedLab/gopeed/bind/desktop
-cd ui/flutter
-flutter build windows
-```
-
-- macos
-
-```bash
-go build -tags nosqlite -ldflags="-w -s" -buildmode=c-shared -o ui/flutter/macos/Frameworks/libgopeed.dylib github.com/GopeedLab/gopeed/bind/desktop
-cd ui/flutter
-flutter build macos
-```
-
-- linux
-
-```bash
-go build -tags nosqlite -ldflags="-w -s" -buildmode=c-shared -o ui/flutter/linux/bundle/lib/libgopeed.so github.com/GopeedLab/gopeed/bind/desktop
-cd ui/flutter
-flutter build linux
-```
-
-#### モバイル
-
-先ほどと同じように、`cgo` 環境を準備し、`gomobile` をインストールする必要があります:
-
-```bash
-go install golang.org/x/mobile/cmd/gomobile@latest
-go get golang.org/x/mobile/bind
-gomobile init
-```
-
-コマンド:
-
-- android
-
-```bash
-gomobile bind -tags nosqlite -ldflags="-w -s -checklinkname=0" -o ui/flutter/android/app/libs/libgopeed.aar -target=android -androidapi 21 -javapkg="com.gopeed" github.com/GopeedLab/gopeed/bind/mobile
-cd ui/flutter
-flutter build apk
-```
-
-- ios
-
-```bash
-gomobile bind -tags nosqlite -ldflags="-w -s" -o ui/flutter/ios/Frameworks/Libgopeed.xcframework -target=ios github.com/GopeedLab/gopeed/bind/mobile
-cd ui/flutter
-flutter build ios --no-codesign
-```
-
-#### Web
-
-コマンド:
-
-```bash
-cd ui/flutter
-flutter build web
-cd ../../
-rm -rf cmd/web/dist
-cp -r ui/flutter/build/web cmd/web/dist
-go build -tags nosqlite,web -ldflags="-s -w" -o bin/ github.com/GopeedLab/gopeed/cmd/web
-```
-
-## ❤️ 感謝
-
-### コントリビューター
-
-<a href="https://github.com/GopeedLab/gopeed/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=GopeedLab/gopeed" />
-</a>
-
-### JetBrains
-
-[![goland](_docs/img/goland.svg)](https://www.jetbrains.com/?from=gopeed)
-
-## ライセンス
-
-[GPLv3](LICENSE)
+<div align=center>
+<img src="icon.png" style="width:100px;" width="100"/>
+<h2>PonyDownloader</h2>
+</div>
+
+[English](/README.md) | [简体中文](/README_zh-CN.md) | [繁體中文](/README_zh-TW.md) | [日本語](/README_ja-JP.md) | [Tiếng Việt](/README_vi-VN.md)
+
+### 一、機能概要
+- Go と Flutter で作られた高速・モダン・無料のオープンソースダウンローダーで、HTTP、HTTPS、BitTorrent、マグネットリンク、ed2k に対応しています。
+- Windows、macOS、Linux、Android、iOS、Web に対応し、ネイティブのデスクトップ・モバイルクライアントと、セルフホスト可能な Web 管理画面を提供します。
+- マルチタスク同時実行、HTTP マルチコネクション分割転送、BitTorrent の DHT ノード探索、uTP、Web Seed、ファイル選択ダウンロード、Tracker 管理、シード制限に対応。
+- REST API、CLI、JavaScript 拡張、ブラウザ連携、Webhook、MCP エンドポイントを提供し、自動化や AI エージェントとの連携が可能です。
+- システムテーマ追従、ライト/ダークモード、複数のアクセントカラー、20 以上の UI 言語に対応しています。
+
+### 二、デプロイ方法
+1. デスクトップ・モバイル：[GitHub Releases](https://github.com/Mutantcat-Working-Group/PonyDownloader/releases) から各プラットフォームのインストーラをダウンロードしてインストールします。
+2. セルフホスト Web サービス：配布パッケージ内の Web バイナリを起動します。デフォルトで `0.0.0.0:9999` で待ち受けるので、ブラウザで `http://localhost:9999` を開きます。
+   ```
+   主な起動オプション：
+   -A バインドアドレス（デフォルト 0.0.0.0）
+   -P バインドポート（デフォルト 9999）
+   -u Web ログインユーザー名
+   -p Web ログインパスワード（未設定なら Web 認証は無効）
+   -T API トークン（Web 認証有効時に HTTP API で必須）
+   -d ストレージディレクトリ
+   ```
+3. Docker：リポジトリ直下の `docker-compose.yml` が 9999 ポートとダウンロードディレクトリをマウントするので、`docker compose up -d` を実行します。
+4. ソースからのビルド：Go 1.25+ と Flutter 3.41+ が必要です。バックエンドは `go build`、フロントエンドは `flutter build` でビルドします。
+
+### 三、使い方
+1. デスクトップ・モバイル：タスクを作成し、HTTP/HTTPS リンク、マグネットリンク、トレントファイルを貼り付けて保存先を選び、ダウンロードを開始します。
+2. Web 管理画面：`http://localhost:9999` を開いて、タスク作成、進捗確認、カテゴリ管理、設定変更ができます。認証を有効にした場合はログインが必要です。
+3. タスク管理：一時停止、再開、再試行、一括操作、ステータスフィルタ、カテゴリに対応し、再起動後も未完了タスクを自動復元します。
+4. ブラウザ連携：対応ブラウザの拡張機能から、Web ページのダウンロード要求を PonyDownloader に直接送信できます。
+5. AI 連携：MCP を有効化（`--mcp-enable`）すると、AI エージェントが `http://localhost:9999/mcp` 経由で自然言語によりタスクを管理できます。
+
+### 四、API ドキュメント
+1. サービス情報 - `GET /api/v1/info`
+   - バージョン、ランタイム、OS、アーキテクチャなどの基本情報を返します。
+2. リソースの解析 - `POST /api/v1/resolve`
+   - リクエスト例：
+   ```json
+   {
+       "req": {
+           "url": "https://example.com/file.zip"
+       }
+   }
+   ```
+   - リソースのメタデータとファイル一覧を返します。必要に応じてタスク作成前に解析できます。
+3. タスクの作成 - `POST /api/v1/tasks`
+   - リクエスト例：
+   ```json
+   {
+       "req": {
+           "url": "https://example.com/file.zip",
+           "extra": {
+               "connections": 16
+           }
+       },
+       "opts": {
+           "path": "/downloads"
+       }
+   }
+   ```
+   - 解析で得たリソース ID を `rid` として渡すこともできます。
+4. タスクの取得 - `GET /api/v1/tasks`
+   - タスク ID やステータスで絞り込み可能です（例：`GET /api/v1/tasks?status=running`）。
+5. 一時停止と再開 - `PUT /api/v1/tasks/{id}/pause`、`PUT /api/v1/tasks/{id}/continue`
+6. タスクの削除 - `DELETE /api/v1/tasks/{id}`、`?force=true` でファイルも削除可能。
+7. MCP エンドポイント - `POST /mcp`
+   - MCP 有効化後、AI エージェントが自然言語でダウンロードタスクを管理できます。
+
+### 五、注力している点
+- 帯域幅を最大限活用：マルチタスク同時実行、HTTP マルチコネクション分割ダウンロード、BitTorrent P2P を組み合わせます。
+- 複数プロトコルを 1 つのエントリで管理：HTTP/HTTPS、BitTorrent、マグネットリンク、ed2k を同じ UI で処理します。
+- ネイティブなクロスプラットフォーム体験：Electron ではなく Flutter でネイティブ描画し、軽量で低オーバーヘッドです。
+- オープンな自動化基盤：REST API、CLI、Webhook、ダウンロード後スクリプト、JavaScript 拡張、MCP を自動化に利用できます。
+- 軽量なセルフホスト：単一の Web バイナリだけでサーバーや NAS に長期運用できます。
+
+### 六、開発進捗
+- [X] HTTP/HTTPS マルチコネクションダウンロード
+- [X] BitTorrent / マグネットリンク
+- [X] ed2k ダウンロード
+- [X] タスク管理（一時停止、再開、再試行、一括、フィルタ、カテゴリ）
+- [X] レジュームと再起動後の復元
+- [X] Web 管理画面とアカウント認証
+- [X] REST API と API トークン
+- [X] MCP / AI エージェント連携
+- [X] ブラウザ連携
+- [X] JavaScript 拡張
+- [X] Docker デプロイ
+- [ ] 安定版リリースと自動テストの整備

@@ -1,4 +1,4 @@
-// Package mcpserver exposes Gopeed's task operations over the Model Context
+// Package mcpserver exposes PonyDownloader's task operations over the Model Context
 // Protocol.
 package mcpserver
 
@@ -18,7 +18,7 @@ import (
 
 const developmentVersion = "dev"
 
-const serverInstructions = "Gopeed is a download manager for HTTP, HTTPS, BitTorrent, magnet, and ED2K resources. " +
+const serverInstructions = "PonyDownloader is a download manager for HTTP, HTTPS, BitTorrent, magnet, and ED2K resources. " +
 	"When the user asks to download a resource and provides a supported URL or URI, use create_task. " +
 	"Use resolve_task first when the user needs resource metadata or wants to select files before creating the task. " +
 	"If the user has not provided a concrete URL or URI, ask for one instead of inventing it."
@@ -45,7 +45,7 @@ func NewServer(downloader *download.Downloader) *mcp.Server {
 	if version == "" {
 		version = developmentVersion
 	}
-	server := mcp.NewServer(&mcp.Implementation{Name: "gopeed", Version: version}, &mcp.ServerOptions{
+	server := mcp.NewServer(&mcp.Implementation{Name: "ponydownloader", Version: version}, &mcp.ServerOptions{
 		Instructions: serverInstructions,
 	})
 	registerTools(server, downloader)
@@ -216,11 +216,11 @@ type createTaskOutput struct {
 }
 
 type taskIDInput struct {
-	ID string `json:"id" jsonschema:"Gopeed task ID"`
+	ID string `json:"id" jsonschema:"PonyDownloader task ID"`
 }
 
 type deleteTaskInput struct {
-	ID    string `json:"id" jsonschema:"Gopeed task ID"`
+	ID    string `json:"id" jsonschema:"PonyDownloader task ID"`
 	Force bool   `json:"force,omitempty" jsonschema:"Also delete downloaded files from disk"`
 }
 
@@ -305,7 +305,7 @@ func registerTools(server *mcp.Server, downloader *download.Downloader) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "create_task",
 		Title:       "Create task",
-		Description: "Create and start a Gopeed download task. Use this when the user asks to download an HTTP or HTTPS URL, a BitTorrent torrent, a magnet URI, or an ED2K link. Accepts either a resource ID from resolve_task or a direct request.",
+		Description: "Create and start a PonyDownloader download task. Use this when the user asks to download an HTTP or HTTPS URL, a BitTorrent torrent, a magnet URI, or an ED2K link. Accepts either a resource ID from resolve_task or a direct request.",
 		InputSchema: downloadInputSchema[createTaskInput](),
 		Annotations: &mcp.ToolAnnotations{DestructiveHint: &nondestructive, OpenWorldHint: &openWorld},
 	}, func(_ context.Context, _ *mcp.CallToolRequest, input *createTaskInput) (*mcp.CallToolResult, *createTaskOutput, error) {
@@ -334,7 +334,7 @@ func registerTools(server *mcp.Server, downloader *download.Downloader) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "list_tasks",
 		Title:       "List tasks",
-		Description: "List Gopeed tasks, optionally filtered by ID or task status.",
+		Description: "List PonyDownloader tasks, optionally filtered by ID or task status.",
 		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true, OpenWorldHint: &closedWorld},
 	}, func(_ context.Context, _ *mcp.CallToolRequest, input *listTasksInput) (*mcp.CallToolResult, *listTasksOutput, error) {
 		statuses, err := parseStatuses(input.Statuses)
@@ -364,7 +364,7 @@ func registerTools(server *mcp.Server, downloader *download.Downloader) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_task",
 		Title:       "Get task",
-		Description: "Get one Gopeed task including its request, resource, options, and current progress.",
+		Description: "Get one PonyDownloader task including its request, resource, options, and current progress.",
 		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true, OpenWorldHint: &closedWorld},
 	}, func(_ context.Context, _ *mcp.CallToolRequest, input *taskIDInput) (*mcp.CallToolResult, *getTaskOutput, error) {
 		task, err := requireTask(downloader, input.ID)
@@ -387,7 +387,7 @@ func registerTools(server *mcp.Server, downloader *download.Downloader) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_task_status",
 		Title:       "Get task status",
-		Description: "Get the lightweight runtime status and per-file progress for one Gopeed task.",
+		Description: "Get the lightweight runtime status and per-file progress for one PonyDownloader task.",
 		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true, OpenWorldHint: &closedWorld},
 	}, func(_ context.Context, _ *mcp.CallToolRequest, input *taskIDInput) (*mcp.CallToolResult, *getTaskStatusOutput, error) {
 		if err := validateTaskID(input.ID); err != nil {
@@ -403,7 +403,7 @@ func registerTools(server *mcp.Server, downloader *download.Downloader) {
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "get_task_stats",
 		Title:       "Get task statistics",
-		Description: "Get protocol-specific statistics for one Gopeed task, such as HTTP connections or BitTorrent peers and seeding data.",
+		Description: "Get protocol-specific statistics for one PonyDownloader task, such as HTTP connections or BitTorrent peers and seeding data.",
 		Annotations: &mcp.ToolAnnotations{ReadOnlyHint: true, OpenWorldHint: &closedWorld},
 	}, func(_ context.Context, _ *mcp.CallToolRequest, input *taskIDInput) (*mcp.CallToolResult, *getTaskStatsOutput, error) {
 		if err := validateTaskID(input.ID); err != nil {
@@ -416,13 +416,13 @@ func registerTools(server *mcp.Server, downloader *download.Downloader) {
 		return nil, &getTaskStatsOutput{Stats: stats}, nil
 	})
 
-	registerTaskAction(server, downloader, "pause_task", "Pause task", "Pause one Gopeed task.", &nondestructive, &closedWorld, downloader.Pause)
-	registerTaskAction(server, downloader, "continue_task", "Continue task", "Continue a paused or failed Gopeed task.", &nondestructive, &openWorld, downloader.Continue)
+	registerTaskAction(server, downloader, "pause_task", "Pause task", "Pause one PonyDownloader task.", &nondestructive, &closedWorld, downloader.Pause)
+	registerTaskAction(server, downloader, "continue_task", "Continue task", "Continue a paused or failed PonyDownloader task.", &nondestructive, &openWorld, downloader.Continue)
 
 	mcp.AddTool(server, &mcp.Tool{
 		Name:        "delete_task",
 		Title:       "Delete task",
-		Description: "Delete one Gopeed task. Downloaded files are preserved unless force is true.",
+		Description: "Delete one PonyDownloader task. Downloaded files are preserved unless force is true.",
 		Annotations: &mcp.ToolAnnotations{DestructiveHint: &destructive, IdempotentHint: true, OpenWorldHint: &closedWorld},
 	}, func(_ context.Context, _ *mcp.CallToolRequest, input *deleteTaskInput) (*mcp.CallToolResult, *taskActionOutput, error) {
 		if _, err := requireTask(downloader, input.ID); err != nil {

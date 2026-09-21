@@ -20,7 +20,7 @@ class SceneDelegate: FlutterSceneDelegate {
   private func forwardGopeedLinks(_ contexts: Set<UIOpenURLContext>) {
     // app_links 6.x only registers AppDelegate callbacks. UIScene delivers
     // both cold-start and running-app scheme links here instead.
-    for context in contexts where context.url.scheme?.lowercased() == "gopeed" {
+    for context in contexts where context.url.scheme?.lowercased() == "ponydownloader" {
       AppLinks.shared.handleLink(url: context.url)
     }
   }

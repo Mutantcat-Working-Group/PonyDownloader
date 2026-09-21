@@ -17,8 +17,8 @@ void main() {
 
   setUpAll(() {
     app_package.packageInfo = PackageInfo(
-      appName: 'Gopeed',
-      packageName: 'com.gopeed.Gopeed',
+      appName: 'PonyDownloader',
+      packageName: 'org.mutantcat.ponydownloader',
       version: '1.7.0',
       buildNumber: '1',
     );
@@ -68,7 +68,7 @@ void main() {
       expect(selected?.version, '2.0.0-beta.2');
       expect(
         updateAssetName(selected!.version, channel: UpdateChannel.macosDmg, architecture: Architecture.arm64),
-        'Gopeed-v2.0.0-beta.2-macos-arm64.dmg',
+        'PonyDownloader-v2.0.0-beta.2-macos-universal.dmg',
       );
     });
 
@@ -97,26 +97,26 @@ void main() {
     test('uses the release naming convention for desktop packages', () {
       expect(
         updateAssetName('1.8.0', channel: UpdateChannel.windowsPortable, architecture: Architecture.x64),
-        'Gopeed-v1.8.0-windows-amd64-portable.zip',
+        'PonyDownloader-v1.8.0-windows-amd64-portable.zip',
       );
       expect(
         updateAssetName('1.8.0', channel: UpdateChannel.macosDmg, architecture: Architecture.arm64),
-        'Gopeed-v1.8.0-macos-arm64.dmg',
+        'PonyDownloader-v1.8.0-macos-universal.dmg',
       );
       expect(
         updateAssetName('1.8.0', channel: UpdateChannel.linuxDeb, architecture: Architecture.ia32),
-        'Gopeed-v1.8.0-linux-386.deb',
+        'PonyDownloader-v1.8.0-linux-386.deb',
       );
     });
 
     test('maps Android ABI names', () {
       expect(
         updateAssetName('1.8.0', channel: UpdateChannel.androidApk, architecture: Architecture.arm),
-        'Gopeed-v1.8.0-android-armeabi-v7a.apk',
+        'PonyDownloader-v1.8.0-android-armeabi-v7a.apk',
       );
       expect(
         updateAssetName('1.8.0', channel: UpdateChannel.androidApk, architecture: Architecture.arm64),
-        'Gopeed-v1.8.0-android-arm64-v8a.apk',
+        'PonyDownloader-v1.8.0-android-arm64-v8a.apk',
       );
     });
   });
@@ -153,15 +153,15 @@ void main() {
     });
 
     app_package.packageInfo = PackageInfo(
-      appName: 'Gopeed',
-      packageName: 'com.gopeed.Gopeed',
+      appName: 'PonyDownloader',
+      packageName: 'org.mutantcat.ponydownloader',
       version: '2.0.0.1',
       buildNumber: '1',
     );
     addTearDown(() {
       app_package.packageInfo = PackageInfo(
-        appName: 'Gopeed',
-        packageName: 'com.gopeed.Gopeed',
+        appName: 'PonyDownloader',
+        packageName: 'org.mutantcat.ponydownloader',
         version: '1.7.0',
         buildNumber: '1',
       );

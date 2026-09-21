@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <application
-        android:label="Gopeed"
+        android:label="PonyDownloader"
         android:name="${applicationName}"
         android:requestLegacyExternalStorage="true"
         android:extractNativeLibs="true"
@@ -46,7 +46,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="gopeed" />
+                <data android:scheme="ponydownloader" />
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -78,7 +78,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="content" android:host="*" android:mimeType="application/x-bittorrent" />
             </intent-filter>
-            <intent-filter android:label="Gopeed">
+            <intent-filter android:label="PonyDownloader">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />

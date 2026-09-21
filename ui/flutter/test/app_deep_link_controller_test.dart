@@ -20,7 +20,7 @@ void main() {
   test('receives initial and subsequent scheme extension URLs with UTF-8 params', () async {
     final originalPlatform = AppLinksPlatform.instance;
     final initialUrl = 'https://github.com/author/扩展';
-    Uri link(String url) => Uri.parse('gopeed:///extension').replace(
+    Uri link(String url) => Uri.parse('ponydownloader:///extension').replace(
       queryParameters: {
         'params': base64Encode(utf8.encode(jsonEncode({'url': url}))),
       },
@@ -53,14 +53,14 @@ void main() {
     }
   });
 
-  test('keeps the established path-style Gopeed deep-link routes', () {
-    expect(gopeedDeepLinkRoute(Uri.parse('gopeed:///create')), '/create');
-    expect(gopeedDeepLinkRoute(Uri.parse('gopeed:///extension')), '/extension');
+  test('keeps the established path-style PonyDownloader deep-link routes', () {
+    expect(gopeedDeepLinkRoute(Uri.parse('ponydownloader:///create')), '/create');
+    expect(gopeedDeepLinkRoute(Uri.parse('ponydownloader:///extension')), '/extension');
   });
 
-  test('rejects host-style Gopeed deep-link routes', () {
-    expect(gopeedDeepLinkRoute(Uri.parse('gopeed://create')), isEmpty);
-    expect(gopeedDeepLinkRoute(Uri.parse('gopeed://extension')), isEmpty);
+  test('rejects host-style PonyDownloader deep-link routes', () {
+    expect(gopeedDeepLinkRoute(Uri.parse('ponydownloader://create')), isEmpty);
+    expect(gopeedDeepLinkRoute(Uri.parse('ponydownloader://extension')), isEmpty);
   });
 
   test('uses a shared attachment path before an optional caption', () {
