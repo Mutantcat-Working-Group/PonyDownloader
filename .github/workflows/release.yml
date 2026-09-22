@@ -6,16 +6,16 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        # Iterations use the current date without -1/-2 suffixes: v1.0.20260923, v1.0.20260925, ...
+        # Iterations use the current date without -1/-2 suffixes: v1.0.20260925, v1.0.20260926, ...
         description: "Release tag to build, e.g. v1.0.20260925"
         required: false
-        default: "v1.0.20260925"
+        default: "v1.0.20260926"
 
 env:
   GO_VERSION: "1.25.4"
   FLUTTER_VERSION: "3.41.6"
   # Version strategy: advance the date each iteration, never append -1/-2.
-  TAG: ${{ github.event.release.tag_name || inputs.tag || 'v1.0.20260925' }}
+  TAG: ${{ github.event.release.tag_name || inputs.tag || 'v1.0.20260926' }}
 
 permissions:
   contents: write
@@ -100,8 +100,19 @@ jobs:
           path: ui/flutter/build/windows/Output/
 
   macos:
-    name: macOS universal DMG (ad-hoc)
-    runs-on: macos-14
+    name: macOS ${{ matrix.arch }} DMG (ad-hoc)
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        # Native builds per architecture: GitHub Intel runners + arm64 runners.
+        include:
+          - arch: arm64
+            goarch: arm64
+            runner: macos-14
+          - arch: x64
+            goarch: amd64
+            runner: macos-15-intel
     steps:
       - uses: actions/checkout@v4
 
@@ -114,23 +125,17 @@ jobs:
           channel: stable
           flutter-version: ${{ env.FLUTTER_VERSION }}
 
-      - name: Build universal Go libraries
+      - name: Build Go libraries (${{ matrix.goarch }})
+        env:
+          GOARCH: ${{ matrix.goarch }}
         run: |
           set -euo pipefail
           version="${TAG#v}"
-          mkdir -p ui/flutter/.temp ui/flutter/macos/Frameworks ui/flutter/assets/exec
+          mkdir -p ui/flutter/macos/Frameworks ui/flutter/assets/exec
           export CGO_ENABLED=1
-          GOARCH=amd64 go build -tags nosqlite -ldflags="-w -s -X github.com/GopeedLab/gopeed/pkg/base.Version=${version}" -buildmode=c-shared -o ui/flutter/.temp/libgopeed.amd64.dylib github.com/GopeedLab/gopeed/bind/desktop
-          GOARCH=arm64 go build -tags nosqlite -ldflags="-w -s -X github.com/GopeedLab/gopeed/pkg/base.Version=${version}" -buildmode=c-shared -o ui/flutter/.temp/libgopeed.arm64.dylib github.com/GopeedLab/gopeed/bind/desktop
-          lipo -create -output ui/flutter/macos/Frameworks/libgopeed.dylib ui/flutter/.temp/libgopeed.amd64.dylib ui/flutter/.temp/libgopeed.arm64.dylib
-
-          GOARCH=amd64 go build -ldflags="-w -s" -o ui/flutter/.temp/host.amd64 github.com/GopeedLab/gopeed/cmd/host
-          GOARCH=arm64 go build -ldflags="-w -s" -o ui/flutter/.temp/host.arm64 github.com/GopeedLab/gopeed/cmd/host
-          lipo -create -output ui/flutter/assets/exec/host ui/flutter/.temp/host.amd64 ui/flutter/.temp/host.arm64
-
-          GOARCH=amd64 go build -ldflags="-w -s" -o ui/flutter/.temp/updater.amd64 github.com/GopeedLab/gopeed/cmd/updater
-          GOARCH=arm64 go build -ldflags="-w -s" -o ui/flutter/.temp/updater.arm64 github.com/GopeedLab/gopeed/cmd/updater
-          lipo -create -output ui/flutter/assets/exec/updater ui/flutter/.temp/updater.amd64 ui/flutter/.temp/updater.arm64
+          go build -tags nosqlite -ldflags="-w -s -X github.com/GopeedLab/gopeed/pkg/base.Version=${version}" -buildmode=c-shared -o ui/flutter/macos/Frameworks/libgopeed.dylib github.com/GopeedLab/gopeed/bind/desktop
+          go build -ldflags="-w -s" -o ui/flutter/assets/exec/host github.com/GopeedLab/gopeed/cmd/host
+          go build -ldflags="-w -s" -o ui/flutter/assets/exec/updater github.com/GopeedLab/gopeed/cmd/updater
 
       - name: Build macOS app
         run: |
@@ -138,6 +143,8 @@ jobs:
           flutter build macos --release --dart-define=UPDATE_CHANNEL=macosDmg
 
       - name: Ad-hoc sign and create DMG
+        env:
+          ARCH: ${{ matrix.arch }}
         run: |
           set -euo pipefail
           version="${TAG#v}"
@@ -152,13 +159,13 @@ jobs:
           mkdir -p "$dmg_root"
           cp -R PonyDownloader.app "$dmg_root/"
           ln -s /Applications "$dmg_root/Applications"
-          hdiutil create -volname PonyDownloader -srcfolder "$dmg_root" -ov -format UDZO "PonyDownloader-v${version}-macos-arm64.dmg"
-          codesign --sign - "PonyDownloader-v${version}-macos-arm64.dmg"
+          hdiutil create -volname PonyDownloader -srcfolder "$dmg_root" -ov -format UDZO "PonyDownloader-v${version}-macos-${ARCH}.dmg"
+          codesign --sign - "PonyDownloader-v${version}-macos-${ARCH}.dmg"
           rm -rf "$dmg_root"
 
       - uses: actions/upload-artifact@v4
         with:
-          name: macos-dmg
+          name: macos-dmg-${{ matrix.arch }}
           path: ui/flutter/build/macos/Build/Products/Release/PonyDownloader-*.dmg
 
   linux:

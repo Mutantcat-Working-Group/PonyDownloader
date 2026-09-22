@@ -8,7 +8,7 @@ Unicode true
 !define APP_EXE "PonyDownloader.exe"
 
 !ifndef VERSION
-  !define VERSION "1.0.20260925"
+  !define VERSION "1.0.20260926"
 !endif
 !ifndef RELEASE_DIR
   !error "RELEASE_DIR must be defined"
