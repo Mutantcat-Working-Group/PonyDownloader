@@ -6,14 +6,16 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: "Release tag to build, e.g. v1.0.20260921"
+        # Iterations use the current date without -1/-2 suffixes: v1.0.20260923, v1.0.20260923, ...
+        description: "Release tag to build, e.g. v1.0.20260923"
         required: false
-        default: "v1.0.20260921"
+        default: "v1.0.20260923"
 
 env:
   GO_VERSION: "1.25.4"
   FLUTTER_VERSION: "3.41.6"
-  TAG: ${{ github.event.release.tag_name || inputs.tag || 'v1.0.20260921' }}
+  # Version strategy: advance the date each iteration, never append -1/-2.
+  TAG: ${{ github.event.release.tag_name || inputs.tag || 'v1.0.20260923' }}
 
 permissions:
   contents: write
@@ -23,6 +25,12 @@ jobs:
     name: Windows x64 NSIS installer
     runs-on: windows-latest
     steps:
+      - name: Enable long paths on Windows
+        shell: pwsh
+        run: |
+          git config --system core.longpaths true
+          fsutil behavior set disable8dot3 1
+
       - uses: actions/checkout@v4
 
       - uses: actions/setup-go@v5
