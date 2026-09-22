@@ -97,3 +97,9 @@
 Building from source requires Go 1.25+ and Flutter 3.41+. Build the backend with `go build` and the frontend with `flutter build`.
 
 This section only covers building from source. Regular users should download ready-made installers from [GitHub Releases](https://github.com/Mutantcat-Working-Group/PonyDownloader/releases).
+
+---
+
+## Acknowledgments
+
+This repository is a fork of [GopeedLab/gopeed](https://github.com/GopeedLab/gopeed). Thanks to the original authors for their open-source work; this repository continues to build upon it.
