@@ -44,6 +44,8 @@ jobs:
 
       - name: Build Windows app
         shell: pwsh
+        env:
+          CL: "/D_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS"
         run: |
           $version = $env:TAG -replace '^v', ''
           $ldflags = "-w -s -X github.com/GopeedLab/gopeed/pkg/base.Version=$version"
@@ -133,7 +135,7 @@ jobs:
       - name: Build macOS app
         run: |
           cd ui/flutter
-          flutter build macos --release --universal --dart-define=UPDATE_CHANNEL=macosDmg
+          flutter build macos --release --dart-define=UPDATE_CHANNEL=macosDmg
 
       - name: Ad-hoc sign and create DMG
         run: |
@@ -150,8 +152,8 @@ jobs:
           mkdir -p "$dmg_root"
           cp -R PonyDownloader.app "$dmg_root/"
           ln -s /Applications "$dmg_root/Applications"
-          hdiutil create -volname PonyDownloader -srcfolder "$dmg_root" -ov -format UDZO "PonyDownloader-v${version}-macos-universal.dmg"
-          codesign --sign - "PonyDownloader-v${version}-macos-universal.dmg"
+          hdiutil create -volname PonyDownloader -srcfolder "$dmg_root" -ov -format UDZO "PonyDownloader-v${version}-macos-arm64.dmg"
+          codesign --sign - "PonyDownloader-v${version}-macos-arm64.dmg"
           rm -rf "$dmg_root"
 
       - uses: actions/upload-artifact@v4
