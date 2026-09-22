@@ -246,12 +246,13 @@ jobs:
         run: |
           set -euo pipefail
           cd release-assets
-          files=(*)
+          mapfile -t files < <(find . -maxdepth 1 -type f -printf '%f\n')
+          if [ ${#files[@]} -eq 0 ]; then exit 0; fi
           sha256sum "${files[@]}" > checksums.txt
           md5sum "${files[@]}" > checksums-md5.txt
           sha1sum "${files[@]}" > checksums-sha1.txt
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG }}
-          files: release-assets/*
+          files: release-assets/*.exe release-assets/*.dmg release-assets/*.AppImage release-assets/checksums*.txt
           overwrite: true
