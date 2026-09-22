@@ -254,5 +254,9 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG }}
-          files: release-assets/*.exe release-assets/*.dmg release-assets/*.AppImage release-assets/checksums*.txt
+          files: |
+            release-assets/*.exe
+            release-assets/*.dmg
+            release-assets/*.AppImage
+            release-assets/checksums*.txt
           overwrite: true
