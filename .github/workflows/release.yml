@@ -177,8 +177,9 @@ jobs:
         include:
           - arch: amd64
             runner: ubuntu-22.04
-          - arch: arm64
-            runner: ubuntu-24.04-arm
+          # Upstream limit: Flutter publishes no arm64 Linux desktop archive
+          # ("Unable to determine Flutter version ... architecture: arm64"), so an
+          # arm64 AppImage cannot be built until Flutter ships one.
     steps:
       - uses: actions/checkout@v4
 
