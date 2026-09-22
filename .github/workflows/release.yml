@@ -155,15 +155,12 @@ jobs:
 
   linux:
     name: Linux AppImage (${{ matrix.arch }})
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         include:
-          - os: ubuntu-22.04
-            arch: amd64
-          - os: ubuntu-22.04-arm
-            arch: arm64
+          - arch: amd64
     steps:
       - uses: actions/checkout@v4
 
