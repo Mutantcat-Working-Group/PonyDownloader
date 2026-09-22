@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/core/utils/compact_count_formatter.dart';
+import 'package:ponydownloader/core/utils/compact_count_formatter.dart';
 
 void main() {
   test('keeps small counts exact and compacts larger counts to a bounded label', () {

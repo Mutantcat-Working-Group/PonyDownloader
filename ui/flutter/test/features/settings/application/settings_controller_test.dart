@@ -1,20 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/api/model/downloader_config.dart';
-import 'package:gopeed/app/application/app_runtime_controller.dart';
-import 'package:gopeed/core/capabilities/app_capabilities.dart';
-import 'package:gopeed/core/capabilities/capability_rpc.dart';
-import 'package:gopeed/core/capabilities/gopeed_capability.dart';
-import 'package:gopeed/core/common/start_config.dart';
-import 'package:gopeed/core/common/api_server_state.dart';
-import 'package:gopeed/features/settings/application/settings_controller.dart';
+import 'package:ponydownloader/api/model/downloader_config.dart';
+import 'package:ponydownloader/app/application/app_runtime_controller.dart';
+import 'package:ponydownloader/core/capabilities/app_capabilities.dart';
+import 'package:ponydownloader/core/capabilities/capability_rpc.dart';
+import 'package:ponydownloader/core/capabilities/ponydownloader_capability.dart';
+import 'package:ponydownloader/core/common/start_config.dart';
+import 'package:ponydownloader/core/common/api_server_state.dart';
+import 'package:ponydownloader/features/settings/application/settings_controller.dart';
 
 void main() {
   test('settings reload backend config after the page releases its provider', () async {
     var backendDirectory = 'D:/Initial';
     var getConfigCalls = 0;
     final registry = CapabilityRegistry(createAppCapabilityCodecs())
-      ..bind(GopeedMethods.getConfig, (_) {
+      ..bind(PonyDownloaderMethods.getConfig, (_) {
         getConfigCalls++;
         return DownloaderConfig(downloadDir: backendDirectory);
       });
@@ -45,8 +45,8 @@ void main() {
       ..extra.analyticsClientId = 'existing-client';
     DownloaderConfig? saved;
     final registry = CapabilityRegistry(createAppCapabilityCodecs())
-      ..bind(GopeedMethods.getConfig, (_) => DownloaderConfig.fromJson(backend.toJson()))
-      ..bind(GopeedMethods.putConfig, (config) {
+      ..bind(PonyDownloaderMethods.getConfig, (_) => DownloaderConfig.fromJson(backend.toJson()))
+      ..bind(PonyDownloaderMethods.putConfig, (config) {
         saved = DownloaderConfig.fromJson(config.toJson());
         return const RpcUnit();
       });

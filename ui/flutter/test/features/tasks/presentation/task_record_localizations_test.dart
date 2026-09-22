@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/features/tasks/domain/task_record.dart';
-import 'package:gopeed/features/tasks/presentation/task_record_localizations.dart';
-import 'package:gopeed/l10n/app_localizations_en.dart';
+import 'package:ponydownloader/features/tasks/domain/task_record.dart';
+import 'package:ponydownloader/features/tasks/presentation/task_record_localizations.dart';
+import 'package:ponydownloader/l10n/app_localizations_en.dart';
 
 void main() {
   test('remaining time and download duration share unit thresholds and rounding', () {

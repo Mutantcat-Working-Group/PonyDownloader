@@ -23,29 +23,29 @@ class SettingsController extends AsyncNotifier<SettingsState> {
   @override
   Future<SettingsState> build() async {
     await ref.read(appRuntimeControllerProvider.future);
-    return SettingsState(config: await ref.read(gopeedServiceProvider).getConfig());
+    return SettingsState(config: await ref.read(ponydownloaderServiceProvider).getConfig());
   }
 
   Future<void> reload({bool showLoading = true}) async {
     if (showLoading) state = const AsyncValue.loading();
-    state = AsyncValue.data(SettingsState(config: await ref.read(gopeedServiceProvider).getConfig()));
+    state = AsyncValue.data(SettingsState(config: await ref.read(ponydownloaderServiceProvider).getConfig()));
   }
 
   Future<void> save(DownloaderConfig config) async {
     state = AsyncValue.data(SettingsState(config: config, saving: true));
-    final latest = await ref.read(gopeedServiceProvider).getConfig();
+    final latest = await ref.read(ponydownloaderServiceProvider).getConfig();
     config.extra
       ..windowState = latest.extra.windowState
       ..bookmarks = latest.extra.bookmarks
       ..createHistory = latest.extra.createHistory
       ..runAsMenubarApp = latest.extra.runAsMenubarApp
       ..analyticsClientId = latest.extra.analyticsClientId;
-    await ref.read(gopeedServiceProvider).putConfig(config);
+    await ref.read(ponydownloaderServiceProvider).putConfig(config);
     ref.read(appRuntimeControllerProvider.notifier).replaceDownloaderConfig(config);
     state = AsyncValue.data(SettingsState(config: config));
   }
 
   Future<void> testWebhook(String url) async {
-    await ref.read(gopeedServiceProvider).testWebhook(url);
+    await ref.read(ponydownloaderServiceProvider).testWebhook(url);
   }
 }

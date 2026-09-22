@@ -7,25 +7,25 @@ import 'package:flutter/material.dart' show Icons;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gopeed/api/model/create_task.dart';
-import 'package:gopeed/api/model/downloader_config.dart';
-import 'package:gopeed/api/model/options.dart';
-import 'package:gopeed/api/model/request.dart';
-import 'package:gopeed/api/model/resolve_result.dart';
-import 'package:gopeed/api/model/resource.dart';
-import 'package:gopeed/core/capabilities/app_capabilities.dart';
-import 'package:gopeed/core/capabilities/app_navigation_capability.dart';
-import 'package:gopeed/core/capabilities/capability_rpc.dart';
-import 'package:gopeed/core/capabilities/gopeed_capability.dart';
-import 'package:gopeed/core/capabilities/storage_capability.dart';
-import 'package:gopeed/features/tasks/presentation/pages/create_task_window_page.dart';
-import 'package:gopeed/features/tasks/application/pending_create_task.dart';
-import 'package:gopeed/shared/services/download_directory_picker.dart';
-import 'package:gopeed/shared/theme/app_component_themes.dart';
-import 'package:gopeed/shared/theme/app_design_tokens.dart';
-import 'package:gopeed/shared/theme/app_theme.dart';
-import 'package:gopeed/shared/widgets/app_loading_button.dart';
-import 'package:gopeed/shared/widgets/app_tooltip.dart';
+import 'package:ponydownloader/api/model/create_task.dart';
+import 'package:ponydownloader/api/model/downloader_config.dart';
+import 'package:ponydownloader/api/model/options.dart';
+import 'package:ponydownloader/api/model/request.dart';
+import 'package:ponydownloader/api/model/resolve_result.dart';
+import 'package:ponydownloader/api/model/resource.dart';
+import 'package:ponydownloader/core/capabilities/app_capabilities.dart';
+import 'package:ponydownloader/core/capabilities/app_navigation_capability.dart';
+import 'package:ponydownloader/core/capabilities/capability_rpc.dart';
+import 'package:ponydownloader/core/capabilities/ponydownloader_capability.dart';
+import 'package:ponydownloader/core/capabilities/storage_capability.dart';
+import 'package:ponydownloader/features/tasks/presentation/pages/create_task_window_page.dart';
+import 'package:ponydownloader/features/tasks/application/pending_create_task.dart';
+import 'package:ponydownloader/shared/services/download_directory_picker.dart';
+import 'package:ponydownloader/shared/theme/app_component_themes.dart';
+import 'package:ponydownloader/shared/theme/app_design_tokens.dart';
+import 'package:ponydownloader/shared/theme/app_theme.dart';
+import 'package:ponydownloader/shared/widgets/app_loading_button.dart';
+import 'package:ponydownloader/shared/widgets/app_tooltip.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shad;
 
 void main() {
@@ -45,9 +45,9 @@ void main() {
       addTearDown(() => messenger.setMockMethodCallHandler(channel, null));
       final config = DownloaderConfig(downloadDir: '/downloads')..extra.defaultDirectDownload = true;
       final registry = CapabilityRegistry(createAppCapabilityCodecs())
-        ..bind(GopeedMethods.getConfig, (_) => config)
+        ..bind(PonyDownloaderMethods.getConfig, (_) => config)
         ..bind(StorageMethods.saveCreateHistory, (_) => const RpcUnit())
-        ..bind(GopeedMethods.createTask, (_) {
+        ..bind(PonyDownloaderMethods.createTask, (_) {
           events.add('created');
           return 'task-id';
         })
@@ -91,8 +91,8 @@ void main() {
 
       CreateTask? submitted;
       final registry = CapabilityRegistry(createAppCapabilityCodecs())
-        ..bind(GopeedMethods.getConfig, (_) => DownloaderConfig(downloadDir: '/downloads'))
-        ..bind(GopeedMethods.createTask, (task) {
+        ..bind(PonyDownloaderMethods.getConfig, (_) => DownloaderConfig(downloadDir: '/downloads'))
+        ..bind(PonyDownloaderMethods.createTask, (task) {
           submitted = task;
           return 'created-id';
         })
@@ -175,7 +175,7 @@ void main() {
     addTearDown(tester.view.resetPadding);
 
     final registry = CapabilityRegistry(createAppCapabilityCodecs())
-      ..bind(GopeedMethods.getConfig, (_) => DownloaderConfig(downloadDir: '/downloads'));
+      ..bind(PonyDownloaderMethods.getConfig, (_) => DownloaderConfig(downloadDir: '/downloads'));
     final capabilities = AppCapabilities(LocalCapabilityInvoker(registry));
 
     try {
@@ -230,8 +230,8 @@ void main() {
       ]
       ..protocolConfig.http.connections = 8;
     final registry = CapabilityRegistry(createAppCapabilityCodecs())
-      ..bind(GopeedMethods.getConfig, (_) => config)
-      ..bind(GopeedMethods.createTask, (task) {
+      ..bind(PonyDownloaderMethods.getConfig, (_) => config)
+      ..bind(PonyDownloaderMethods.createTask, (task) {
         submitted = task;
         return 'created-task';
       })
@@ -473,9 +473,9 @@ void main() {
     addTearDown(tester.view.resetDevicePixelRatio);
 
     final registry = CapabilityRegistry(createAppCapabilityCodecs())
-      ..bind(GopeedMethods.getConfig, (_) => DownloaderConfig(downloadDir: '/downloads'))
+      ..bind(PonyDownloaderMethods.getConfig, (_) => DownloaderConfig(downloadDir: '/downloads'))
       ..bind(
-        GopeedMethods.resolve,
+        PonyDownloaderMethods.resolve,
         (_) => ResolveResult(
           id: 'resolved-id',
           res: Resource(
@@ -534,7 +534,7 @@ void main() {
     String? removedHistory;
     var cleared = false;
     final registry = CapabilityRegistry(createAppCapabilityCodecs())
-      ..bind(GopeedMethods.getConfig, (_) => DownloaderConfig(downloadDir: '/downloads'))
+      ..bind(PonyDownloaderMethods.getConfig, (_) => DownloaderConfig(downloadDir: '/downloads'))
       ..bind(StorageMethods.getCreateHistory, (_) => List<String>.unmodifiable(histories))
       ..bind(StorageMethods.removeCreateHistory, (value) {
         removedHistory = value;

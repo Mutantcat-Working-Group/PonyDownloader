@@ -5,7 +5,7 @@ import 'package:shadcn_flutter/shadcn_flutter.dart' as shad;
 
 import '../../../../shared/theme/app_design_tokens.dart';
 import '../../../../shared/theme/app_palette.dart';
-import '../../../../shared/widgets/gopeed_app_mark.dart';
+import '../../../../shared/widgets/ponydownloader_app_mark.dart';
 
 class LoginBrandArt extends StatelessWidget {
   const LoginBrandArt({super.key, this.compact = false});
@@ -86,7 +86,7 @@ class _TransferOrbit extends StatelessWidget {
                 BoxShadow(color: palette.brand.withValues(alpha: 0.18), blurRadius: compact ? 18 : 32, spreadRadius: 2),
               ],
             ),
-            child: GopeedAppMark(size: coreSize - (compact ? 14 : 22)),
+            child: PonyDownloaderAppMark(size: coreSize - (compact ? 14 : 22)),
           ),
           PositionedDirectional(
             top: compact ? 5 : 16,

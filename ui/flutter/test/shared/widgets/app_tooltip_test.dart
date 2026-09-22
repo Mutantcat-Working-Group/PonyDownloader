@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart' show MaterialApp, Tooltip;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/shared/widgets/app_tooltip.dart';
+import 'package:ponydownloader/shared/widgets/app_tooltip.dart';
 
 void main() {
   testWidgets('AppTooltip delegates product tooltips to Flutter Tooltip', (tester) async {

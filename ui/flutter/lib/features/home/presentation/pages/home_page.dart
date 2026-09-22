@@ -512,7 +512,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     await _runTaskAction(() async {
       if (config != null) {
         config.extra.lastDeleteTaskKeep = keepFiles;
-        await ref.read(gopeedServiceProvider).putConfig(config);
+        await ref.read(ponydownloaderServiceProvider).putConfig(config);
       }
       await ref.read(tasksControllerProvider.notifier).deleteSelected(ids, force: !keepFiles);
       await ref.read(appRuntimeControllerProvider.notifier).reloadConfig();

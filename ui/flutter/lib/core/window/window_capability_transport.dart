@@ -9,7 +9,7 @@ import '../capabilities/capability_rpc.dart';
 import 'app_window_appearance.dart';
 
 abstract final class AppWindowRpcProtocol {
-  static const channelName = 'gopeed.app.capabilities.v1';
+  static const channelName = 'ponydownloader.app.capabilities.v1';
   static const call = 'capability.call';
   static const bootstrap = 'window.bootstrap';
   static const subscribe = 'window.subscribe';

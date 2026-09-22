@@ -84,18 +84,18 @@ class AppDeepLinkController extends AsyncNotifier<AppDeepLinkState> {
 
   Future<void> _handleUri(Uri uri) async {
     if (uri.scheme == 'ponydownloader') {
-      await _handleGopeedUri(uri);
+      await _handlePonyDownloaderUri(uri);
       return;
     }
     final createTask = CreateTask(req: Request(url: await _uriToTaskUrl(uri)));
     await _openCreate(createTask);
   }
 
-  Future<void> _handleGopeedUri(Uri uri) async {
-    if (isSilentGopeedWakeUri(uri)) {
+  Future<void> _handlePonyDownloaderUri(Uri uri) async {
+    if (isSilentPonyDownloaderWakeUri(uri)) {
       return;
     }
-    final route = gopeedDeepLinkRoute(uri);
+    final route = ponydownloaderDeepLinkRoute(uri);
     if (route == '/create') {
       final params = uri.queryParameters['params'];
       if (params?.isNotEmpty == true) {
@@ -184,6 +184,6 @@ Uri? sharedMediaUri(SharedMedia media) {
 /// PonyDownloader's established links use `ponydownloader:///create`, where the action is the
 /// URI path. Do not interpret the URI host as an action: the host-style
 /// `ponydownloader://create` form is intentionally unsupported.
-String gopeedDeepLinkRoute(Uri uri) {
+String ponydownloaderDeepLinkRoute(Uri uri) {
   return uri.path;
 }

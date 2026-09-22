@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/core/common/task_event.dart';
+import 'package:ponydownloader/core/common/task_event.dart';
 
 void main() {
   test('task event mask combines subscribed event types', () {

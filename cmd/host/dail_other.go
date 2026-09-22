@@ -15,5 +15,5 @@ func Dial() (net.Conn, error) {
 	if err != nil {
 		return nil, err
 	}
-	return net.Dial("unix", filepath.Join(filepath.Dir(exe), "gopeed_host.sock"))
+	return net.Dial("unix", filepath.Join(filepath.Dir(exe), "ponydownloader_host.sock"))
 }

@@ -268,7 +268,7 @@ class AppNotificationController extends AsyncNotifier<AppNotificationState> {
   @visibleForTesting
   Future<api_task.Task?> findTask(String taskId) async {
     try {
-      final tasks = await ref.read(gopeedServiceProvider).getTasks(api_task.Status.values);
+      final tasks = await ref.read(ponydownloaderServiceProvider).getTasks(api_task.Status.values);
       for (final task in tasks) {
         if (task.id == taskId) return task;
       }

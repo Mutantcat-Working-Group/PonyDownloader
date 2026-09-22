@@ -1,4 +1,4 @@
-# Gopeed
+# PonyDownloader
 
 A new Flutter project.
 

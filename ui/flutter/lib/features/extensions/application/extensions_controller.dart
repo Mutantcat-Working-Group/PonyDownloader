@@ -3,7 +3,7 @@ import 'dart:collection';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../api/gopeed_site_api.dart';
+import '../../../api/ponydownloader_site_api.dart';
 import '../../../api/model/extension.dart';
 import '../../../api/model/install_extension.dart';
 import '../../../api/model/store_extension.dart';
@@ -151,7 +151,7 @@ class ExtensionsController extends AsyncNotifier<ExtensionsState> {
     if (pagination == null || !pagination.hasNext || current.loadingMoreStore) return;
     state = AsyncValue.data(current.copyWith(loadingMoreStore: true));
     try {
-      final page = await GopeedSiteApi.instance.getExtensions(
+      final page = await PonyDownloaderSiteApi.instance.getExtensions(
         page: pagination.page + 1,
         limit: pagination.limit,
         sort: current.storeSort,
@@ -198,7 +198,7 @@ class ExtensionsController extends AsyncNotifier<ExtensionsState> {
       final installUrl = (extension.directory ?? '').trim().isEmpty
           ? extension.repoUrl
           : '${extension.repoUrl}#${extension.directory!.trim()}';
-      final installedId = await ref.read(gopeedServiceProvider).installExtension(InstallExtension(url: installUrl));
+      final installedId = await ref.read(ponydownloaderServiceProvider).installExtension(InstallExtension(url: installUrl));
       await loadInstalled(refreshUpdates: false);
       unawaited(checkUpdate());
       _bumpStoreInstallCount(installedId.isNotEmpty ? installedId : extension.id);
@@ -209,7 +209,7 @@ class ExtensionsController extends AsyncNotifier<ExtensionsState> {
   Future<void> installFromUrl(String url, {bool devInstall = false}) async {
     await _runBusy(manualInstallBusyKey, () async {
       final installedId = await ref
-          .read(gopeedServiceProvider)
+          .read(ponydownloaderServiceProvider)
           .installExtension(InstallExtension(devMode: devInstall, url: url));
       await loadInstalled(refreshUpdates: false);
       unawaited(checkUpdate());
@@ -222,14 +222,14 @@ class ExtensionsController extends AsyncNotifier<ExtensionsState> {
 
   Future<void> toggleExtension(Extension extension, bool enabled) async {
     await _runBusy(extension.identity, () async {
-      await ref.read(gopeedServiceProvider).switchExtension(extension.identity, SwitchExtension(status: enabled));
+      await ref.read(ponydownloaderServiceProvider).switchExtension(extension.identity, SwitchExtension(status: enabled));
       await loadInstalled(refreshUpdates: false);
     });
   }
 
   Future<void> removeExtension(Extension extension) async {
     await _runBusy(extension.identity, () async {
-      await ref.read(gopeedServiceProvider).deleteExtension(extension.identity);
+      await ref.read(ponydownloaderServiceProvider).deleteExtension(extension.identity);
       await loadInstalled(refreshUpdates: false);
       final flags = Map<String, String>.of(_current.updateFlags)..remove(extension.identity);
       state = AsyncValue.data(_current.copyWith(updateFlags: flags));
@@ -238,7 +238,7 @@ class ExtensionsController extends AsyncNotifier<ExtensionsState> {
 
   Future<void> upgradeExtension(Extension extension) async {
     await _runBusy(extension.identity, () async {
-      await ref.read(gopeedServiceProvider).updateExtension(extension.identity);
+      await ref.read(ponydownloaderServiceProvider).updateExtension(extension.identity);
       await loadInstalled(refreshUpdates: false);
       unawaited(checkUpdate());
       _bumpStoreInstallCount(extension.identity);
@@ -249,7 +249,7 @@ class ExtensionsController extends AsyncNotifier<ExtensionsState> {
   Future<void> saveExtensionSettings(Extension extension, Map<String, dynamic> settings) async {
     await _runBusy(extension.identity, () async {
       await ref
-          .read(gopeedServiceProvider)
+          .read(ponydownloaderServiceProvider)
           .updateExtensionSettings(extension.identity, UpdateExtensionSettings(settings: settings));
       await loadInstalled(refreshUpdates: false);
     });
@@ -259,7 +259,7 @@ class ExtensionsController extends AsyncNotifier<ExtensionsState> {
     final flags = <String, String>{};
     for (final ext in _current.installedExtensions) {
       try {
-        final resp = await ref.read(gopeedServiceProvider).upgradeCheckExtension(ext.identity);
+        final resp = await ref.read(ponydownloaderServiceProvider).upgradeCheckExtension(ext.identity);
         if (resp.newVersion.isNotEmpty) {
           flags[ext.identity] = resp.newVersion;
         }
@@ -285,7 +285,7 @@ class ExtensionsController extends AsyncNotifier<ExtensionsState> {
 
   Future<ExtensionsState> _loadInstalled({required bool refreshUpdates, required ExtensionsState current}) async {
     state = AsyncValue.data(current.copyWith(loadingInstalled: true));
-    final installed = await ref.read(gopeedServiceProvider).getExtensions();
+    final installed = await ref.read(ponydownloaderServiceProvider).getExtensions();
     state = AsyncValue.data(_current.copyWith(installedExtensions: installed, loadingInstalled: false));
     if (refreshUpdates) {
       await checkUpdate();
@@ -295,7 +295,7 @@ class ExtensionsController extends AsyncNotifier<ExtensionsState> {
 
   Future<void> _refreshStore({required ExtensionsState current}) async {
     state = AsyncValue.data(current.copyWith(loadingStore: true));
-    final page = await GopeedSiteApi.instance.getExtensions(
+    final page = await PonyDownloaderSiteApi.instance.getExtensions(
       page: 1,
       limit: 20,
       sort: _current.storeSort,
@@ -349,7 +349,7 @@ class ExtensionsController extends AsyncNotifier<ExtensionsState> {
   void _reportInstallSafe(String id) {
     unawaited(() async {
       try {
-        await GopeedSiteApi.instance.reportExtensionInstall(id);
+        await PonyDownloaderSiteApi.instance.reportExtensionInstall(id);
       } catch (_) {}
     }());
   }

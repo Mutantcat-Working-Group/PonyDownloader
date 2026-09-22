@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/api/api.dart' as api;
-import 'package:gopeed/core/network/gopeed/gopeed_transport.dart';
-import 'package:gopeed/features/auth/application/web_auth_controller.dart';
+import 'package:ponydownloader/api/api.dart' as api;
+import 'package:ponydownloader/core/network/ponydownloader/ponydownloader_transport.dart';
+import 'package:ponydownloader/features/auth/application/web_auth_controller.dart';
 
 void main() {
   test('successful login relies on the server cookie and unauthorized requires login', () async {
@@ -18,7 +18,7 @@ void main() {
   });
 }
 
-class _LoginTransport implements GopeedTransport {
+class _LoginTransport implements PonyDownloaderTransport {
   @override
   Future<dynamic> request(
     String path, {

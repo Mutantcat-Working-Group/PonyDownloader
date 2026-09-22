@@ -6,7 +6,7 @@ class ContinuedProcessing {
   const ContinuedProcessing._();
 
   static const _channel =
-      MethodChannel('gopeed/continued_processing');
+      MethodChannel('ponydownloader/continued_processing');
 
   static Future<bool> isSupported() async {
     if (!Platform.isIOS) return false;

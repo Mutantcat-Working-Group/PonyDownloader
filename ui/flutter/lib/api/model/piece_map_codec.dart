@@ -3,7 +3,7 @@ import 'dart:typed_data';
 
 enum TaskPieceState { pending, completed }
 
-/// Decoded view of Gopeed's ordered `bitset-v1` piece map.
+/// Decoded view of PonyDownloader's ordered `bitset-v1` piece map.
 ///
 /// A set bit means the piece is complete and verified. The decoder keeps the
 /// compact bytes instead of expanding large torrents into per-piece objects;

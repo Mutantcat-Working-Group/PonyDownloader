@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/core/window/app_window_bootstrap.dart';
-import 'package:gopeed/core/window/app_window_payload.dart';
-import 'package:gopeed/l10n/l10n.dart';
+import 'package:ponydownloader/core/window/app_window_bootstrap.dart';
+import 'package:ponydownloader/core/window/app_window_payload.dart';
+import 'package:ponydownloader/l10n/l10n.dart';
 
 void main() {
   test('create-task child window has a localized native title', () {

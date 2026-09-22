@@ -14,7 +14,7 @@ Future<String> copyToCache(Uri uri) async {
 
   final importDirectory = Directory(path.join((await getTemporaryDirectory()).path, 'torrent-imports'));
   await importDirectory.create(recursive: true);
-  final output = File(path.join(importDirectory.path, 'gopeed-${DateTime.now().microsecondsSinceEpoch}.torrent'));
+  final output = File(path.join(importDirectory.path, 'ponydownloader-${DateTime.now().microsecondsSinceEpoch}.torrent'));
   final sink = output.openWrite();
 
   try {

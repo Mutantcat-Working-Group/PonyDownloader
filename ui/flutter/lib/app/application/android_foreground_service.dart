@@ -4,7 +4,7 @@ import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 
 import '../../l10n/l10n.dart';
 
-/// Keeps the Android process alive while Gopeed is available for downloads.
+/// Keeps the Android process alive while PonyDownloader is available for downloads.
 class AndroidForegroundService {
   const AndroidForegroundService._();
 
@@ -13,7 +13,7 @@ class AndroidForegroundService {
 
     FlutterForegroundTask.init(
       androidNotificationOptions: AndroidNotificationOptions(
-        channelId: 'gopeed_service',
+        channelId: 'ponydownloader_service',
         channelName: l10n.androidForegroundServiceChannel,
         channelImportance: NotificationChannelImportance.LOW,
         showWhen: true,

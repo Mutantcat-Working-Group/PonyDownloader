@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/api/model/task.dart';
-import 'package:gopeed/api/model/task_stats.dart';
+import 'package:ponydownloader/api/model/task.dart';
+import 'package:ponydownloader/api/model/task_stats.dart';
 
 void main() {
   test('HTTP stats parse the current Go connection payload', () {

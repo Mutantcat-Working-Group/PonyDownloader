@@ -1,9 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/api/model/create_task.dart';
-import 'package:gopeed/api/model/request.dart';
-import 'package:gopeed/core/window/app_window_launcher.dart';
-import 'package:gopeed/core/window/window_capability_transport.dart';
+import 'package:ponydownloader/api/model/create_task.dart';
+import 'package:ponydownloader/api/model/request.dart';
+import 'package:ponydownloader/core/window/app_window_launcher.dart';
+import 'package:ponydownloader/core/window/window_capability_transport.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

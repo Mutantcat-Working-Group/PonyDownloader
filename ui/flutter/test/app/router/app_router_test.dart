@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gopeed/app/router/app_router.dart';
-import 'package:gopeed/features/auth/application/web_auth_controller.dart';
+import 'package:ponydownloader/app/router/app_router.dart';
+import 'package:ponydownloader/features/auth/application/web_auth_controller.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

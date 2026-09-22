@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/core/capabilities/capability_rpc.dart';
-import 'package:gopeed/core/window/app_window_appearance.dart';
+import 'package:ponydownloader/core/capabilities/capability_rpc.dart';
+import 'package:ponydownloader/core/window/app_window_appearance.dart';
 
 class _Payload {
   const _Payload(this.value);

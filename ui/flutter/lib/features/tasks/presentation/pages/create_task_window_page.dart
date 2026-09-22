@@ -755,7 +755,7 @@ class _CreateTaskWindowPageState extends ConsumerState<CreateTaskWindowPage> {
 
   Future<void> _loadDefaults() async {
     try {
-      final config = await ref.read(gopeedServiceProvider).getConfig();
+      final config = await ref.read(ponydownloaderServiceProvider).getConfig();
       if (!mounted) return;
       setState(() {
         _configuredDownloadDirectory = config.downloadDir.trim();
@@ -870,7 +870,7 @@ class _CreateTaskWindowPageState extends ConsumerState<CreateTaskWindowPage> {
         await Future.wait(
           urls.map((url) {
             return ref
-                .read(gopeedServiceProvider)
+                .read(ponydownloaderServiceProvider)
                 .createTask(
                   CreateTask(
                     req: _buildRequest(url, protocolUrl: _protocolUrlFor(url)),
@@ -885,7 +885,7 @@ class _CreateTaskWindowPageState extends ConsumerState<CreateTaskWindowPage> {
 
       final request = _buildRequest(urls.first, protocolUrl: _protocolUrlFor(urls.first));
       final options = _buildOptions();
-      final result = await ref.read(gopeedServiceProvider).resolve(ResolveTask(req: request, opts: options));
+      final result = await ref.read(ponydownloaderServiceProvider).resolve(ResolveTask(req: request, opts: options));
       if (!mounted) return;
       final created = await _showResolveDialog(request, result);
       if (!created) {
@@ -1052,7 +1052,7 @@ class _CreateTaskWindowPageState extends ConsumerState<CreateTaskWindowPage> {
       ..sort();
     if (result.id.isNotEmpty) {
       await ref
-          .read(gopeedServiceProvider)
+          .read(ponydownloaderServiceProvider)
           .createTask(
             CreateTask(
               rid: result.id,
@@ -1074,11 +1074,11 @@ class _CreateTaskWindowPageState extends ConsumerState<CreateTaskWindowPage> {
           ),
         );
       }).toList();
-      await ref.read(gopeedServiceProvider).createTaskBatch(CreateTaskBatch(reqs: reqs, opts: _buildOptions()));
+      await ref.read(ponydownloaderServiceProvider).createTaskBatch(CreateTaskBatch(reqs: reqs, opts: _buildOptions()));
       return;
     }
 
-    await ref.read(gopeedServiceProvider).createTask(CreateTask(req: request, opts: _buildOptions()));
+    await ref.read(ponydownloaderServiceProvider).createTask(CreateTask(req: request, opts: _buildOptions()));
   }
 
   Future<bool> _showResolveDialog(Request request, ResolveResult result) async {

@@ -7,26 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		032447D610CFAF8A75642212 /* GopeedLiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C142A455C80367DDD68AE /* GopeedLiveActivityManager.swift */; };
+		032447D610CFAF8A75642212 /* PonyDownloaderLiveActivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB8C142A455C80367DDD68AE /* PonyDownloaderLiveActivityManager.swift */; };
 		0C585CBA2D41E28900FF2EC0 /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C585CB92D41E28900FF2EC0 /* ShareViewController.swift */; };
 		0C585CBD2D41E28900FF2EC0 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 0C585CBC2D41E28900FF2EC0 /* Base */; };
 		0C585CC12D41E28900FF2EC0 /* ShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 0C585CB72D41E28900FF2EC0 /* ShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		1045ACE898D35C0D8D8A993E /* GopeedDownloadAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AC32C4BF90EAC54D048584 /* GopeedDownloadAttributes.swift */; };
+		1045ACE898D35C0D8D8A993E /* PonyDownloaderDownloadAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AC32C4BF90EAC54D048584 /* PonyDownloaderDownloadAttributes.swift */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
-		1E29080079AAFD1CF2C71262 /* GopeedDownloadAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AC32C4BF90EAC54D048584 /* GopeedDownloadAttributes.swift */; };
+		1E29080079AAFD1CF2C71262 /* PonyDownloaderDownloadAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 09AC32C4BF90EAC54D048584 /* PonyDownloaderDownloadAttributes.swift */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
-		3EF29839EA13551EB8144269 /* GopeedLiveActivityExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 76ED41E0163DFA97F018D1AC /* GopeedLiveActivityExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		5BF69191A426106A38B62F9F /* GopeedContinuedProcessingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3879B6DB5398A19281BA5F8F /* GopeedContinuedProcessingManager.swift */; };
+		3EF29839EA13551EB8144269 /* PonyDownloaderLiveActivityExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 76ED41E0163DFA97F018D1AC /* PonyDownloaderLiveActivityExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		5BF69191A426106A38B62F9F /* PonyDownloaderContinuedProcessingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3879B6DB5398A19281BA5F8F /* PonyDownloaderContinuedProcessingManager.swift */; };
 		6085D504396791024CEC496B /* Pods_RunnerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8823E31DA135C410E362683E /* Pods_RunnerTests.framework */; };
-		6243BE8F995F5284DBDD7DE3 /* GopeedLiveActivityWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C9F8DE4B991051758F2BE1 /* GopeedLiveActivityWidget.swift */; };
+		6243BE8F995F5284DBDD7DE3 /* PonyDownloaderLiveActivityWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35C9F8DE4B991051758F2BE1 /* PonyDownloaderLiveActivityWidget.swift */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		7884E8682EC3CC0700C636F2 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7884E8672EC3CC0400C636F2 /* SceneDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		A10000000000000000000001 /* LocationKeepAliveManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002 /* LocationKeepAliveManager.swift */; };
-		A20000000000000000000001 /* GopeedTaskEventForwarder.m in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* GopeedTaskEventForwarder.m */; };
+		A20000000000000000000001 /* PonyDownloaderTaskEventForwarder.m in Sources */ = {isa = PBXBuildFile; fileRef = A20000000000000000000002 /* PonyDownloaderTaskEventForwarder.m */; };
 		B44F54F47E581A39546303C9 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 029EF293EAA92EB3D18BBF19 /* libresolv.tbd */; };
 		C164A2AA80F148015630B8E9 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B918B8D5281BAE2DEA6BE3C /* Pods_Runner.framework */; };
 		D081C25C294826C0006EB10B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D081C25B294826C0006EB10B /* libc++.tbd */; };
@@ -41,7 +41,7 @@
 			containerPortal = 97C146E61CF9000F007C117D /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FFA6D07C1B1CB56543DE4B67;
-			remoteInfo = GopeedLiveActivityExtension;
+			remoteInfo = PonyDownloaderLiveActivityExtension;
 		};
 		0C585CBF2D41E28900FF2EC0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -67,7 +67,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				0C585CC12D41E28900FF2EC0 /* ShareExtension.appex in Embed Foundation Extensions */,
-				3EF29839EA13551EB8144269 /* GopeedLiveActivityExtension.appex in Embed Foundation Extensions */,
+				3EF29839EA13551EB8144269 /* PonyDownloaderLiveActivityExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,7 +86,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		09AC32C4BF90EAC54D048584 /* GopeedDownloadAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GopeedDownloadAttributes.swift; sourceTree = "<group>"; };
+		09AC32C4BF90EAC54D048584 /* PonyDownloaderDownloadAttributes.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PonyDownloaderDownloadAttributes.swift; sourceTree = "<group>"; };
 		0C585CB72D41E28900FF2EC0 /* ShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		0C585CB92D41E28900FF2EC0 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		0C585CBC2D41E28900FF2EC0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
@@ -100,15 +100,15 @@
 		3217CFC346202B3E2A8C52DD /* Pods-RunnerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.debug.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		331C8081294A63A400263BE5 /* RunnerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RunnerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		35C9F8DE4B991051758F2BE1 /* GopeedLiveActivityWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GopeedLiveActivityWidget.swift; sourceTree = "<group>"; };
-		3879B6DB5398A19281BA5F8F /* GopeedContinuedProcessingManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GopeedContinuedProcessingManager.swift; sourceTree = "<group>"; };
+		35C9F8DE4B991051758F2BE1 /* PonyDownloaderLiveActivityWidget.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PonyDownloaderLiveActivityWidget.swift; sourceTree = "<group>"; };
+		3879B6DB5398A19281BA5F8F /* PonyDownloaderContinuedProcessingManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PonyDownloaderContinuedProcessingManager.swift; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		52A13633B52EDC9D3F479DFD /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		55356FCC7E573C3FEEC2DF4D /* Pods-RunnerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.release.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.release.xcconfig"; sourceTree = "<group>"; };
 		5B918B8D5281BAE2DEA6BE3C /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		76ED41E0163DFA97F018D1AC /* GopeedLiveActivityExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = GopeedLiveActivityExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		76ED41E0163DFA97F018D1AC /* PonyDownloaderLiveActivityExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PonyDownloaderLiveActivityExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		7884E8672EC3CC0400C636F2 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		78EE8538B1DF04DAF73E75D3 /* Pods-ShareExtension.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareExtension.profile.xcconfig"; path = "Target Support Files/Pods-ShareExtension/Pods-ShareExtension.profile.xcconfig"; sourceTree = "<group>"; };
 		78F0D48FED63C04B9A3FFDE4 /* Pods-RunnerTests.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RunnerTests.profile.xcconfig"; path = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests.profile.xcconfig"; sourceTree = "<group>"; };
@@ -124,14 +124,14 @@
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A10000000000000000000002 /* LocationKeepAliveManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationKeepAliveManager.swift; sourceTree = "<group>"; };
-		A20000000000000000000002 /* GopeedTaskEventForwarder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GopeedTaskEventForwarder.m; sourceTree = "<group>"; };
-		A20000000000000000000003 /* GopeedTaskEventForwarder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GopeedTaskEventForwarder.h; sourceTree = "<group>"; };
+		A20000000000000000000002 /* PonyDownloaderTaskEventForwarder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PonyDownloaderTaskEventForwarder.m; sourceTree = "<group>"; };
+		A20000000000000000000003 /* PonyDownloaderTaskEventForwarder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PonyDownloaderTaskEventForwarder.h; sourceTree = "<group>"; };
 		BE83526BCA48EE87CB910236 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		BFA76EAE38733F2444C8A609 /* Pods-ShareExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ShareExtension.debug.xcconfig"; path = "Target Support Files/Pods-ShareExtension/Pods-ShareExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		D554135997A5C7A2C62E1B64 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		D081C25B294826C0006EB10B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		D0E623A729482D030001185E /* Libgopeed.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Libgopeed.xcframework; path = Frameworks/Libgopeed.xcframework; sourceTree = "<group>"; };
-		EB8C142A455C80367DDD68AE /* GopeedLiveActivityManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = GopeedLiveActivityManager.swift; sourceTree = "<group>"; };
+		EB8C142A455C80367DDD68AE /* PonyDownloaderLiveActivityManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = PonyDownloaderLiveActivityManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,14 +221,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5FB22DCA9F2EA11B7C1F1A22 /* GopeedLiveActivity */ = {
+		5FB22DCA9F2EA11B7C1F1A22 /* PonyDownloaderLiveActivity */ = {
 			isa = PBXGroup;
 			children = (
-				35C9F8DE4B991051758F2BE1 /* GopeedLiveActivityWidget.swift */,
+				35C9F8DE4B991051758F2BE1 /* PonyDownloaderLiveActivityWidget.swift */,
 				52A13633B52EDC9D3F479DFD /* Info.plist */,
 			);
-			name = GopeedLiveActivity;
-			path = GopeedLiveActivity;
+			name = PonyDownloaderLiveActivity;
+			path = PonyDownloaderLiveActivity;
 			sourceTree = "<group>";
 		};
 		9740EEB11CF90186004384FC /* Flutter */ = {
@@ -252,7 +252,7 @@
 				331C8082294A63A400263BE5 /* RunnerTests */,
 				2B6C6F082D376286EF3D5FA3 /* Pods */,
 				44BA5D7C75A3E4957F6560C7 /* Frameworks */,
-				5FB22DCA9F2EA11B7C1F1A22 /* GopeedLiveActivity */,
+				5FB22DCA9F2EA11B7C1F1A22 /* PonyDownloaderLiveActivity */,
 			);
 			sourceTree = "<group>";
 		};
@@ -262,7 +262,7 @@
 				97C146EE1CF9000F007C117D /* Runner.app */,
 				0C585CB72D41E28900FF2EC0 /* ShareExtension.appex */,
 				331C8081294A63A400263BE5 /* RunnerTests.xctest */,
-				76ED41E0163DFA97F018D1AC /* GopeedLiveActivityExtension.appex */,
+				76ED41E0163DFA97F018D1AC /* PonyDownloaderLiveActivityExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -280,12 +280,12 @@
 				74858FAE1ED2DC5600515810 /* AppDelegate.swift */,
 				7884E8672EC3CC0400C636F2 /* SceneDelegate.swift */,
 				A10000000000000000000002 /* LocationKeepAliveManager.swift */,
-				A20000000000000000000003 /* GopeedTaskEventForwarder.h */,
-				A20000000000000000000002 /* GopeedTaskEventForwarder.m */,
+				A20000000000000000000003 /* PonyDownloaderTaskEventForwarder.h */,
+				A20000000000000000000002 /* PonyDownloaderTaskEventForwarder.m */,
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
-				09AC32C4BF90EAC54D048584 /* GopeedDownloadAttributes.swift */,
-				EB8C142A455C80367DDD68AE /* GopeedLiveActivityManager.swift */,
-				3879B6DB5398A19281BA5F8F /* GopeedContinuedProcessingManager.swift */,
+				09AC32C4BF90EAC54D048584 /* PonyDownloaderDownloadAttributes.swift */,
+				EB8C142A455C80367DDD68AE /* PonyDownloaderLiveActivityManager.swift */,
+				3879B6DB5398A19281BA5F8F /* PonyDownloaderContinuedProcessingManager.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -355,9 +355,9 @@
 			productReference = 97C146EE1CF9000F007C117D /* Runner.app */;
 			productType = "com.apple.product-type.application";
 		};
-		FFA6D07C1B1CB56543DE4B67 /* GopeedLiveActivityExtension */ = {
+		FFA6D07C1B1CB56543DE4B67 /* PonyDownloaderLiveActivityExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = DAF208923F589C87CBB49D56 /* Build configuration list for PBXNativeTarget "GopeedLiveActivityExtension" */;
+			buildConfigurationList = DAF208923F589C87CBB49D56 /* Build configuration list for PBXNativeTarget "PonyDownloaderLiveActivityExtension" */;
 			buildPhases = (
 				1A1326FD8C4C86ED5A529666 /* Sources */,
 				2134C1710299C602C39EE9D6 /* Frameworks */,
@@ -367,9 +367,9 @@
 			);
 			dependencies = (
 			);
-			name = GopeedLiveActivityExtension;
-			productName = GopeedLiveActivityExtension;
-			productReference = 76ED41E0163DFA97F018D1AC /* GopeedLiveActivityExtension.appex */;
+			name = PonyDownloaderLiveActivityExtension;
+			productName = PonyDownloaderLiveActivityExtension;
+			productReference = 76ED41E0163DFA97F018D1AC /* PonyDownloaderLiveActivityExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -411,7 +411,7 @@
 				97C146ED1CF9000F007C117D /* Runner */,
 				0C585CB62D41E28900FF2EC0 /* ShareExtension */,
 				331C8080294A63A400263BE5 /* RunnerTests */,
-				FFA6D07C1B1CB56543DE4B67 /* GopeedLiveActivityExtension */,
+				FFA6D07C1B1CB56543DE4B67 /* PonyDownloaderLiveActivityExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -582,8 +582,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6243BE8F995F5284DBDD7DE3 /* GopeedLiveActivityWidget.swift in Sources */,
-				1045ACE898D35C0D8D8A993E /* GopeedDownloadAttributes.swift in Sources */,
+				6243BE8F995F5284DBDD7DE3 /* PonyDownloaderLiveActivityWidget.swift in Sources */,
+				1045ACE898D35C0D8D8A993E /* PonyDownloaderDownloadAttributes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,10 +603,10 @@
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				7884E8682EC3CC0700C636F2 /* SceneDelegate.swift in Sources */,
 				A10000000000000000000001 /* LocationKeepAliveManager.swift in Sources */,
-				A20000000000000000000001 /* GopeedTaskEventForwarder.m in Sources */,
-				1E29080079AAFD1CF2C71262 /* GopeedDownloadAttributes.swift in Sources */,
-				032447D610CFAF8A75642212 /* GopeedLiveActivityManager.swift in Sources */,
-				5BF69191A426106A38B62F9F /* GopeedContinuedProcessingManager.swift in Sources */,
+				A20000000000000000000001 /* PonyDownloaderTaskEventForwarder.m in Sources */,
+				1E29080079AAFD1CF2C71262 /* PonyDownloaderDownloadAttributes.swift in Sources */,
+				032447D610CFAF8A75642212 /* PonyDownloaderLiveActivityManager.swift in Sources */,
+				5BF69191A426106A38B62F9F /* PonyDownloaderContinuedProcessingManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -625,8 +625,8 @@
 		};
 		FBEBBD3469D2B152FDD0B424 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = GopeedLiveActivityExtension;
-			target = FFA6D07C1B1CB56543DE4B67 /* GopeedLiveActivityExtension */;
+			name = PonyDownloaderLiveActivityExtension;
+			target = FFA6D07C1B1CB56543DE4B67 /* PonyDownloaderLiveActivityExtension */;
 			targetProxy = 03B416C78831516F6591BD24 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -869,7 +869,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = GopeedLiveActivity/Info.plist;
+				INFOPLIST_FILE = PonyDownloaderLiveActivity/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PonyDownloader;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -878,7 +878,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
-				PRODUCT_BUNDLE_IDENTIFIER = org.mutantcat.ponydownloader.GopeedLiveActivityExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = org.mutantcat.ponydownloader.PonyDownloaderLiveActivityExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -897,7 +897,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = GopeedLiveActivity/Info.plist;
+				INFOPLIST_FILE = PonyDownloaderLiveActivity/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PonyDownloader;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -906,7 +906,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
-				PRODUCT_BUNDLE_IDENTIFIER = org.mutantcat.ponydownloader.GopeedLiveActivityExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = org.mutantcat.ponydownloader.PonyDownloaderLiveActivityExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1080,7 +1080,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = GopeedLiveActivity/Info.plist;
+				INFOPLIST_FILE = PonyDownloaderLiveActivity/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = PonyDownloader;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1089,7 +1089,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = "$(FLUTTER_BUILD_NAME)";
-				PRODUCT_BUNDLE_IDENTIFIER = org.mutantcat.ponydownloader.GopeedLiveActivityExtension;
+				PRODUCT_BUNDLE_IDENTIFIER = org.mutantcat.ponydownloader.PonyDownloaderLiveActivityExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
@@ -1142,7 +1142,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		DAF208923F589C87CBB49D56 /* Build configuration list for PBXNativeTarget "GopeedLiveActivityExtension" */ = {
+		DAF208923F589C87CBB49D56 /* Build configuration list for PBXNativeTarget "PonyDownloaderLiveActivityExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				6CADF5E48DB3AF5F00998F2A /* Release */,

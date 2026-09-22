@@ -35,7 +35,7 @@ func defaultWebViewRPCAddress() string {
 	if err != nil {
 		return ""
 	}
-	return filepath.Join(homeDir, "Library", "Application Support", "com.gopeed.gopeed", "gopeed_webview.sock")
+	return filepath.Join(homeDir, "Library", "Application Support", "org.mutantcat.ponydownloader", "ponydownloader_webview.sock")
 }
 
 func TestProviderProfiles(t *testing.T) {

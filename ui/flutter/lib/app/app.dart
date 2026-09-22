@@ -12,18 +12,19 @@ import '../shared/theme/app_theme.dart';
 import '../features/auth/application/web_auth_controller.dart';
 import 'application/app_appearance_controller.dart';
 import 'application/app_runtime_controller.dart';
+import 'application/screen_sleep_watchdog.dart';
 import 'rpc/webview_rpc_overlay.dart';
 import 'rpc/webview_rpc_service.dart';
 import 'router/app_router.dart';
 
-class GopeedApp extends ConsumerStatefulWidget {
-  const GopeedApp({super.key});
+class PonyDownloaderApp extends ConsumerStatefulWidget {
+  const PonyDownloaderApp({super.key});
 
   @override
-  ConsumerState<GopeedApp> createState() => _GopeedAppState();
+  ConsumerState<PonyDownloaderApp> createState() => _PonyDownloaderAppState();
 }
 
-class _GopeedAppState extends ConsumerState<GopeedApp> with WidgetsBindingObserver {
+class _PonyDownloaderAppState extends ConsumerState<PonyDownloaderApp> with WidgetsBindingObserver {
   late final GoRouter _router;
 
   @override
@@ -46,7 +47,15 @@ class _GopeedAppState extends ConsumerState<GopeedApp> with WidgetsBindingObserv
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (mounted) {
+      ref.read(screenSleepWatchdogProvider.notifier).handleLifecycleChange(state);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    ref.watch(screenSleepWatchdogProvider);
     ref.listen(appRuntimeControllerProvider, (_, next) {
       final runtime = next.value;
       if (runtime != null) {

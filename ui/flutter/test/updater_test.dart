@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart' show Icons;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/api/model/downloader_config.dart';
-import 'package:gopeed/features/settings/presentation/widgets/app_update_dialog.dart';
-import 'package:gopeed/features/settings/presentation/widgets/app_update_notes_viewport.dart';
-import 'package:gopeed/shared/theme/app_theme.dart';
-import 'package:gopeed/util/arch/arch.dart';
-import 'package:gopeed/util/github_mirror.dart';
-import 'package:gopeed/util/package_info.dart' as app_package;
-import 'package:gopeed/util/updater.dart';
+import 'package:ponydownloader/api/model/downloader_config.dart';
+import 'package:ponydownloader/features/settings/presentation/widgets/app_update_dialog.dart';
+import 'package:ponydownloader/features/settings/presentation/widgets/app_update_notes_viewport.dart';
+import 'package:ponydownloader/shared/theme/app_theme.dart';
+import 'package:ponydownloader/util/arch/arch.dart';
+import 'package:ponydownloader/util/github_mirror.dart';
+import 'package:ponydownloader/util/package_info.dart' as app_package;
+import 'package:ponydownloader/util/updater.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shad;
 
@@ -100,8 +100,20 @@ void main() {
         'PonyDownloader-v1.8.0-windows-amd64-portable.zip',
       );
       expect(
+        updateAssetName('1.8.0', channel: UpdateChannel.windowsInstaller, architecture: Architecture.x64),
+        'PonyDownloader-v1.8.0-windows-amd64.exe',
+      );
+      expect(
         updateAssetName('1.8.0', channel: UpdateChannel.macosDmg, architecture: Architecture.arm64),
         'PonyDownloader-v1.8.0-macos-universal.dmg',
+      );
+      expect(
+        updateAssetName('1.8.0', channel: UpdateChannel.linuxAppImage, architecture: Architecture.x64),
+        'PonyDownloader-v1.8.0-linux-amd64.AppImage',
+      );
+      expect(
+        updateAssetName('1.8.0', channel: UpdateChannel.linuxAppImage, architecture: Architecture.arm64),
+        'PonyDownloader-v1.8.0-linux-arm64.AppImage',
       );
       expect(
         updateAssetName('1.8.0', channel: UpdateChannel.linuxDeb, architecture: Architecture.ia32),
@@ -136,11 +148,13 @@ void main() {
     );
     expect(
       githubMirrorUrls(
-        'https://github.com/GopeedLab/gopeed/releases/download/v1.8.0/app.zip',
+        'https://github.com/Mutantcat-Working-Group/PonyDownloader/releases/download/v1.8.0/app.zip',
         MirrorType.githubRelease,
         config: config,
       ),
-      ['https://mirror.example/https://github.com/GopeedLab/gopeed/releases/download/v1.8.0/app.zip'],
+      [
+        'https://mirror.example/https://github.com/Mutantcat-Working-Group/PonyDownloader/releases/download/v1.8.0/app.zip',
+      ],
     );
   });
 

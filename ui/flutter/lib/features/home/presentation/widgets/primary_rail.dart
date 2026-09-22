@@ -6,7 +6,7 @@ import '../../../../core/window/app_window_chrome.dart';
 import '../../../../shared/theme/app_design_tokens.dart';
 import '../../../../shared/theme/app_palette.dart';
 import '../../../../shared/widgets/app_tooltip.dart';
-import '../../../../shared/widgets/gopeed_app_mark.dart';
+import '../../../../shared/widgets/ponydownloader_app_mark.dart';
 import '../../../../l10n/l10n.dart';
 
 enum RailSection { tasks, extensions, settings }
@@ -28,7 +28,7 @@ class PrimaryRail extends StatelessWidget {
         children: [
           SizedBox(
             height: AppDesignTokens.contentHeaderHeight,
-            child: const Center(child: GopeedAppMark(key: ValueKey('primary-rail-app-mark'))),
+            child: const Center(child: PonyDownloaderAppMark(key: ValueKey('primary-rail-app-mark'))),
           ),
           const SizedBox(height: AppDesignTokens.space8),
           _RailItem(

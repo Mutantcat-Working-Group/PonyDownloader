@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/create_task_action_buttons.dart';
-import 'package:gopeed/l10n/l10n.dart';
-import 'package:gopeed/shared/theme/app_component_themes.dart';
-import 'package:gopeed/shared/theme/app_theme.dart';
-import 'package:gopeed/shared/widgets/app_loading_button.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/create_task_action_buttons.dart';
+import 'package:ponydownloader/l10n/l10n.dart';
+import 'package:ponydownloader/shared/theme/app_component_themes.dart';
+import 'package:ponydownloader/shared/theme/app_theme.dart';
+import 'package:ponydownloader/shared/widgets/app_loading_button.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shad;
 
 void main() {

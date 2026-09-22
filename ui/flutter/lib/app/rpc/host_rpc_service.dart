@@ -25,7 +25,7 @@ class HostRpcService {
     _server = await startRpcServer(
       routes: {
         '/create': (ctx) async {
-          final meta = ctx.request.headers['X-Gopeed-Host-Meta']?.firstOrNull ?? '{}';
+          final meta = ctx.request.headers['X-PonyDownloader-Host-Meta']?.firstOrNull ?? '{}';
           final jsonMeta = jsonDecode(meta);
           final silent = jsonMeta['silent'] as bool? ?? false;
           final params = await ctx.readText();

@@ -6,12 +6,12 @@ COPY . .
 ARG VERSION=dev
 RUN CGO_ENABLED=0 go build -tags nosqlite,web \
       -ldflags="-s -w -X github.com/GopeedLab/gopeed/pkg/base.Version=$VERSION -X github.com/GopeedLab/gopeed/pkg/base.InDocker=true" \
-      -o dist/gopeed github.com/GopeedLab/gopeed/cmd/web
+      -o dist/ponydownloader github.com/GopeedLab/gopeed/cmd/web
 
 FROM alpine:3.23
-LABEL maintainer="monkeyWie"
+LABEL maintainer="MutantCat Working Group"
 WORKDIR /app
-COPY --from=go /app/dist/gopeed ./
+COPY --from=go /app/dist/ponydownloader ./
 COPY entrypoint.sh ./entrypoint.sh
 RUN apk update && \
     apk add --no-cache su-exec ; \

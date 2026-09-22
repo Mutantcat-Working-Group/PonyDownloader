@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/api/model/downloader_config.dart';
+import 'package:ponydownloader/api/model/downloader_config.dart';
 
 void main() {
   test('auto-start tasks uses the backend-owned top-level config field', () {

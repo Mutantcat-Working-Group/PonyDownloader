@@ -9,7 +9,7 @@ import '../../api/model/task.dart';
 class LocationKeepAlive {
   const LocationKeepAlive._();
 
-  static const _channel = MethodChannel('gopeed/location_keep_alive');
+  static const _channel = MethodChannel('ponydownloader/location_keep_alive');
 
   static Future<bool> requestPermission() async {
     if (!Platform.isIOS) return false;

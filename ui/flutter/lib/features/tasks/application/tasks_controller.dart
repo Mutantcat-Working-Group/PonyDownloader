@@ -79,12 +79,12 @@ class TasksController extends AsyncNotifier<TasksState> {
   }
 
   Future<void> pause(String id) async {
-    await ref.read(gopeedServiceProvider).pauseTask(id);
+    await ref.read(ponydownloaderServiceProvider).pauseTask(id);
     await refresh(silent: true);
   }
 
   Future<void> resume(String id) async {
-    await ref.read(gopeedServiceProvider).continueTask(id);
+    await ref.read(ponydownloaderServiceProvider).continueTask(id);
     await refresh(silent: true);
   }
 
@@ -99,28 +99,28 @@ class TasksController extends AsyncNotifier<TasksState> {
   }
 
   Future<void> updateRequest(String id, Request request) async {
-    await ref.read(gopeedServiceProvider).patchTask(id, ResolveTask(req: request));
-    await ref.read(gopeedServiceProvider).continueTask(id);
+    await ref.read(ponydownloaderServiceProvider).patchTask(id, ResolveTask(req: request));
+    await ref.read(ponydownloaderServiceProvider).continueTask(id);
     await refresh(silent: true);
   }
 
   Future<void> pauseAll(List<String>? ids) async {
-    await ref.read(gopeedServiceProvider).pauseAllTasks(ids);
+    await ref.read(ponydownloaderServiceProvider).pauseAllTasks(ids);
     await refresh(silent: true);
   }
 
   Future<void> resumeAll(List<String>? ids) async {
-    await ref.read(gopeedServiceProvider).continueAllTasks(ids);
+    await ref.read(ponydownloaderServiceProvider).continueAllTasks(ids);
     await refresh(silent: true);
   }
 
   Future<void> deleteSelected(List<String>? ids, {bool force = false}) async {
-    await ref.read(gopeedServiceProvider).deleteTasks(ids, force);
+    await ref.read(ponydownloaderServiceProvider).deleteTasks(ids, force);
     await refresh(silent: true);
   }
 
   Future<TasksState> _fetch() async {
-    final tasks = await ref.read(gopeedServiceProvider).getTasks(api_model.Status.values);
+    final tasks = await ref.read(ponydownloaderServiceProvider).getTasks(api_model.Status.values);
     final transferSpeeds = aggregateTaskTransferSpeeds(tasks);
     tasks.sort((a, b) {
       if (a.status == api_model.Status.running && b.status != api_model.Status.running) return -1;

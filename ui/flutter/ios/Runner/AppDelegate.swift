@@ -22,7 +22,7 @@ import UIKit
       codec: FlutterStandardMethodCodec.sharedInstance(),
       taskQueue: libgopeedTaskQueue
     )
-    let taskEventForwarder = GopeedTaskEventForwarder(channel: libgopeedChannel)
+    let taskEventForwarder = PonyDownloaderTaskEventForwarder(channel: libgopeedChannel)
     libgopeedChannel.setMethodCallHandler { call, result in
       switch call.method {
       case "start":
@@ -60,7 +60,7 @@ import UIKit
         let query = arguments?["query"] as? String ?? ""
         let body = arguments?["body"] as? String ?? ""
         let requestID = (arguments?["requestID"] as? NSNumber)?.int64Value ?? 0
-        GopeedInvokeAsyncWithResult(method, path, query, body, requestID, result)
+        PonyDownloaderInvokeAsyncWithResult(method, path, query, body, requestID, result)
       case "subscribeTaskEvents":
         let arguments = call.arguments as? [String: Any]
         let flutterMask =
@@ -72,7 +72,7 @@ import UIKit
         let combinedMask =
             flutterMask | liveActivityMask
 
-        GopeedSubscribeTaskEventsWithForwarder(
+        PonyDownloaderSubscribeTaskEventsWithForwarder(
             combinedMask,
             taskEventForwarder
         )
@@ -83,7 +83,7 @@ import UIKit
     }
 
     let locationChannel = FlutterMethodChannel(
-      name: "gopeed/location_keep_alive",
+      name: "ponydownloader/location_keep_alive",
       binaryMessenger: messenger
     )
     locationChannel.setMethodCallHandler { call, result in
@@ -104,7 +104,7 @@ import UIKit
     }
     let continuedProcessingChannel =
     FlutterMethodChannel(
-        name: "gopeed/continued_processing",
+        name: "ponydownloader/continued_processing",
         binaryMessenger: messenger
     )
 
@@ -134,7 +134,7 @@ import UIKit
 
                 if #available(iOS 26.0, *) {
 
-                    GopeedContinuedProcessingManager
+                    PonyDownloaderContinuedProcessingManager
                         .shared
                         .setEnabled(enabled) {
                             success in

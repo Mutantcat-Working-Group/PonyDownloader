@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/core/utils/transfer_rate_formatter.dart';
+import 'package:ponydownloader/core/utils/transfer_rate_formatter.dart';
 
 void main() {
   test('formats transfer rates with adaptive binary units', () {

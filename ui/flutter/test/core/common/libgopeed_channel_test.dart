@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/core/common/libgopeed_channel.dart';
+import 'package:ponydownloader/core/common/libgopeed_channel.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

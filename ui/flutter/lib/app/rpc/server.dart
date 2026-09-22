@@ -90,14 +90,14 @@ class RpcServerHandle {
 
 Future<RpcBinding> defaultHostRpcBinding() async {
   if (Util.isWindows()) {
-    return const RpcBinding(network: 'pipe', address: r'\\.\pipe\gopeed_host');
+    return const RpcBinding(network: 'pipe', address: r'\\.\pipe\ponydownloader_host');
   }
-  return RpcBinding(network: 'unix', address: await Util.homePathJoin('gopeed_host.sock'));
+  return RpcBinding(network: 'unix', address: await Util.homePathJoin('ponydownloader_host.sock'));
 }
 
 Future<RpcBinding> defaultWebViewRpcBinding() async {
   if (Util.supportUnixSocket()) {
-    return RpcBinding(network: 'unix', address: await Util.homePathJoin('gopeed_webview.sock'));
+    return RpcBinding(network: 'unix', address: await Util.homePathJoin('ponydownloader_webview.sock'));
   }
   return const RpcBinding(network: 'tcp', address: '127.0.0.1:0');
 }

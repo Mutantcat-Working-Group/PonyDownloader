@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:gopeed/app/rpc/webview_rpc_service.dart';
+import 'package:ponydownloader/app/rpc/webview_rpc_service.dart';
 
 class _Profile extends Fake implements WebViewProfile {}
 

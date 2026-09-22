@@ -1,2 +1,2 @@
 #import "GeneratedPluginRegistrant.h"
-#import "GopeedTaskEventForwarder.h"
+#import "PonyDownloaderTaskEventForwarder.h"

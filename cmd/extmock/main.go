@@ -87,7 +87,7 @@ func run() int {
 }
 
 func usage() {
-	fmt.Fprintf(os.Stderr, `gopeed extmock CLI
+	fmt.Fprintf(os.Stderr, `ponydownloader extmock CLI
 
 Usage:
   extmock resolve [flags] <extension-dir> <url>
@@ -545,7 +545,7 @@ func newExtMockExtension() *download.Extension {
 	return &download.Extension{
 		Name:    "extmock",
 		Author:  "gopeed",
-		Title:   "Gopeed ExtMock Runtime",
+		Title:   "PonyDownloader ExtMock Runtime",
 		Version: "0.0.0",
 		DevMode: true,
 	}
@@ -592,7 +592,7 @@ func defaultWebViewRPCUnixSocket() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return filepath.Join(homeDir, "gopeed_webview.sock"), nil
+	return filepath.Join(homeDir, "ponydownloader_webview.sock"), nil
 }
 
 type taskTerminalWaiter struct {

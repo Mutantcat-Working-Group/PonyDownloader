@@ -2,16 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:gopeed/features/extensions/application/pending_extension_install.dart';
+import 'package:ponydownloader/features/extensions/application/pending_extension_install.dart';
 
 import 'package:app_links_platform_interface/app_links_platform_interface.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/api/model/downloader_config.dart';
-import 'package:gopeed/app/application/app_runtime_controller.dart';
-import 'package:gopeed/app/application/app_deep_link_controller.dart';
-import 'package:gopeed/core/common/api_server_state.dart';
-import 'package:gopeed/core/common/start_config.dart';
+import 'package:ponydownloader/api/model/downloader_config.dart';
+import 'package:ponydownloader/app/application/app_runtime_controller.dart';
+import 'package:ponydownloader/app/application/app_deep_link_controller.dart';
+import 'package:ponydownloader/core/common/api_server_state.dart';
+import 'package:ponydownloader/core/common/start_config.dart';
 import 'package:share_handler/share_handler.dart';
 
 void main() {
@@ -54,13 +54,13 @@ void main() {
   });
 
   test('keeps the established path-style PonyDownloader deep-link routes', () {
-    expect(gopeedDeepLinkRoute(Uri.parse('ponydownloader:///create')), '/create');
-    expect(gopeedDeepLinkRoute(Uri.parse('ponydownloader:///extension')), '/extension');
+    expect(ponydownloaderDeepLinkRoute(Uri.parse('ponydownloader:///create')), '/create');
+    expect(ponydownloaderDeepLinkRoute(Uri.parse('ponydownloader:///extension')), '/extension');
   });
 
   test('rejects host-style PonyDownloader deep-link routes', () {
-    expect(gopeedDeepLinkRoute(Uri.parse('ponydownloader://create')), isEmpty);
-    expect(gopeedDeepLinkRoute(Uri.parse('ponydownloader://extension')), isEmpty);
+    expect(ponydownloaderDeepLinkRoute(Uri.parse('ponydownloader://create')), isEmpty);
+    expect(ponydownloaderDeepLinkRoute(Uri.parse('ponydownloader://extension')), isEmpty);
   });
 
   test('uses a shared attachment path before an optional caption', () {

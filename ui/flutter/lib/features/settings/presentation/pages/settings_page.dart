@@ -15,7 +15,7 @@ import '../../../../app/application/app_runtime_controller.dart';
 import '../../../../app/application/location_keep_alive.dart';
 import '../../../../app/application/continued_processing.dart';
 import '../../../../core/common/start_config.dart';
-import '../../../../core/network/gopeed/gopeed_transport.dart';
+import '../../../../core/network/ponydownloader/ponydownloader_transport.dart';
 import '../../../../core/utils/breakpoints.dart';
 import '../../../../core/window/app_window_chrome.dart';
 import '../../../../shared/theme/app_design_tokens.dart';
@@ -422,7 +422,7 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     title: context.l10n.contributors,
                     subtitle: context.l10n.thanksDesc,
                     child: _ExternalTextLink(
-                      key: const ValueKey('gopeed-contributors'),
+                      key: const ValueKey('ponydownloader-contributors'),
                       label: context.l10n.viewContributors,
                       onPressed: () => unawaited(
                         _openExternalUri(

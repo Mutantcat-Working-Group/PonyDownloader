@@ -122,7 +122,7 @@ class LibgopeedWorker {
       Pointer<Char> payload,
     ) {
       if (payload == nullptr) {
-        mainSendPort.send(['response', requestID, false, 'Gopeed InvokeAsync returned a null response']);
+        mainSendPort.send(['response', requestID, false, 'PonyDownloader InvokeAsync returned a null response']);
         return;
       }
       try {
@@ -227,7 +227,7 @@ class LibgopeedWorker {
       _ => throw StateError('Unknown API server operation: $operation'),
     };
     if (resultPtr == nullptr) {
-      throw StateError('Gopeed API server operation returned a null response');
+      throw StateError('PonyDownloader API server operation returned a null response');
     }
     try {
       return resultPtr.cast<Utf8>().toDartString();

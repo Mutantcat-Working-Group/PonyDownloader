@@ -1,6 +1,6 @@
 services:
-    gopeed:
-      container_name: gopeed
+    ponydownloader:
+      container_name: ponydownloader
       ports:
         - 9999:9999 # HTTP port (host:container)
       environment:
@@ -8,8 +8,8 @@ services:
         - PGID=0
         - UMASK=022
       volumes:
-        - ~/gopeed/Downloads:/app/Downloads # mount download path
-        #- ~/gopeed/storage:/app/storage # if you need to mount storage path, uncomment this line
+        - ~/PonyDownloader/Downloads:/app/Downloads # mount download path
+        #- ~/PonyDownloader/storage:/app/storage # if you need to mount storage path, uncomment this line
       restart: unless-stopped
-      image: liwei2633/gopeed
+      image: mutantcat/ponydownloader
       # command: -u Username -p Password # optional authentication

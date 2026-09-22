@@ -1,4 +1,4 @@
-import 'package:gopeed/api/model/request.dart';
+import 'package:ponydownloader/api/model/request.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'resource.g.dart';

@@ -13,7 +13,7 @@ import '../../core/common/start_config.dart';
 import '../../core/common/task_event.dart';
 import '../../core/entry/app_initializer.dart';
 import '../../core/libgopeed_boot.dart';
-import '../../core/network/gopeed/gopeed_transport.dart';
+import '../../core/network/ponydownloader/ponydownloader_transport.dart';
 import '../../features/auth/application/web_auth_controller.dart';
 import '../../l10n/l10n.dart';
 import '../../util/log_util.dart';
@@ -25,7 +25,7 @@ import 'android_foreground_service.dart';
 import 'location_keep_alive.dart';
 import 'continued_processing.dart';
 
-const unixSocketPath = 'gopeed.sock';
+const unixSocketPath = 'ponydownloader.sock';
 
 final appRuntimeControllerProvider = AsyncNotifierProvider<AppRuntimeController, AppRuntimeState>(
   AppRuntimeController.new,
@@ -64,7 +64,7 @@ class AppRuntimeController extends AsyncNotifier<AppRuntimeState> {
   Future<void> reloadConfig() async {
     final current = state.value;
     if (current == null) return;
-    final config = await ref.read(gopeedServiceProvider).getConfig();
+    final config = await ref.read(ponydownloaderServiceProvider).getConfig();
     final apiState = kIsWeb ? current.apiServerState : (await LibgopeedBoot.instance.getApiServerState()).state;
     final startConfig = _copyStartConfig(current.startConfig);
     if (kIsWeb) {
@@ -254,7 +254,7 @@ class AppRuntimeController extends AsyncNotifier<AppRuntimeState> {
   Future<DownloaderConfig> _loadDownloaderConfig() async {
     DownloaderConfig config;
     try {
-      config = await ref.read(gopeedServiceProvider).getConfig();
+      config = await ref.read(ponydownloaderServiceProvider).getConfig();
     } catch (error, stackTrace) {
       logger.w('load downloader config failed', error, stackTrace);
       config = DownloaderConfig();
@@ -336,7 +336,7 @@ class AppRuntimeController extends AsyncNotifier<AppRuntimeState> {
       await Analytics.instance.init(fallbackClientId: config.extra.analyticsClientId);
       if (config.extra.analyticsClientId.isEmpty && Analytics.instance.clientId.isNotEmpty) {
         config.extra.analyticsClientId = Analytics.instance.clientId;
-        await ref.read(gopeedServiceProvider).putConfig(config);
+        await ref.read(ponydownloaderServiceProvider).putConfig(config);
       }
       unawaited(Analytics.instance.logAppOpen());
     } catch (error, stackTrace) {
@@ -357,7 +357,7 @@ class AppRuntimeController extends AsyncNotifier<AppRuntimeState> {
     btExtra.subscribeTrackers = trackers;
     btExtra.lastTrackerUpdateTime = DateTime.now();
     config.protocolConfig.bt.trackers = {...btExtra.subscribeTrackers, ...btExtra.customTrackers}.toList();
-    await ref.read(gopeedServiceProvider).putConfig(config);
+    await ref.read(ponydownloaderServiceProvider).putConfig(config);
 
     final current = state.value;
     if (current != null) {
@@ -429,14 +429,14 @@ class AppRuntimeController extends AsyncNotifier<AppRuntimeState> {
     final current = state.value;
     if (current == null) return;
     final nextConfig = _copyStartConfig(config);
-    final downloaderConfig = await ref.read(gopeedServiceProvider).getConfig();
+    final downloaderConfig = await ref.read(ponydownloaderServiceProvider).getConfig();
     downloaderConfig.api
       ..enable = nextConfig.apiEnable
       ..mcpEnable = nextConfig.mcpEnable
       ..network = nextConfig.network
       ..address = nextConfig.address
       ..token = nextConfig.apiToken;
-    await ref.read(gopeedServiceProvider).putConfig(downloaderConfig);
+    await ref.read(ponydownloaderServiceProvider).putConfig(downloaderConfig);
     final statusResult = await LibgopeedBoot.instance.getApiServerState();
     _replaceApiRuntime(nextConfig, downloaderConfig, statusResult.state);
     if (statusResult.error.isNotEmpty) {
@@ -447,9 +447,9 @@ class AppRuntimeController extends AsyncNotifier<AppRuntimeState> {
   Future<void> _persistApiServerEnabled(bool enabled) async {
     final current = state.value;
     if (current == null) return;
-    final downloaderConfig = await ref.read(gopeedServiceProvider).getConfig();
+    final downloaderConfig = await ref.read(ponydownloaderServiceProvider).getConfig();
     downloaderConfig.api.enable = enabled;
-    await ref.read(gopeedServiceProvider).putConfig(downloaderConfig);
+    await ref.read(ponydownloaderServiceProvider).putConfig(downloaderConfig);
     final nextConfig = _copyStartConfig(current.startConfig)..apiEnable = enabled;
     final statusResult = await LibgopeedBoot.instance.getApiServerState();
     _replaceApiRuntime(nextConfig, downloaderConfig, statusResult.state);
@@ -500,9 +500,9 @@ class AppRuntimeController extends AsyncNotifier<AppRuntimeState> {
     final operation = _preferenceWrites.then((_) async {
       final current = state.value;
       if (current == null) return;
-      final config = await ref.read(gopeedServiceProvider).getConfig();
+      final config = await ref.read(ponydownloaderServiceProvider).getConfig();
       mutation(config.extra);
-      await ref.read(gopeedServiceProvider).putConfig(config);
+      await ref.read(ponydownloaderServiceProvider).putConfig(config);
       replaceDownloaderConfig(config);
     });
     _preferenceWrites = operation.then<void>((_) {}, onError: (_, _) {});

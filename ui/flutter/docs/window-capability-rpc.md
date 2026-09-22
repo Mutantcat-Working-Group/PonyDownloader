@@ -17,7 +17,7 @@ Presentation / Riverpod controllers
               |
         AppCapabilities
           /         \
- GopeedService   AppStorageService
+ PonyDownloaderService   AppStorageService
           \         /
        CapabilityInvoker
           /         \
@@ -36,7 +36,7 @@ The presentation layer must not branch on whether it is running in a main or chi
 Every operation is declared once as a typed `RpcMethod<P, R>`:
 
 ```dart
-static const resolve = RpcMethod<ResolveTask, ResolveResult>('gopeed.resolve');
+static const resolve = RpcMethod<ResolveTask, ResolveResult>('ponydownloader.resolve');
 ```
 
 Rules:
@@ -57,7 +57,7 @@ The local invoker calls the typed handler directly and does not perform a JSON r
 Child-to-main requests use one unidirectional `WindowMethodChannel`:
 
 ```text
-gopeed.app.capabilities.v1
+ponydownloader.app.capabilities.v1
 ```
 
 The transport uses one method, `capability.call`, with an operation name and JSON payload. Results use a common success/error envelope. MethodChannel provides request-response correlation, so the protocol does not add request IDs for ordinary calls.
@@ -97,12 +97,12 @@ State broadcasting must observe the owning Riverpod state centrally. Do not broa
 
 ## 7. Gopeed Backend Migration
 
-All structured task, configuration, extension, and webhook operations are exposed through `GopeedService`. The local registry currently binds them to `lib/api/api.dart`.
+All structured task, configuration, extension, and webhook operations are exposed through `PonyDownloaderService`. The local registry currently binds them to `lib/api/api.dart`.
 
 When the backend moves to FFI:
 
 - Replace the main-window local bindings or their underlying implementation.
-- Keep `GopeedMethods`, `GopeedService`, child-window transport, pages, and controllers unchanged.
+- Keep `PonyDownloaderMethods`, `PonyDownloaderService`, child-window transport, pages, and controllers unchanged.
 - Keep raw HTTP proxy functionality separate unless an explicit capability contract is introduced for it.
 
 ## 8. Adding A Capability

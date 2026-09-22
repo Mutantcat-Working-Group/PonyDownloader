@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/api/model/downloader_config.dart';
-import 'package:gopeed/app/application/app_platform_controller.dart';
-import 'package:gopeed/app/application/app_runtime_controller.dart';
-import 'package:gopeed/core/common/api_server_state.dart';
-import 'package:gopeed/core/common/start_config.dart';
-import 'package:gopeed/util/updater.dart';
+import 'package:ponydownloader/api/model/downloader_config.dart';
+import 'package:ponydownloader/app/application/app_platform_controller.dart';
+import 'package:ponydownloader/app/application/app_runtime_controller.dart';
+import 'package:ponydownloader/core/common/api_server_state.dart';
+import 'package:ponydownloader/core/common/start_config.dart';
+import 'package:ponydownloader/util/updater.dart';
 
 void main() {
   test('runtime updates do not rebuild the platform controller', () async {

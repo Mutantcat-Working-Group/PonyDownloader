@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:path/path.dart' as path;
 import 'package:win32_registry/win32_registry.dart';
 
@@ -16,6 +17,7 @@ const _edgeExtensionId = 'dkajnckekendchdleoaenoophcobooce';
 const _firefoxExtensionId = '{c5d69a8f-2ed0-46a7-afa4-b3a00dc58088}';
 
 List<String> get _debugExtensionIds {
+  if (kReleaseMode) return const [];
   final envValue = Platform.environment['GOPEED_DEBUG_EXTENSION_IDS'] ?? '';
   if (envValue.isNotEmpty) {
     return envValue.split(',').map((id) => id.trim()).toList();

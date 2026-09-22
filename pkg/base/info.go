@@ -1,7 +1,7 @@
 package base
 
-// Version is the build version, set at build time, using `go build -ldflags "-X github.com/GopeedLab/gopeed/pkg/base.Version=1.0.20260921"`.
-var Version = "1.0.20260921"
+// Version is the build version, set at build time, using `go build -ldflags "-X github.com/GopeedLab/gopeed/pkg/base.Version=1.0.20260922"`.
+var Version = "1.0.20260922"
 var InDocker string
 
 func init() {

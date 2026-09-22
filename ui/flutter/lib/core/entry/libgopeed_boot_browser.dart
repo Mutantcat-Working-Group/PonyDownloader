@@ -30,7 +30,7 @@ class LibgopeedBootBrowser implements LibgopeedBoot {
 
   @override
   Future<String> invoke(String method, String path, {String query = '', String body = ''}) {
-    throw UnsupportedError('Native Gopeed invoke is unavailable on web');
+    throw UnsupportedError('Native PonyDownloader invoke is unavailable on web');
   }
 
   @override

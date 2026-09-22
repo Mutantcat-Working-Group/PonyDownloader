@@ -2,11 +2,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/features/auth/presentation/pages/login_page.dart';
-import 'package:gopeed/l10n/app_localizations.dart';
-import 'package:gopeed/shared/theme/app_component_themes.dart';
-import 'package:gopeed/shared/theme/app_theme.dart';
-import 'package:gopeed/shared/widgets/app_loading_button.dart';
+import 'package:ponydownloader/features/auth/presentation/pages/login_page.dart';
+import 'package:ponydownloader/l10n/app_localizations.dart';
+import 'package:ponydownloader/shared/theme/app_component_themes.dart';
+import 'package:ponydownloader/shared/theme/app_theme.dart';
+import 'package:ponydownloader/shared/widgets/app_loading_button.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shad;
 
 void main() {

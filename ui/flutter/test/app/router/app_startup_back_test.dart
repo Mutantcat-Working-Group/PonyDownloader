@@ -4,11 +4,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/app/application/app_runtime_controller.dart';
-import 'package:gopeed/app/router/app_router.dart';
-import 'package:gopeed/features/auth/application/web_auth_controller.dart';
-import 'package:gopeed/shared/theme/app_theme.dart';
-import 'package:gopeed/shared/widgets/app_toast.dart';
+import 'package:ponydownloader/app/application/app_runtime_controller.dart';
+import 'package:ponydownloader/app/router/app_router.dart';
+import 'package:ponydownloader/features/auth/application/web_auth_controller.dart';
+import 'package:ponydownloader/shared/theme/app_theme.dart';
+import 'package:ponydownloader/shared/widgets/app_toast.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shad;
 
 class _StartingRuntime extends AppRuntimeController {

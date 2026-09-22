@@ -230,6 +230,8 @@
   "backgroundLocationKeepAlive": "常驻后台",
   "notificationTaskDone": "任务完成",
   "notificationTaskError": "任务失败",
+  "notificationDownloadsRecoveredTitle": "下载已恢复",
+  "notificationDownloadsRecoveredBody": "PonyDownloader 已恢复电脑休眠期间中断的下载任务。",
   "appTitle": "PonyDownloader 下载管理器",
   "unsupportedWindowPayload": "不支持的窗口请求",
   "runtimeInitializationFailed": "无法初始化 PonyDownloader 运行环境。\n{error}",

@@ -169,17 +169,17 @@ class AppPlatformController extends AsyncNotifier<AppPlatformState> with WindowL
         MenuItem(label: locale.create, onClick: (_) => _openCreateTask()),
         MenuItem(
           label: locale.startAll,
-          onClick: (_) => unawaited(ref.read(gopeedServiceProvider).continueAllTasks(null)),
+          onClick: (_) => unawaited(ref.read(ponydownloaderServiceProvider).continueAllTasks(null)),
         ),
         MenuItem(
           label: locale.pauseAll,
-          onClick: (_) => unawaited(ref.read(gopeedServiceProvider).pauseAllTasks(null)),
+          onClick: (_) => unawaited(ref.read(ponydownloaderServiceProvider).pauseAllTasks(null)),
         ),
         MenuItem(label: locale.setting, onClick: (_) => _go('/settings')),
         MenuItem.separator(),
         MenuItem(
           label: locale.donate,
-          onClick: (_) => unawaited(launchUrl(Uri.parse('https://gopeed.com/docs/donate'))),
+          onClick: (_) => unawaited(launchUrl(Uri.parse('https://github.com/Mutantcat-Working-Group/PonyDownloader'))),
         ),
         MenuItem(label: version),
         MenuItem.separator(),
@@ -208,7 +208,7 @@ class AppPlatformController extends AsyncNotifier<AppPlatformState> with WindowL
           return;
         }
         if (silent) {
-          await ref.read(gopeedServiceProvider).createTask(createTask);
+          await ref.read(ponydownloaderServiceProvider).createTask(createTask);
           return;
         }
         final opened = await AppWindowLauncher.openCreateTaskWindow(createTask: createTask);

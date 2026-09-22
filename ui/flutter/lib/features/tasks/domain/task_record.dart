@@ -3,7 +3,7 @@ import 'package:path/path.dart' as path;
 
 import '../../../api/model/resource.dart' as api_resource;
 import '../../../api/model/task.dart' as api_task;
-import '../../../core/icons/gopeed_icons.dart';
+import '../../../core/icons/ponydownloader_icons.dart';
 import '../../../core/utils/byte_size_formatter.dart';
 import '../../../core/utils/transfer_rate_formatter.dart';
 
@@ -246,29 +246,29 @@ const _databaseExtensions = {'db', 'sqlite', 'sqlite3', 'mdb', 'accdb', 'parquet
 
 IconData taskFileTypeIcon(String name, {bool isFolder = false, api_task.Protocol? protocol}) {
   return switch (_assetType(name, isFolder: isFolder, protocol: protocol)) {
-    TaskAssetType.file => GopeedIcons.file,
-    TaskAssetType.folder => GopeedIcons.folder,
-    TaskAssetType.torrentFolder => GopeedIcons.folderBt,
-    TaskAssetType.torrent => GopeedIcons.protocolBt,
-    TaskAssetType.ed2k => GopeedIcons.protocolEd2k,
-    TaskAssetType.installer => GopeedIcons.fileInstaller,
-    TaskAssetType.androidPackage => GopeedIcons.fileAndroid,
-    TaskAssetType.iosPackage => GopeedIcons.fileIos,
-    TaskAssetType.diskImage => GopeedIcons.fileDiskImage,
-    TaskAssetType.web => GopeedIcons.fileWeb,
-    TaskAssetType.text => GopeedIcons.fileText,
-    TaskAssetType.pdf => GopeedIcons.filePdf,
-    TaskAssetType.document => GopeedIcons.fileDocument,
-    TaskAssetType.spreadsheet => GopeedIcons.fileSpreadsheet,
-    TaskAssetType.presentation => GopeedIcons.filePresentation,
-    TaskAssetType.archive => GopeedIcons.fileArchive,
-    TaskAssetType.image => GopeedIcons.fileImage,
-    TaskAssetType.audio => GopeedIcons.fileAudio,
-    TaskAssetType.video => GopeedIcons.fileVideo,
-    TaskAssetType.code => GopeedIcons.fileCode,
-    TaskAssetType.ebook => GopeedIcons.fileEbook,
-    TaskAssetType.font => GopeedIcons.fileFont,
-    TaskAssetType.database => GopeedIcons.fileDatabase,
+    TaskAssetType.file => PonyDownloaderIcons.file,
+    TaskAssetType.folder => PonyDownloaderIcons.folder,
+    TaskAssetType.torrentFolder => PonyDownloaderIcons.folderBt,
+    TaskAssetType.torrent => PonyDownloaderIcons.protocolBt,
+    TaskAssetType.ed2k => PonyDownloaderIcons.protocolEd2k,
+    TaskAssetType.installer => PonyDownloaderIcons.fileInstaller,
+    TaskAssetType.androidPackage => PonyDownloaderIcons.fileAndroid,
+    TaskAssetType.iosPackage => PonyDownloaderIcons.fileIos,
+    TaskAssetType.diskImage => PonyDownloaderIcons.fileDiskImage,
+    TaskAssetType.web => PonyDownloaderIcons.fileWeb,
+    TaskAssetType.text => PonyDownloaderIcons.fileText,
+    TaskAssetType.pdf => PonyDownloaderIcons.filePdf,
+    TaskAssetType.document => PonyDownloaderIcons.fileDocument,
+    TaskAssetType.spreadsheet => PonyDownloaderIcons.fileSpreadsheet,
+    TaskAssetType.presentation => PonyDownloaderIcons.filePresentation,
+    TaskAssetType.archive => PonyDownloaderIcons.fileArchive,
+    TaskAssetType.image => PonyDownloaderIcons.fileImage,
+    TaskAssetType.audio => PonyDownloaderIcons.fileAudio,
+    TaskAssetType.video => PonyDownloaderIcons.fileVideo,
+    TaskAssetType.code => PonyDownloaderIcons.fileCode,
+    TaskAssetType.ebook => PonyDownloaderIcons.fileEbook,
+    TaskAssetType.font => PonyDownloaderIcons.fileFont,
+    TaskAssetType.database => PonyDownloaderIcons.fileDatabase,
   };
 }
 

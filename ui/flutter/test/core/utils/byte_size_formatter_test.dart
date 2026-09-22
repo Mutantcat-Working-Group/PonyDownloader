@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/core/utils/byte_size_formatter.dart';
+import 'package:ponydownloader/core/utils/byte_size_formatter.dart';
 
 void main() {
   test('formats scaled byte sizes with up to two decimal places', () {

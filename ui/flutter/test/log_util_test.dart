@@ -1,14 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/util/log_util.dart';
+import 'package:ponydownloader/util/log_util.dart';
 import 'package:path/path.dart' as path;
 
 void main() {
   late Directory temporaryDirectory;
 
   setUp(() async {
-    temporaryDirectory = await Directory.systemTemp.createTemp('gopeed-log-util-');
+    temporaryDirectory = await Directory.systemTemp.createTemp('ponydownloader-log-util-');
   });
 
   tearDown(() async {

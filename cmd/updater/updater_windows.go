@@ -4,7 +4,6 @@ package main
 
 import (
 	"archive/zip"
-	"fmt"
 	"io"
 	"os"
 	"os/exec"
@@ -15,75 +14,15 @@ import (
 func install(killSignalChan chan<- any, updateChannel, packagePath, destDir string) (bool, error) {
 	switch updateChannel {
 	case "windowsInstaller":
-		return false, installByInstaller(killSignalChan, packagePath, destDir)
+		return false, installByInstaller(killSignalChan, packagePath)
 	default:
 		return true, installByPortable(killSignalChan, packagePath, destDir)
 	}
 }
 
-// installByInstaller extracts the installer from the zip file and runs it
-func installByInstaller(killSignalChan chan<- any, packagePath, destDir string) error {
-	// Create a temp directory for extraction
-	tempDir, err := os.MkdirTemp("", "gopeed_update")
-	if err != nil {
-		return err
-	}
-	defer os.RemoveAll(tempDir)
-
-	// Extract the zip file
-	reader, err := zip.OpenReader(packagePath)
-	if err != nil {
-		return err
-	}
-	defer reader.Close()
-
-	var installerPath string
-	for _, file := range reader.File {
-		cleanName := filepath.Clean(file.Name)
-		if strings.HasPrefix(cleanName, "..") || filepath.IsAbs(cleanName) {
-			continue
-		}
-		if file.FileInfo().IsDir() {
-			continue
-		}
-
-		path := filepath.Join(tempDir, cleanName)
-
-		if err := os.MkdirAll(filepath.Dir(path), os.ModePerm); err != nil {
-			return err
-		}
-
-		dstFile, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, file.Mode())
-		if err != nil {
-			return err
-		}
-
-		srcFile, err := file.Open()
-		if err != nil {
-			dstFile.Close()
-			return err
-		}
-
-		_, err = io.Copy(dstFile, srcFile)
-		srcFile.Close()
-		dstFile.Close()
-		if err != nil {
-			return err
-		}
-
-		// If this is likely an installer (.exe, .msi), save its path
-		ext := strings.ToLower(filepath.Ext(file.Name))
-		if ext == ".exe" || ext == ".msi" {
-			installerPath = path
-		}
-	}
-
-	if installerPath == "" {
-		return fmt.Errorf("no installer found in the update package")
-	}
-
-	// Run the installer
-	cmd := exec.Command(installerPath)
+// installByInstaller runs the downloaded NSIS installer directly.
+func installByInstaller(killSignalChan chan<- any, packagePath string) error {
+	cmd := exec.Command(packagePath)
 	if err := cmd.Start(); err != nil {
 		return err
 	}

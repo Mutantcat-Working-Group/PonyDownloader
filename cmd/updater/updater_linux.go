@@ -67,6 +67,6 @@ func installByFlathub() error {
 
 // installBySnap updates the application via Snap
 func installBySnap() error {
-	command := "sudo snap refresh gopeed"
+	command := "sudo snap refresh ponydownloader"
 	return executeInTerminal(command)
 }

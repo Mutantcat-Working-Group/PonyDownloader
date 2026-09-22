@@ -2,10 +2,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:gopeed/app/router/mobile_exit_guard.dart';
-import 'package:gopeed/shared/navigation/app_exit_confirmation_controller.dart';
-import 'package:gopeed/shared/theme/app_theme.dart';
-import 'package:gopeed/shared/widgets/app_toast.dart';
+import 'package:ponydownloader/app/router/mobile_exit_guard.dart';
+import 'package:ponydownloader/shared/navigation/app_exit_confirmation_controller.dart';
+import 'package:ponydownloader/shared/theme/app_theme.dart';
+import 'package:ponydownloader/shared/widgets/app_toast.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shad;
 
 void main() {

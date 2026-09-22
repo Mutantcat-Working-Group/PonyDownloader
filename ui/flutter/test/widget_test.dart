@@ -13,96 +13,96 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shad;
 import 'package:window_manager/window_manager.dart';
-import 'package:gopeed/features/home/presentation/pages/home_page.dart';
-import 'package:gopeed/app/app.dart';
-import 'package:gopeed/app/router/app_router.dart';
-import 'package:gopeed/core/capabilities/capability_rpc.dart';
-import 'package:gopeed/core/capabilities/gopeed_capability.dart';
-import 'package:gopeed/core/capabilities/storage_capability.dart';
-import 'package:gopeed/api/model/resolve_result.dart';
-import 'package:gopeed/features/tasks/application/pending_create_task.dart';
-import 'package:gopeed/features/tasks/application/task_list_navigation.dart';
-import 'package:gopeed/core/capabilities/app_capabilities.dart';
-import 'package:gopeed/core/capabilities/app_navigation_capability.dart';
-import 'package:gopeed/app/application/app_appearance_controller.dart';
-import 'package:gopeed/app/application/app_deep_link_controller.dart';
-import 'package:gopeed/app/application/app_notification_controller.dart';
-import 'package:gopeed/app/application/app_platform_controller.dart';
-import 'package:gopeed/app/application/app_runtime_controller.dart';
-import 'package:gopeed/api/model/create_task.dart';
-import 'package:gopeed/api/model/install_extension.dart';
-import 'package:gopeed/features/extensions/application/pending_extension_install.dart';
-import 'package:gopeed/api/model/downloader_config.dart';
-import 'package:gopeed/api/model/extension.dart' as api_extension;
-import 'package:gopeed/api/model/meta.dart';
-import 'package:gopeed/api/model/options.dart';
-import 'package:gopeed/api/model/request.dart';
-import 'package:gopeed/api/model/resource.dart';
-import 'package:gopeed/api/model/store_extension.dart';
-import 'package:gopeed/api/model/task.dart' as api_task;
-import 'package:gopeed/core/common/start_config.dart';
-import 'package:gopeed/core/common/api_server_state.dart';
-import 'package:gopeed/core/icons/gopeed_icons.dart';
-import 'package:gopeed/core/network/gopeed/gopeed_transport.dart';
-import 'package:gopeed/core/window/app_window_chrome.dart';
-import 'package:gopeed/core/window/app_window_frame.dart';
-import 'package:gopeed/features/home/presentation/widgets/tasks_top_bar.dart';
-import 'package:gopeed/features/extensions/application/extensions_controller.dart';
-import 'package:gopeed/features/extensions/presentation/pages/extension_details_page.dart';
-import 'package:gopeed/features/extensions/presentation/pages/extensions_page.dart';
-import 'package:gopeed/features/home/presentation/widgets/primary_rail.dart';
-import 'package:gopeed/features/tasks/application/pending_update_task.dart';
-import 'package:gopeed/features/tasks/application/task_batch_selection_controller.dart';
-import 'package:gopeed/features/tasks/application/task_runtime_status_provider.dart';
-import 'package:gopeed/features/tasks/application/task_stats_provider.dart';
-import 'package:gopeed/features/tasks/application/tasks_controller.dart';
-import 'package:gopeed/features/settings/application/settings_controller.dart';
-import 'package:gopeed/features/settings/presentation/pages/settings_page.dart';
-import 'package:gopeed/features/settings/presentation/widgets/download_categories_setting.dart';
-import 'package:gopeed/features/settings/presentation/widgets/mcp_agent_setup.dart';
-import 'package:gopeed/features/settings/presentation/widgets/settings_item.dart';
-import 'package:gopeed/features/settings/presentation/widgets/settings_language_select.dart';
-import 'package:gopeed/features/settings/presentation/widgets/settings_list_editor.dart';
-import 'package:gopeed/features/tasks/domain/task_record.dart';
-import 'package:gopeed/features/tasks/presentation/pages/create_task_window_page.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/resolve_file_tree.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/speed_monitor_card.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/task_batch_selection_builder.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/task_file_tree.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/task_file_manager.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/task_progress_bar.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/task_card/task_card.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/task_context_menu.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/task_delete_dialog.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/task_drawer.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/pending_update_dialog.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/task_statistics/piece_map.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/task_statistics/peer_table.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/task_statistics/task_statistics_tab.dart';
-import 'package:gopeed/features/tasks/presentation/widgets/task_update_url_dialog.dart';
-import 'package:gopeed/api/model/task_stats.dart';
-import 'package:gopeed/l10n/l10n.dart';
-import 'package:gopeed/shared/theme/app_palette.dart';
-import 'package:gopeed/shared/theme/app_component_themes.dart';
-import 'package:gopeed/shared/theme/app_design_tokens.dart';
-import 'package:gopeed/shared/theme/app_theme.dart';
-import 'package:gopeed/shared/theme/app_theme_color.dart';
-import 'package:gopeed/shared/services/download_directory_picker.dart';
-import 'package:gopeed/shared/widgets/app_loading_button.dart';
-import 'package:gopeed/shared/widgets/app_choice_segmented_control.dart';
-import 'package:gopeed/shared/widgets/app_copy_icon_button.dart';
-import 'package:gopeed/shared/widgets/app_http_headers_editor.dart';
-import 'package:gopeed/shared/widgets/app_path_picker_field.dart';
-import 'package:gopeed/shared/widgets/app_primary_button.dart';
-import 'package:gopeed/shared/widgets/app_text_field.dart';
-import 'package:gopeed/shared/widgets/app_tooltip.dart';
-import 'package:gopeed/shared/widgets/app_toast.dart';
-import 'package:gopeed/shared/widgets/app_swipe_tabs.dart';
-import 'package:gopeed/shared/widgets/gopeed_app_mark.dart';
-import 'package:gopeed/shared/widgets/responsive_menu_layout.dart';
-import 'package:gopeed/shared/widgets/virtual_tree_view.dart';
-import 'package:gopeed/shared/widgets/window/desktop_window_header.dart';
-import 'package:gopeed/util/updater.dart';
+import 'package:ponydownloader/features/home/presentation/pages/home_page.dart';
+import 'package:ponydownloader/app/app.dart';
+import 'package:ponydownloader/app/router/app_router.dart';
+import 'package:ponydownloader/core/capabilities/capability_rpc.dart';
+import 'package:ponydownloader/core/capabilities/ponydownloader_capability.dart';
+import 'package:ponydownloader/core/capabilities/storage_capability.dart';
+import 'package:ponydownloader/api/model/resolve_result.dart';
+import 'package:ponydownloader/features/tasks/application/pending_create_task.dart';
+import 'package:ponydownloader/features/tasks/application/task_list_navigation.dart';
+import 'package:ponydownloader/core/capabilities/app_capabilities.dart';
+import 'package:ponydownloader/core/capabilities/app_navigation_capability.dart';
+import 'package:ponydownloader/app/application/app_appearance_controller.dart';
+import 'package:ponydownloader/app/application/app_deep_link_controller.dart';
+import 'package:ponydownloader/app/application/app_notification_controller.dart';
+import 'package:ponydownloader/app/application/app_platform_controller.dart';
+import 'package:ponydownloader/app/application/app_runtime_controller.dart';
+import 'package:ponydownloader/api/model/create_task.dart';
+import 'package:ponydownloader/api/model/install_extension.dart';
+import 'package:ponydownloader/features/extensions/application/pending_extension_install.dart';
+import 'package:ponydownloader/api/model/downloader_config.dart';
+import 'package:ponydownloader/api/model/extension.dart' as api_extension;
+import 'package:ponydownloader/api/model/meta.dart';
+import 'package:ponydownloader/api/model/options.dart';
+import 'package:ponydownloader/api/model/request.dart';
+import 'package:ponydownloader/api/model/resource.dart';
+import 'package:ponydownloader/api/model/store_extension.dart';
+import 'package:ponydownloader/api/model/task.dart' as api_task;
+import 'package:ponydownloader/core/common/start_config.dart';
+import 'package:ponydownloader/core/common/api_server_state.dart';
+import 'package:ponydownloader/core/icons/ponydownloader_icons.dart';
+import 'package:ponydownloader/core/network/ponydownloader/ponydownloader_transport.dart';
+import 'package:ponydownloader/core/window/app_window_chrome.dart';
+import 'package:ponydownloader/core/window/app_window_frame.dart';
+import 'package:ponydownloader/features/home/presentation/widgets/tasks_top_bar.dart';
+import 'package:ponydownloader/features/extensions/application/extensions_controller.dart';
+import 'package:ponydownloader/features/extensions/presentation/pages/extension_details_page.dart';
+import 'package:ponydownloader/features/extensions/presentation/pages/extensions_page.dart';
+import 'package:ponydownloader/features/home/presentation/widgets/primary_rail.dart';
+import 'package:ponydownloader/features/tasks/application/pending_update_task.dart';
+import 'package:ponydownloader/features/tasks/application/task_batch_selection_controller.dart';
+import 'package:ponydownloader/features/tasks/application/task_runtime_status_provider.dart';
+import 'package:ponydownloader/features/tasks/application/task_stats_provider.dart';
+import 'package:ponydownloader/features/tasks/application/tasks_controller.dart';
+import 'package:ponydownloader/features/settings/application/settings_controller.dart';
+import 'package:ponydownloader/features/settings/presentation/pages/settings_page.dart';
+import 'package:ponydownloader/features/settings/presentation/widgets/download_categories_setting.dart';
+import 'package:ponydownloader/features/settings/presentation/widgets/mcp_agent_setup.dart';
+import 'package:ponydownloader/features/settings/presentation/widgets/settings_item.dart';
+import 'package:ponydownloader/features/settings/presentation/widgets/settings_language_select.dart';
+import 'package:ponydownloader/features/settings/presentation/widgets/settings_list_editor.dart';
+import 'package:ponydownloader/features/tasks/domain/task_record.dart';
+import 'package:ponydownloader/features/tasks/presentation/pages/create_task_window_page.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/resolve_file_tree.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/speed_monitor_card.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/task_batch_selection_builder.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/task_file_tree.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/task_file_manager.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/task_progress_bar.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/task_card/task_card.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/task_context_menu.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/task_delete_dialog.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/task_drawer.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/pending_update_dialog.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/task_statistics/piece_map.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/task_statistics/peer_table.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/task_statistics/task_statistics_tab.dart';
+import 'package:ponydownloader/features/tasks/presentation/widgets/task_update_url_dialog.dart';
+import 'package:ponydownloader/api/model/task_stats.dart';
+import 'package:ponydownloader/l10n/l10n.dart';
+import 'package:ponydownloader/shared/theme/app_palette.dart';
+import 'package:ponydownloader/shared/theme/app_component_themes.dart';
+import 'package:ponydownloader/shared/theme/app_design_tokens.dart';
+import 'package:ponydownloader/shared/theme/app_theme.dart';
+import 'package:ponydownloader/shared/theme/app_theme_color.dart';
+import 'package:ponydownloader/shared/services/download_directory_picker.dart';
+import 'package:ponydownloader/shared/widgets/app_loading_button.dart';
+import 'package:ponydownloader/shared/widgets/app_choice_segmented_control.dart';
+import 'package:ponydownloader/shared/widgets/app_copy_icon_button.dart';
+import 'package:ponydownloader/shared/widgets/app_http_headers_editor.dart';
+import 'package:ponydownloader/shared/widgets/app_path_picker_field.dart';
+import 'package:ponydownloader/shared/widgets/app_primary_button.dart';
+import 'package:ponydownloader/shared/widgets/app_text_field.dart';
+import 'package:ponydownloader/shared/widgets/app_tooltip.dart';
+import 'package:ponydownloader/shared/widgets/app_toast.dart';
+import 'package:ponydownloader/shared/widgets/app_swipe_tabs.dart';
+import 'package:ponydownloader/shared/widgets/ponydownloader_app_mark.dart';
+import 'package:ponydownloader/shared/widgets/responsive_menu_layout.dart';
+import 'package:ponydownloader/shared/widgets/virtual_tree_view.dart';
+import 'package:ponydownloader/shared/widgets/window/desktop_window_header.dart';
+import 'package:ponydownloader/util/updater.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized().platformDispatcher.localeTestValue = const Locale('en');
@@ -115,10 +115,10 @@ void main() {
         var created = 0;
         final config = DownloaderConfig(downloadDir: '/downloads')..extra.defaultDirectDownload = direct;
         final registry = CapabilityRegistry(createAppCapabilityCodecs())
-          ..bind(GopeedMethods.getConfig, (_) => config)
+          ..bind(PonyDownloaderMethods.getConfig, (_) => config)
           ..bind(StorageMethods.saveCreateHistory, (_) => const RpcUnit())
           ..bind(
-            GopeedMethods.resolve,
+            PonyDownloaderMethods.resolve,
             (_) => ResolveResult(
               id: 'resolved',
               res: Resource(
@@ -127,7 +127,7 @@ void main() {
               ),
             ),
           )
-          ..bind(GopeedMethods.createTask, (_) {
+          ..bind(PonyDownloaderMethods.createTask, (_) {
             created++;
             return 'new-task';
           });
@@ -143,7 +143,7 @@ void main() {
           ],
         );
         addTearDown(container.dispose);
-        await tester.pumpWidget(UncontrolledProviderScope(container: container, child: const GopeedApp()));
+        await tester.pumpWidget(UncontrolledProviderScope(container: container, child: const PonyDownloaderApp()));
         await tester.pumpAndSettle();
         await tester.tap(find.text('Completed 1'));
         await tester.pumpAndSettle();
@@ -195,7 +195,7 @@ void main() {
           tasksControllerProvider.overrideWith(CompletedTasksController.new),
           settingsControllerProvider.overrideWith(FakeSettingsController.new),
         ],
-        child: const GopeedApp(),
+        child: const PonyDownloaderApp(),
       ),
     );
     await tester.pumpAndSettle();
@@ -309,7 +309,7 @@ void main() {
           appRuntimeControllerProvider.overrideWith(FakeRuntimeController.new),
           tasksControllerProvider.overrideWith(FakeTasksController.new),
         ],
-        child: const GopeedApp(),
+        child: const PonyDownloaderApp(),
       ),
     );
     await tester.pumpAndSettle();
@@ -349,11 +349,11 @@ void main() {
           .behavior,
       HitTestBehavior.opaque,
     );
-    expect(find.byType(GopeedAppMark), findsOneWidget);
+    expect(find.byType(PonyDownloaderAppMark), findsOneWidget);
     expect(find.byKey(const ValueKey('primary-rail-app-mark')), findsOneWidget);
     expect(tester.getSize(find.byKey(const ValueKey('primary-rail-app-mark'))), const Size.square(24));
-    expect(find.descendant(of: find.byType(GopeedAppMark), matching: find.byType(CustomPaint)), findsOneWidget);
-    expect(find.descendant(of: find.byType(GopeedAppMark), matching: find.byType(Image)), findsNothing);
+    expect(find.descendant(of: find.byType(PonyDownloaderAppMark), matching: find.byType(CustomPaint)), findsOneWidget);
+    expect(find.descendant(of: find.byType(PonyDownloaderAppMark), matching: find.byType(Image)), findsNothing);
     expect(find.text('M'), findsNothing);
     expect(find.text('V1.0'), findsNothing);
     expect(
@@ -437,7 +437,7 @@ void main() {
           appRuntimeControllerProvider.overrideWith(FakeRuntimeController.new),
           tasksControllerProvider.overrideWith(FailingTasksController.new),
         ],
-        child: const GopeedApp(),
+        child: const PonyDownloaderApp(),
       ),
     );
     await tester.pumpAndSettle();
@@ -466,7 +466,7 @@ void main() {
           appRuntimeControllerProvider.overrideWith(FakeRuntimeController.new),
           tasksControllerProvider.overrideWith(FakeTasksController.new),
         ],
-        child: const GopeedApp(),
+        child: const PonyDownloaderApp(),
       ),
     );
     await tester.pumpAndSettle();
@@ -491,7 +491,7 @@ void main() {
           appRuntimeControllerProvider.overrideWith(FakeRuntimeController.new),
           tasksControllerProvider.overrideWith(RecordingTasksController.new),
         ],
-        child: const GopeedApp(),
+        child: const PonyDownloaderApp(),
       ),
     );
     await tester.pump();
@@ -519,7 +519,7 @@ void main() {
           appRuntimeControllerProvider.overrideWith(FakeRuntimeController.new),
           tasksControllerProvider.overrideWith(FakeTasksController.new),
         ],
-        child: const GopeedApp(),
+        child: const PonyDownloaderApp(),
       ),
     );
     await tester.pumpAndSettle();
@@ -1448,7 +1448,7 @@ void main() {
     expect(find.text('Contributors'), findsOneWidget);
     expect(find.byKey(const ValueKey('ponydownloader-homepage')), findsOneWidget);
     expect(find.byKey(const ValueKey('ponydownloader-github')), findsOneWidget);
-    expect(find.byKey(const ValueKey('gopeed-contributors')), findsOneWidget);
+    expect(find.byKey(const ValueKey('ponydownloader-contributors')), findsOneWidget);
     final aboutOrder = [
       'Homepage',
       'GitHub',
@@ -1461,7 +1461,7 @@ void main() {
     for (final (key, label) in [
       ('ponydownloader-homepage', 'github.com/Mutantcat-Working-Group/PonyDownloader'),
       ('ponydownloader-github', 'github.com/Mutantcat-Working-Group/PonyDownloader'),
-      ('gopeed-contributors', 'View contributors'),
+      ('ponydownloader-contributors', 'View contributors'),
     ]) {
       final link = find.byKey(ValueKey(key));
       expect(find.descendant(of: link, matching: find.byType(shad.SecondaryButton)), findsNothing);
@@ -2725,7 +2725,7 @@ void main() {
           settingsControllerProvider.overrideWith(FakeSettingsController.new),
           tasksControllerProvider.overrideWith(FakeTasksController.new),
         ],
-        child: const GopeedApp(),
+        child: const PonyDownloaderApp(),
       ),
     );
     await tester.pumpAndSettle();
@@ -3718,25 +3718,25 @@ void main() {
 
   test('task icons follow task type and file extension instead of status', () {
     final extensionCases = <(String, IconData)>[
-      ('setup.exe', GopeedIcons.fileInstaller),
-      ('mobile.apk', GopeedIcons.fileAndroid),
-      ('mobile.ipa', GopeedIcons.fileIos),
-      ('backup.iso', GopeedIcons.fileDiskImage),
-      ('index.html', GopeedIcons.fileWeb),
-      ('notes.md', GopeedIcons.fileText),
-      ('manual.pdf', GopeedIcons.filePdf),
-      ('report.docx', GopeedIcons.fileDocument),
-      ('budget.xlsx', GopeedIcons.fileSpreadsheet),
-      ('slides.pptx', GopeedIcons.filePresentation),
-      ('source.tar.gz', GopeedIcons.fileArchive),
-      ('photo.PNG', GopeedIcons.fileImage),
-      ('track.flac', GopeedIcons.fileAudio),
-      ('movie.MKV', GopeedIcons.fileVideo),
-      ('main.dart', GopeedIcons.fileCode),
-      ('book.epub', GopeedIcons.fileEbook),
-      ('display.woff2', GopeedIcons.fileFont),
-      ('cache.sqlite', GopeedIcons.fileDatabase),
-      ('linux.torrent', GopeedIcons.protocolBt),
+      ('setup.exe', PonyDownloaderIcons.fileInstaller),
+      ('mobile.apk', PonyDownloaderIcons.fileAndroid),
+      ('mobile.ipa', PonyDownloaderIcons.fileIos),
+      ('backup.iso', PonyDownloaderIcons.fileDiskImage),
+      ('index.html', PonyDownloaderIcons.fileWeb),
+      ('notes.md', PonyDownloaderIcons.fileText),
+      ('manual.pdf', PonyDownloaderIcons.filePdf),
+      ('report.docx', PonyDownloaderIcons.fileDocument),
+      ('budget.xlsx', PonyDownloaderIcons.fileSpreadsheet),
+      ('slides.pptx', PonyDownloaderIcons.filePresentation),
+      ('source.tar.gz', PonyDownloaderIcons.fileArchive),
+      ('photo.PNG', PonyDownloaderIcons.fileImage),
+      ('track.flac', PonyDownloaderIcons.fileAudio),
+      ('movie.MKV', PonyDownloaderIcons.fileVideo),
+      ('main.dart', PonyDownloaderIcons.fileCode),
+      ('book.epub', PonyDownloaderIcons.fileEbook),
+      ('display.woff2', PonyDownloaderIcons.fileFont),
+      ('cache.sqlite', PonyDownloaderIcons.fileDatabase),
+      ('linux.torrent', PonyDownloaderIcons.protocolBt),
     ];
     for (final (name, icon) in extensionCases) {
       expect(
@@ -3746,14 +3746,14 @@ void main() {
       );
     }
 
-    expect(_taskRecord(id: 'folder', name: 'Downloads', isFolder: true).icon, GopeedIcons.folder);
+    expect(_taskRecord(id: 'folder', name: 'Downloads', isFolder: true).icon, PonyDownloaderIcons.folder);
     expect(
       _taskRecord(id: 'bt-folder', name: 'Linux collection', isFolder: true, protocol: api_task.Protocol.bt).icon,
-      GopeedIcons.folderBt,
+      PonyDownloaderIcons.folderBt,
     );
-    expect(_taskRecord(id: 'file', name: 'unknown').icon, GopeedIcons.file);
-    expect(_taskRecord(id: 'bt', name: 'unknown', protocol: api_task.Protocol.bt).icon, GopeedIcons.protocolBt);
-    expect(_taskRecord(id: 'ed2k', name: 'unknown', protocol: api_task.Protocol.ed2k).icon, GopeedIcons.protocolEd2k);
+    expect(_taskRecord(id: 'file', name: 'unknown').icon, PonyDownloaderIcons.file);
+    expect(_taskRecord(id: 'bt', name: 'unknown', protocol: api_task.Protocol.bt).icon, PonyDownloaderIcons.protocolBt);
+    expect(_taskRecord(id: 'ed2k', name: 'unknown', protocol: api_task.Protocol.ed2k).icon, PonyDownloaderIcons.protocolEd2k);
     final runningIcon = _taskRecord(id: 'running-video', name: 'movie.mp4').icon;
     final failedIcon = _taskRecord(id: 'failed-video', name: 'movie.mp4', status: TaskStatus.failed).icon;
     expect(failedIcon, runningIcon);
@@ -3987,8 +3987,8 @@ void main() {
     expect(find.text('Size'), findsOneWidget);
     expect(find.text('skipped.mp3'), findsOneWidget);
     expect(find.text('selected.mp3'), findsOneWidget);
-    expect(find.byIcon(GopeedIcons.folder), findsOneWidget);
-    expect(find.byIcon(GopeedIcons.fileAudio), findsNWidgets(2));
+    expect(find.byIcon(PonyDownloaderIcons.folder), findsOneWidget);
+    expect(find.byIcon(PonyDownloaderIcons.fileAudio), findsNWidgets(2));
     expect(tester.widget<Text>(find.text('selected.mp3')).style?.fontSize, 11);
     final compactTree = tester.widget<VirtualTreeView<dynamic>>(
       find.byWidgetPredicate((widget) => widget is VirtualTreeView),
@@ -4483,7 +4483,7 @@ void main() {
           appRuntimeControllerProvider.overrideWith(FakeRuntimeController.new),
           tasksControllerProvider.overrideWith(RecordingTasksController.new),
         ],
-        child: const GopeedApp(),
+        child: const PonyDownloaderApp(),
       ),
     );
     await tester.pump();
@@ -4542,8 +4542,8 @@ void main() {
     expect(find.text('root.txt'), findsOneWidget);
     expect(find.text('docs'), findsOneWidget);
     expect(find.text('guide.pdf'), findsNothing);
-    expect(find.byIcon(GopeedIcons.fileText), findsOneWidget);
-    expect(find.byIcon(GopeedIcons.folder), findsOneWidget);
+    expect(find.byIcon(PonyDownloaderIcons.fileText), findsOneWidget);
+    expect(find.byIcon(PonyDownloaderIcons.folder), findsOneWidget);
     expect(find.byIcon(Icons.open_in_new), findsOneWidget);
     final openFileTooltip = find.ancestor(of: find.byIcon(Icons.open_in_new), matching: find.byType(AppTooltip));
     expect(tester.widget<AppTooltip>(openFileTooltip).message, 'Open File');
@@ -4553,7 +4553,7 @@ void main() {
     await tester.tap(find.text('docs'));
     await tester.pump();
     expect(find.text('guide.pdf'), findsOneWidget);
-    expect(find.byIcon(GopeedIcons.filePdf), findsOneWidget);
+    expect(find.byIcon(PonyDownloaderIcons.filePdf), findsOneWidget);
     expect(find.text('1 items'), findsNothing);
     expect(find.byKey(const ValueKey('file-breadcrumb-/docs')), findsOneWidget);
 
@@ -4581,7 +4581,7 @@ void main() {
           appRuntimeControllerProvider.overrideWith(FakeRuntimeController.new),
           tasksControllerProvider.overrideWith(() => tasksController = RefreshingTaskFilesController()),
         ],
-        child: const GopeedApp(),
+        child: const PonyDownloaderApp(),
       ),
     );
     await tester.pump();
@@ -5271,7 +5271,7 @@ void main() {
     );
     addTearDown(container.dispose);
 
-    await tester.pumpWidget(UncontrolledProviderScope(container: container, child: const GopeedApp()));
+    await tester.pumpWidget(UncontrolledProviderScope(container: container, child: const PonyDownloaderApp()));
     await tester.pumpAndSettle();
 
     const listeningTask = PendingUpdateTask(id: 'paused-http', name: 'archive.zip');
@@ -5331,7 +5331,7 @@ void main() {
           appRuntimeControllerProvider.overrideWith(FakeRuntimeController.new),
           tasksControllerProvider.overrideWith(() => tasksController = RecordingTasksController()),
         ],
-        child: const GopeedApp(),
+        child: const PonyDownloaderApp(),
       ),
     );
     await tester.pump();
@@ -5359,7 +5359,7 @@ void main() {
           appRuntimeControllerProvider.overrideWith(FakeRuntimeController.new),
           tasksControllerProvider.overrideWith(CompletedTasksController.new),
         ],
-        child: const GopeedApp(),
+        child: const PonyDownloaderApp(),
       ),
     );
     await tester.pumpAndSettle();

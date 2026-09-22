@@ -128,7 +128,7 @@ func (p *pageWrapper) start() error {
 		}
 		p.view = w
 		w.SetEventHandler(p.handleNativeEvent)
-		w.SetTitle(firstNonEmpty(p.opts.Title, "Gopeed WebView"))
+		w.SetTitle(firstNonEmpty(p.opts.Title, "PonyDownloader WebView"))
 		w.SetSize(defaultWindowDimension(p.opts.Width, 1280), defaultWindowDimension(p.opts.Height, 800), webview.HintNone)
 
 		if p.opts.UserAgent != "" {

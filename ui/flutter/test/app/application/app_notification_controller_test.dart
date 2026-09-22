@@ -7,17 +7,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/api/model/downloader_config.dart';
-import 'package:gopeed/api/model/meta.dart';
-import 'package:gopeed/api/model/options.dart';
-import 'package:gopeed/api/model/request.dart';
-import 'package:gopeed/api/model/resource.dart';
-import 'package:gopeed/api/model/task.dart' as api_task;
-import 'package:gopeed/app/application/app_notification_controller.dart';
-import 'package:gopeed/app/application/app_runtime_controller.dart';
-import 'package:gopeed/core/common/api_server_state.dart';
-import 'package:gopeed/core/common/start_config.dart';
-import 'package:gopeed/core/common/task_event.dart';
+import 'package:ponydownloader/api/model/downloader_config.dart';
+import 'package:ponydownloader/api/model/meta.dart';
+import 'package:ponydownloader/api/model/options.dart';
+import 'package:ponydownloader/api/model/request.dart';
+import 'package:ponydownloader/api/model/resource.dart';
+import 'package:ponydownloader/api/model/task.dart' as api_task;
+import 'package:ponydownloader/app/application/app_notification_controller.dart';
+import 'package:ponydownloader/app/application/app_runtime_controller.dart';
+import 'package:ponydownloader/core/common/api_server_state.dart';
+import 'package:ponydownloader/core/common/start_config.dart';
+import 'package:ponydownloader/core/common/task_event.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -191,7 +191,7 @@ void main() {
   test('action responses route to file and folder handlers by encoded spec', () async {
     final container = await start(enabled: true);
     final notifier = container.read(appNotificationControllerProvider.notifier) as _TestNotificationController;
-    final existingPath = '${Directory.systemTemp.path}/gopeed-notification-test.zip';
+    final existingPath = '${Directory.systemTemp.path}/ponydownloader-notification-test.zip';
     addTearDown(() => File(existingPath).deleteSync());
     File(existingPath).writeAsStringSync('data');
 
@@ -221,7 +221,7 @@ void main() {
   test('folder actions accept an existing BT directory on all desktop payload formats', () async {
     final container = await start(enabled: true);
     final notifier = container.read(appNotificationControllerProvider.notifier) as _TestNotificationController;
-    final directory = await Directory.systemTemp.createTemp('gopeed-notification-bt-');
+    final directory = await Directory.systemTemp.createTemp('ponydownloader-notification-bt-');
     addTearDown(() => directory.delete(recursive: true));
 
     for (final windows in [true, false]) {
@@ -244,7 +244,7 @@ void main() {
   test('missing targets reach shared file operations so reveal can fall back to the parent', () async {
     final container = await start(enabled: true);
     final notifier = container.read(appNotificationControllerProvider.notifier) as _TestNotificationController;
-    final directory = await Directory.systemTemp.createTemp('gopeed-notification-parent-');
+    final directory = await Directory.systemTemp.createTemp('ponydownloader-notification-parent-');
     addTearDown(() => directory.delete(recursive: true));
     final missingPath = '${directory.path}/removed.zip';
 

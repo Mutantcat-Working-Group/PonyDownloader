@@ -3,7 +3,7 @@
 <h2>PonyDownloader</h2>
 </div>
 
-[English](/README.md) | [简体中文](/README_zh-CN.md) | [繁體中文](/README_zh-TW.md) | [日本語](/README_ja-JP.md) | [Tiếng Việt](/README_vi-VN.md)
+[English](/README.md) | [简体中文](/README_zh-CN.md)
 
 ### 1. Overview
 - A fast, modern, free and open-source download manager built with Go and Flutter, supporting HTTP, HTTPS, BitTorrent, magnet links and ed2k.
@@ -11,9 +11,10 @@
 - Multi-task concurrency, multi-connection HTTP transfers, BitTorrent DHT discovery, uTP transport, Web Seeds, selective file downloads, tracker management and seeding limits.
 - REST API, CLI, JavaScript extensions, browser integration, webhooks and an MCP endpoint for automation and AI-agent integration.
 - Follows the system theme, supports light/dark mode, multiple accent colors and 20+ UI languages.
+- Resumes interrupted downloads automatically after the host wakes from sleep or the display turns off, so a screen-off or suspend cycle never breaks active tasks.
 
 ### 2. Deployment
-1. Desktop and mobile: download the installer for your platform from [GitHub Releases](https://github.com/Mutantcat-Working-Group/PonyDownloader/releases) and install it.
+1. Desktop and mobile: download the installer for your platform from [GitHub Releases](https://github.com/Mutantcat-Working-Group/PonyDownloader/releases) and install it. Windows ships an NSIS installer (x64), macOS ships a universal ad-hoc signed DMG (Intel and Apple Silicon), and Linux ships AppImages for x64 and arm64.
 2. Self-hosted Web service: run the Web binary from the release package. It listens on `0.0.0.0:9999` by default, then visit `http://localhost:9999` in your browser.
    ```
    Optional flags:
@@ -25,7 +26,6 @@
    -d storage directory
    ```
 3. Docker: the `docker-compose.yml` in the repo root maps port 9999 and mounts a download directory; run `docker compose up -d`.
-4. Build from source: Go 1.25+ and Flutter 3.41+ are required; build the backend with `go build` and the frontend with `flutter build`.
 
 ### 3. Usage
 1. Desktop and mobile: create a task, paste an HTTP/HTTPS URL, magnet link or torrent file, choose a save directory and start downloading.
@@ -89,4 +89,11 @@
 - [X] Browser integration
 - [X] JavaScript extensions
 - [X] Docker deployment
+- [X] Wake/sleep watchdog that resumes interrupted downloads
 - [ ] Stable release and complete automated tests
+
+### 7. Build from Source
+
+Building from source requires Go 1.25+ and Flutter 3.41+. Build the backend with `go build` and the frontend with `flutter build`.
+
+This section only covers building from source. Regular users should download ready-made installers from [GitHub Releases](https://github.com/Mutantcat-Working-Group/PonyDownloader/releases).

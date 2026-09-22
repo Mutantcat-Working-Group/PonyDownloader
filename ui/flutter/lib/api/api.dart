@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../core/network/gopeed/gopeed_transport.dart';
+import '../core/network/ponydownloader/ponydownloader_transport.dart';
 
 import 'model/create_task.dart';
 import 'model/create_task_batch.dart';
@@ -25,15 +25,15 @@ class ApiTimeoutException implements Exception {
   String toString() => message;
 }
 
-GopeedTransport? _transport;
+PonyDownloaderTransport? _transport;
 
-void setTransportForTesting(GopeedTransport transport) {
+void setTransportForTesting(PonyDownloaderTransport transport) {
   _transport = transport;
 }
 
 void init(String network, String address, String apiToken, {void Function()? onUnauthorized}) {
-  _transport = createGopeedTransport(
-    GopeedTransportConfig(network: network, address: address, apiToken: apiToken, onUnauthorized: onUnauthorized),
+  _transport = createPonyDownloaderTransport(
+    PonyDownloaderTransportConfig(network: network, address: address, apiToken: apiToken, onUnauthorized: onUnauthorized),
   );
 }
 

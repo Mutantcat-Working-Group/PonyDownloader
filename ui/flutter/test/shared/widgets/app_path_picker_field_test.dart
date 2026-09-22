@@ -1,10 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/shared/theme/app_component_themes.dart';
-import 'package:gopeed/shared/theme/app_theme.dart';
-import 'package:gopeed/shared/widgets/app_path_picker_field.dart';
-import 'package:gopeed/shared/widgets/app_text_field.dart';
+import 'package:ponydownloader/shared/theme/app_component_themes.dart';
+import 'package:ponydownloader/shared/theme/app_theme.dart';
+import 'package:ponydownloader/shared/widgets/app_path_picker_field.dart';
+import 'package:ponydownloader/shared/widgets/app_text_field.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart' as shad;
 
 void main() {

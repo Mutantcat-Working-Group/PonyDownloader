@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/core/utils/content_uri_resolver.dart';
+import 'package:ponydownloader/core/utils/content_uri_resolver.dart';
 
 void main() {
   test('rejects non-content URIs', () async {

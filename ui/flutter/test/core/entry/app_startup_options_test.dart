@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/core/entry/app_startup_options.dart';
+import 'package:ponydownloader/core/entry/app_startup_options.dart';
 
 void main() {
   test('starts hidden for the launch-at-startup flag', () {
@@ -24,9 +24,9 @@ void main() {
   });
 
   test('recognizes only the root hidden wake URI', () {
-    expect(isSilentGopeedWakeUri(Uri.parse('ponydownloader:?hidden=true')), isTrue);
-    expect(isSilentGopeedWakeUri(Uri.parse('ponydownloader:///?hidden=true')), isTrue);
-    expect(isSilentGopeedWakeUri(Uri.parse('ponydownloader:///create?hidden=true')), isFalse);
-    expect(isSilentGopeedWakeUri(Uri.parse('https://example.com/?hidden=true')), isFalse);
+    expect(isSilentPonyDownloaderWakeUri(Uri.parse('ponydownloader:?hidden=true')), isTrue);
+    expect(isSilentPonyDownloaderWakeUri(Uri.parse('ponydownloader:///?hidden=true')), isTrue);
+    expect(isSilentPonyDownloaderWakeUri(Uri.parse('ponydownloader:///create?hidden=true')), isFalse);
+    expect(isSilentPonyDownloaderWakeUri(Uri.parse('https://example.com/?hidden=true')), isFalse);
   });
 }

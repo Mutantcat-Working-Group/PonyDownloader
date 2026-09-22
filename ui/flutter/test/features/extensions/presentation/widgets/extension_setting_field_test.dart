@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shadcn_flutter/shadcn_flutter.dart';
-import 'package:gopeed/api/model/extension.dart';
-import 'package:gopeed/features/extensions/presentation/widgets/extension_setting_field.dart';
-import 'package:gopeed/shared/widgets/app_text_field.dart';
+import 'package:ponydownloader/api/model/extension.dart';
+import 'package:ponydownloader/features/extensions/presentation/widgets/extension_setting_field.dart';
+import 'package:ponydownloader/shared/widgets/app_text_field.dart';
 
 void main() {
   Future<void> pumpField(WidgetTester tester, Setting setting, TextEditingController controller) async {

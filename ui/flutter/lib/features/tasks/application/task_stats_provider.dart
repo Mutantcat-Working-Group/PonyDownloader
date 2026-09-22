@@ -11,6 +11,6 @@ typedef TaskStatsRequest = ({String taskId, Protocol? protocol});
 final taskStatsProvider = FutureProvider.autoDispose.family<TaskStats?, TaskStatsRequest>((ref, request) async {
   final refreshTimer = Timer(const Duration(seconds: 2), ref.invalidateSelf);
   ref.onDispose(refreshTimer.cancel);
-  final json = await ref.read(gopeedServiceProvider).getTaskStats(request.taskId);
+  final json = await ref.read(ponydownloaderServiceProvider).getTaskStats(request.taskId);
   return TaskStats.fromJson(request.protocol, json);
 });

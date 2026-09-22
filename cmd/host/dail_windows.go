@@ -7,5 +7,5 @@ import (
 )
 
 func Dial() (net.Conn, error) {
-	return winio.DialPipe(`\\.\pipe\gopeed_host`, nil)
+	return winio.DialPipe(`\\.\pipe\ponydownloader_host`, nil)
 }

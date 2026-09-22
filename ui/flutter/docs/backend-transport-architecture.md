@@ -1,4 +1,4 @@
-# Gopeed Go–Flutter In-Process API Architecture
+# PonyDownloader Go–Flutter In-Process API Architecture
 
 ## 1. Background
 
@@ -29,9 +29,9 @@ Overall architecture:
 ```text
 Flutter Widget / Riverpod Controller
                   |
-             GopeedClient
+          PonyDownloaderClient
                   |
-          GopeedTransport
+          PonyDownloaderTransport
        +----------+-----------+
        |          |           |
  Desktop FFI   Mobile      Web REST
@@ -55,7 +55,7 @@ Flutter Widget / Riverpod Controller
 - Native business calls do not use TCP or Unix sockets.
 - Web continues to use REST. All published core REST paths, HTTP methods, parameters, and response contracts remain fully compatible.
 - The REST server can be started and stopped independently without closing the Downloader.
-- Flutter components depend on one `GopeedClient` and do not branch on FFI, gomobile, or REST.
+- Flutter components depend on one `PonyDownloaderClient` and do not branch on FFI, gomobile, or REST.
 - Go can push task events to Flutter.
 - Native clients use events for terminal task notifications; web may continue polling.
 - Go Bolt Storage is the primary persistence layer for business configuration and application preferences.
@@ -351,9 +351,12 @@ Components do not distinguish FFI from gomobile. The current desktop notificatio
 Use the following organization within the existing project structure:
 
 ```text
-lib/core/network/gopeed/
-├── gopeed_client.dart
-├── gopeed_transport.dart
+lib/core/network/ponydownloader/
+├── ponydownloader_transport.dart
+├── entry/
+│   ├── ponydownloader_transport_native.dart
+│   ├── ponydownloader_transport_web.dart
+│   └── ponydownloader_transport_stub.dart
 ├── api_request.dart
 ├── api_response.dart
 ├── api_exception.dart
@@ -363,7 +366,6 @@ lib/core/network/gopeed/
 │   ├── mobile_gomobile_transport.dart
 │   └── transport_factory.dart
 └── events/
-    ├── gopeed_event.dart
     ├── event_source.dart
     └── task_event_reducer.dart
 ```
@@ -375,18 +377,18 @@ The existing `lib/api/model/` directory may remain initially to avoid a large mo
 Unified interface:
 
 ```dart
-abstract interface class GopeedTransport {
+abstract interface class PonyDownloaderTransport {
   Future<ApiResponse> request(ApiRequest request);
-  Stream<GopeedEvent> get events;
+  Stream<PonyDownloaderTransportEvent> get events;
   Future<void> close();
 }
 ```
 
 A transport must not expose business methods such as `createTask()` or `getTasks()`. Otherwise, every new API would still require changes to all three transports.
 
-### 7.3 Maintain one typed API in GopeedClient
+### 7.3 Maintain one typed API in PonyDownloaderClient
 
-All business methods are implemented once in `GopeedClient`:
+All business methods are implemented once in `PonyDownloaderClient`:
 
 ```dart
 Future<List<Task>> getTasks(List<Status> statuses) {
@@ -402,10 +404,10 @@ Future<List<Task>> getTasks(List<Status> statuses) {
 The same method is dispatched differently by platform:
 
 - Web: RestTransport converts it into a Dio request.
-- Desktop: FFI Transport converts it into `GopeedInvoke`.
+- Desktop: FFI Transport converts it into `InvokeAsync`.
 - Mobile: gomobile Transport converts it into a MethodChannel invocation.
 
-Components and Riverpod controllers inject only `GopeedClient` or a higher-level `GopeedService`.
+Components and Riverpod controllers inject only `PonyDownloaderClient` or a higher-level `PonyDownloaderService`.
 
 The following patterns are prohibited:
 
@@ -416,14 +418,14 @@ The following patterns are prohibited:
 
 ### 7.4 Non-business HTTP capabilities
 
-`proxyRequest` is not a Gopeed Core API and belongs in a separate `ExternalHttpClient`:
+`proxyRequest` is not a PonyDownloader Core API and belongs in a separate `ExternalHttpClient`:
 
 ```text
 Native → request the target directly with Dio
 Web    → /api/web/proxy
 ```
 
-Task file access does not belong in `GopeedClient`:
+Task file access does not belong in `PonyDownloaderClient`:
 
 ```text
 Native → task.storagePath + relativePath
@@ -434,11 +436,11 @@ A web resource helper generates resource URLs used by the web page.
 
 ### 7.5 Multiple windows
 
-The main window is the sole owner of the Runtime, GopeedClient, and EventSource.
+The main window is the sole owner of the Runtime, PonyDownloaderClient, and EventSource.
 
 Child windows continue to use the existing AppCapabilities RPC:
 
-- The main window forwards child requests to GopeedClient.
+- The main window forwards child requests to PonyDownloaderClient.
 - The main window pushes complete state snapshots to child windows.
 - Child windows do not load the dynamic library, call gomobile, or open Storage.
 
@@ -457,7 +459,7 @@ Backend work:
 Flutter work:
 
 4. Add a Dart model and JSON codec if the API introduces a new data structure.
-5. Add one typed method to `GopeedClient`.
+5. Add one typed method to `PonyDownloaderClient`.
 6. Call that method from the feature Provider or Controller.
 
 No changes are required in:
@@ -567,7 +569,7 @@ Error categories:
 - ABI errors: incompatible versions or invalid return buffers.
 - Capability errors: invoking a web-only or native-only capability on the wrong platform.
 
-Flutter converts all of them into `GopeedException`. Components do not handle DioException, PlatformException, or raw FFI errors directly.
+Flutter converts all of them into `AppException`. Components do not handle DioException, PlatformException, or raw FFI errors directly.
 
 ## 11. Testing Strategy
 
@@ -584,7 +586,7 @@ Flutter converts all of them into `GopeedException`. Components do not handle Di
 
 ### 11.2 Flutter
 
-- Use FakeTransport to test GopeedClient paths, query parameters, request bodies, and decoding.
+- Use FakeTransport to test PonyDownloaderClient paths, query parameters, request bodies, and decoding.
 - RestTransport, DesktopFfiTransport, and MobileGomobileTransport contract tests.
 - TaskEvent JSON decoder and subscription-mask tests.
 - Desktop notification tests for done/error events.
@@ -644,7 +646,7 @@ Flutter converts all of them into `GopeedException`. Components do not handle Di
 
 1. Implement business logic once in Go ApplicationService.
 2. Register each API route once in the Core Route Registry.
-3. Implement each Flutter typed method once in GopeedClient.
+3. Implement each Flutter typed method once in PonyDownloaderClient.
 4. Transports serialize and forward data; they do not duplicate business methods.
 5. Event transports carry a generic envelope and do not expand the native bridge for every event type.
 6. Web-only HTTP capabilities do not enter the native API.
@@ -655,7 +657,7 @@ Under these rules, the stable change surface for a normal business API is:
 
 ```text
 Go Service + Route + Test
-Flutter Model (if required) + GopeedClient + Test
+Flutter Model (if required) + PonyDownloaderClient + Test
 ```
 
 Maintenance effort does not grow linearly with the number of supported platforms.

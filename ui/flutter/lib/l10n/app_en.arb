@@ -252,6 +252,8 @@
   "backgroundContinuedProcessing": "Continued Processing (iOS 26+)",
   "notificationTaskDone": "Task completed",
   "notificationTaskError": "Task error",
+  "notificationDownloadsRecoveredTitle": "Downloads resumed",
+  "notificationDownloadsRecoveredBody": "PonyDownloader resumed downloads interrupted while the computer was asleep.",
   "appTitle": "PonyDownloader Download Manager",
   "unsupportedWindowPayload": "Unsupported window request",
   "runtimeInitializationFailed": "Unable to initialize PonyDownloader runtime.\n{error}",

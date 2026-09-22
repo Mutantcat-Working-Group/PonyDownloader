@@ -1,8 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/api/model/extension.dart';
-import 'package:gopeed/api/model/store_extension.dart';
-import 'package:gopeed/features/extensions/application/extensions_controller.dart';
-import 'package:gopeed/features/extensions/presentation/widgets/extension_icon.dart';
+import 'package:ponydownloader/api/model/extension.dart';
+import 'package:ponydownloader/api/model/store_extension.dart';
+import 'package:ponydownloader/features/extensions/application/extensions_controller.dart';
+import 'package:ponydownloader/features/extensions/presentation/widgets/extension_icon.dart';
 import 'package:path/path.dart' as path;
 
 void main() {

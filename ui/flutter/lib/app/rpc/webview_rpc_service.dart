@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kReleaseMode;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -206,7 +207,7 @@ class WebViewRpcService {
       pageId: pageId,
       profile: profile,
       headless: params['headless'] as bool? ?? false,
-      debug: params['debug'] as bool? ?? false,
+      debug: !kReleaseMode && (params['debug'] as bool? ?? false),
       title: params['title'] as String? ?? '',
       width: (params['width'] as num?)?.toInt() ?? 1280,
       height: (params['height'] as num?)?.toInt() ?? 800,
@@ -375,7 +376,7 @@ class WebViewRpcPageSession {
   bool _disposed = false;
 
   Future<void> init() async {
-    callbackChannelName = '__gopeedWebViewCallback_${pageId.replaceAll('-', '_')}';
+    callbackChannelName = '__ponydownloaderWebViewCallback_${pageId.replaceAll('-', '_')}';
     _initScripts.add(
       UserScript(
         source: buildWebViewEventScript(callbackChannelName),

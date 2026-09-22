@@ -19,7 +19,7 @@ import 'util/util.dart';
 Future<void> main(List<String> args) async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Util.isMacos()) {
-    // Gopeed is not sandboxed. Configure each engine before the main/child
+    // PonyDownloader is not sandboxed. Configure each engine before the main/child
     // window split so native file and directory dialogs work in both windows.
     await FilePicker.skipEntitlementsChecks();
   }
@@ -51,5 +51,5 @@ Future<void> main(List<String> args) async {
 
   await AppInitializer.ensureStorageInitialized();
   await AppWindowBootstrap.setupMainWindow(hidden: startupOptions.hidden);
-  runApp(const ProviderScope(child: GopeedApp()));
+  runApp(const ProviderScope(child: PonyDownloaderApp()));
 }

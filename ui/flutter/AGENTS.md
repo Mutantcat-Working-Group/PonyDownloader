@@ -224,8 +224,8 @@ Rules:
 ## 6.1) Cross-Window Capability Rules
 
 - Follow the mandatory architecture in [`docs/window-capability-rpc.md`](docs/window-capability-rpc.md) for all communication between the main window and desktop child windows.
-- The main window is the sole owner of the Gopeed runtime, Gopeed API connection, and Hive database.
-- Child windows must use `AppCapabilities`; they must not initialize Gopeed, open Hive, import `lib/api/api.dart`, or access `Database.instance`.
+- The main window is the sole owner of the PonyDownloader runtime, PonyDownloader API connection, and Hive database.
+- Child windows must use `AppCapabilities`; they must not initialize PonyDownloader, open Hive, import `lib/api/api.dart`, or access `Database.instance`.
 - Add new cross-window operations through shared `RpcMethod` descriptors and the central codec/registry. Do not add feature-specific MethodChannels or duplicate host/client serialization wrappers.
 - Main-to-child state updates must use centrally declared events with complete state snapshots.
 

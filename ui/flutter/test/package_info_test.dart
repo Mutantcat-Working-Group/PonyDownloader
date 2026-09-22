@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/util/package_info.dart';
+import 'package:ponydownloader/util/package_info.dart';
 
 void main() {
   group('normalizeAppVersion', () {

@@ -59,7 +59,7 @@ android {
 
     packaging {
         jniLibs {
-            // Go and Flutter native libraries are large and compress well. Gopeed is
+            // Go and Flutter native libraries are large and compress well. PonyDownloader is
             // primarily distributed as APKs, so preserve the smaller legacy layout.
             useLegacyPackaging = true
         }
@@ -77,7 +77,7 @@ dependencies {
 }
 
 // shadcn_flutter 0.0.53 unconditionally declares every Geist font and all
-// country_flags assets. Android uses platform fonts below and Gopeed does not use
+// country_flags assets. Android uses platform fonts below and PonyDownloader does not use
 // PhoneInput/CountryFlag, so keep those transitive assets out of release APKs.
 val pruneReleaseFlutterAssets =
     tasks.register("pruneReleaseFlutterAssets") {

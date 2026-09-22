@@ -1,8 +1,8 @@
 package org.mutantcat.ponydownloader
 
-import com.gopeed.libgopeed.Libgopeed
-import com.gopeed.libgopeed.InvokeResultListener
-import com.gopeed.libgopeed.TaskEventListener
+import org.mutantcat.ponydownloader.libgopeed.Libgopeed
+import org.mutantcat.ponydownloader.libgopeed.InvokeResultListener
+import org.mutantcat.ponydownloader.libgopeed.TaskEventListener
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodChannel

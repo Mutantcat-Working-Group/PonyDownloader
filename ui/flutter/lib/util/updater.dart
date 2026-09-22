@@ -9,7 +9,6 @@ import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../api/api.dart' as api;
-import '../api/gopeed_site_api.dart';
 import '../api/model/downloader_config.dart';
 import 'arch/arch.dart';
 import 'github_mirror.dart';
@@ -73,20 +72,15 @@ Future<void> installUpdater() async {
 }
 
 Future<VersionInfo?> checkUpdate() async {
-  List<dynamic> releases;
-  try {
-    final releaseDataStr = (await api.proxyRequest(_githubReleasesUrl)).data;
-    if (releaseDataStr == null || releaseDataStr.isEmpty) {
-      throw const FormatException('Empty GitHub releases response');
-    }
-    final releaseData = jsonDecode(releaseDataStr);
-    if (releaseData is! List<dynamic>) {
-      throw const FormatException('Invalid GitHub releases response');
-    }
-    releases = releaseData;
-  } catch (_) {
-    releases = await GopeedSiteApi.instance.getReleases(perPage: _releasePageSize);
+  final releaseDataStr = (await api.proxyRequest(_githubReleasesUrl)).data;
+  if (releaseDataStr == null || releaseDataStr.isEmpty) {
+    throw const FormatException('Empty GitHub releases response');
   }
+  final releaseData = jsonDecode(releaseDataStr);
+  if (releaseData is! List<dynamic>) {
+    throw const FormatException('Invalid GitHub releases response');
+  }
+  final releases = releaseData;
   return selectUpdateRelease(releases, appVersion);
 }
 
@@ -160,7 +154,7 @@ String _versionText(String version) => version.startsWith('v') ? version.substri
 bool _hasSameReleaseCore(Version first, Version second) =>
     first.major == second.major && first.minor == second.minor && first.patch == second.patch;
 
-/// Extracts the matching section from Gopeed's bilingual GitHub release notes.
+/// Extracts the matching section from PonyDownloader's bilingual GitHub release notes.
 String localizedReleaseNotes(String fullChangeLog, String languageCode) {
   final isChinese = languageCode.toLowerCase().startsWith('zh');
   final chineseStart = RegExp(r'^#\s+更新日志', multiLine: true).firstMatch(fullChangeLog)?.start;
@@ -253,6 +247,7 @@ String updateAssetName(String version, {UpdateChannel? channel, Architecture? ar
     UpdateChannel.windowsInstaller => 'PonyDownloader-v$version-windows-${commonArchName()}.exe',
     UpdateChannel.windowsPortable => 'PonyDownloader-v$version-windows-${commonArchName()}-portable.zip',
     UpdateChannel.macosDmg => 'PonyDownloader-v$version-macos-universal.dmg',
+    UpdateChannel.linuxAppImage => 'PonyDownloader-v$version-linux-${commonArchName()}.AppImage',
     UpdateChannel.linuxDeb => 'PonyDownloader-v$version-linux-${commonArchName()}.deb',
     UpdateChannel.androidApk => _androidAssetName(version, arch),
     _ => '',

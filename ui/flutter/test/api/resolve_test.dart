@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter_test/flutter_test.dart';
-import 'package:gopeed/api/api.dart' as api;
-import 'package:gopeed/api/model/options.dart';
-import 'package:gopeed/api/model/request.dart';
-import 'package:gopeed/api/model/resolve_task.dart';
-import 'package:gopeed/core/network/gopeed/gopeed_transport.dart';
+import 'package:ponydownloader/api/api.dart' as api;
+import 'package:ponydownloader/api/model/options.dart';
+import 'package:ponydownloader/api/model/request.dart';
+import 'package:ponydownloader/api/model/resolve_task.dart';
+import 'package:ponydownloader/core/network/ponydownloader/ponydownloader_transport.dart';
 
 void main() {
   test('resolve sends the complete resolve task for magnet links', () async {
@@ -30,7 +30,7 @@ void main() {
   });
 }
 
-class _RecordingTransport implements GopeedTransport {
+class _RecordingTransport implements PonyDownloaderTransport {
   dynamic data;
 
   @override
