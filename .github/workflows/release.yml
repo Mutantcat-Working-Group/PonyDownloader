@@ -6,16 +6,16 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        # Iterations use the current date without -1/-2 suffixes: v1.0.20260923, v1.0.20260924, ...
-        description: "Release tag to build, e.g. v1.0.20260924"
+        # Iterations use the current date without -1/-2 suffixes: v1.0.20260923, v1.0.20260925, ...
+        description: "Release tag to build, e.g. v1.0.20260925"
         required: false
-        default: "v1.0.20260924"
+        default: "v1.0.20260925"
 
 env:
   GO_VERSION: "1.25.4"
   FLUTTER_VERSION: "3.41.6"
   # Version strategy: advance the date each iteration, never append -1/-2.
-  TAG: ${{ github.event.release.tag_name || inputs.tag || 'v1.0.20260924' }}
+  TAG: ${{ github.event.release.tag_name || inputs.tag || 'v1.0.20260925' }}
 
 permissions:
   contents: write
@@ -242,11 +242,17 @@ jobs:
       - name: List release assets
         run: find release-assets -type f | sort
 
+      - name: Flatten artifact directories
+        run: |
+          cd release-assets
+          find . -mindepth 2 -type f -exec mv -t . {} +
+          find . -type d -empty -delete
+
       - name: Generate checksums
         run: |
           set -euo pipefail
           cd release-assets
-          mapfile -t files < <(find . -maxdepth 1 -type f -printf '%f\n')
+          mapfile -t files < <(find . -maxdepth 1 -type f ! -name 'checksums*.txt' -printf '%f\n')
           if [ ${#files[@]} -eq 0 ]; then exit 0; fi
           sha256sum "${files[@]}" > checksums.txt
           md5sum "${files[@]}" > checksums-md5.txt
@@ -259,4 +265,4 @@ jobs:
             release-assets/*.dmg
             release-assets/*.AppImage
             release-assets/checksums*.txt
-          overwrite: true
+          overwrite_files: true
