@@ -1,3 +1,5 @@
+// PonyDownloader — 由异猫工作群（mutantcat.org）发行
+// GitHub: https://github.com/Mutantcat-Working-Group
 import 'dart:async';
 
 import 'package:app_links/app_links.dart';
