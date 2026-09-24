@@ -419,6 +419,17 @@ class _SettingsPageState extends ConsumerState<SettingsPage> {
                     ),
                   ),
                   SettingsItem(
+                    // 发行方信息：由异猫工作群（mutantcat.org）发行。
+                    title: '发行方',
+                    child: _ExternalTextLink(
+                      key: const ValueKey('ponydownloader-publisher'),
+                      label: '异猫工作群（mutantcat.org）',
+                      onPressed: () => unawaited(
+                        _openExternalUri(Uri.parse('https://github.com/Mutantcat-Working-Group')),
+                      ),
+                    ),
+                  ),
+                  SettingsItem(
                     title: context.l10n.contributors,
                     subtitle: context.l10n.thanksDesc,
                     child: _ExternalTextLink(
