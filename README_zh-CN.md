@@ -16,6 +16,7 @@
 - 提供 REST API、命令行工具、JavaScript 扩展、浏览器接管、Webhook 与 MCP 接口，可自由扩展，也能接入 AI Agent 用自然语言管理下载。
 - 跟随系统主题，支持浅色/深色模式、多种强调色与 20+ 种界面语言。
 - 宿主机关闭屏幕或进入休眠后，看门狗会自动恢复被中断的下载任务，一次锁屏或挂起不会破坏正在进行的任务。
+- **发行方** 由异猫工作群（mutantcat.org）发行，GitHub: https://github.com/Mutantcat-Working-Group
 
 核心价值：
 
@@ -145,9 +146,3 @@ Docker 部署：仓库根目录提供 `docker-compose.yml`，映射 9999 端口�
 ### 七、从源码构建
 
 自行编译需要 Go 1.25+ 与 Flutter 3.41+：后端用 `go build`，前端用 `flutter build`。普通用户请直接到 [GitHub Releases](https://github.com/Mutantcat-Working-Group/PonyDownloader/releases) 下载对应平台的安装包，无需准备编译环境。
-
----
-
-## 致谢
-
-本仓库是 [GopeedLab/gopeed](https://github.com/GopeedLab/gopeed) 的 fork，在原项目基础上继续开发。感谢原作者的开源工作。

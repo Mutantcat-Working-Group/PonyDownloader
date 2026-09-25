@@ -12,6 +12,7 @@
 - REST API, CLI, JavaScript extensions, browser integration, webhooks and an MCP endpoint for automation and AI-agent integration.
 - Follows the system theme, supports light/dark mode, multiple accent colors and 20+ UI languages.
 - Resumes interrupted downloads automatically after the host wakes from sleep or the display turns off, so a screen-off or suspend cycle never breaks active tasks.
+- **Publisher** Mutantcat Working Group (mutantcat.org) · GitHub: https://github.com/Mutantcat-Working-Group
 
 Core value:
 
