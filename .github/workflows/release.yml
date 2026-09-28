@@ -47,6 +47,7 @@ jobs:
         env:
           CL: "/D_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS"
         run: |
+          $ErrorActionPreference = 'Stop'
           $version = $env:TAG -replace '^v', ''
           $ldflags = "-w -s -X github.com/GopeedLab/gopeed/pkg/base.Version=$version"
           go build -tags nosqlite -ldflags="$ldflags" -buildmode=c-shared -o ui/flutter/windows/libgopeed.dll github.com/GopeedLab/gopeed/bind/desktop
@@ -73,6 +74,55 @@ jobs:
 
           New-Item -ItemType Directory -Force -Path "build\windows\Output" | Out-Null
 
+      # The NSIS installer embeds the release directory as-is, so every binary
+      # has to carry its self-signed signature before makensis runs.
+      - name: Create Windows code-signing certificate
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $pfx = Join-Path $env:RUNNER_TEMP 'mutantcat-code-signing.pfx'
+          $password = 'mutantcat'
+          $cert = New-SelfSignedCertificate `
+            -Subject 'CN=Mutantcat Working Group, O=Mutantcat Working Group, C=CN' `
+            -CertStoreLocation 'Cert:\CurrentUser\My' `
+            -KeyUsage DigitalSignature `
+            -Type CodeSigningCert `
+            -KeyExportPolicy Exportable `
+            -KeyLength 2048 `
+            -HashAlgorithm SHA256 `
+            -NotAfter (Get-Date).AddYears(10)
+          Export-PfxCertificate -Cert $cert -FilePath $pfx -Password (ConvertTo-SecureString -String $password -Force -AsPlainText) | Out-Null
+          "PFX_PATH=$pfx" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "SIGN_PASSWORD=$password" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          $signtool = $null
+          foreach ($kit in (Get-ChildItem -Path 'C:\Program Files (x86)\Windows Kits\10\bin' -Directory | Sort-Object Name -Descending)) {
+            $candidate = Join-Path $kit.FullName 'x64\signtool.exe'
+            if (Test-Path $candidate) { $signtool = $candidate; break }
+          }
+          if (-not $signtool) { throw 'signtool.exe not found in the Windows SDK' }
+          "SIGNTOOL_PATH=$signtool" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: Sign Windows application
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if (-not $env:PFX_PATH -or -not $env:SIGNTOOL_PATH) { throw 'code-signing setup did not run' }
+          $release = Join-Path (Get-Location) 'ui\flutter\build\windows\x64\runner\Release'
+          $targets = @()
+          $targets += Get-ChildItem $release -Filter 'PonyDownloader.exe' -File
+          $targets += Get-ChildItem $release -Filter '*.dll' -File
+          $targets += Get-ChildItem (Join-Path (Get-Location) 'ui\flutter\windows') -Filter '*.dll' -File -ErrorAction SilentlyContinue
+          $targets += Get-ChildItem (Join-Path $release 'data') -Recurse -Include '*.exe' -File -ErrorAction SilentlyContinue
+          if ($targets.Count -eq 0) { throw "no signable binary under $release" }
+          foreach ($target in $targets) {
+            & $env:SIGNTOOL_PATH sign /fd SHA256 /f $env:PFX_PATH /p $env:SIGN_PASSWORD /d 'PonyDownloader' "$($target.FullName)"
+            $signature = Get-AuthenticodeSignature $target.FullName
+            if (-not $signature.SignerCertificate -or $signature.SignerCertificate.Subject -notlike '*CN=Mutantcat Working Group*') {
+              throw "$($target.Name) lost its signature ($($signature.Status))"
+            }
+            echo "signed $($target.Name)"
+          }
+
       - name: Install NSIS
         shell: pwsh
         run: choco install nsis -y --no-progress
@@ -93,6 +143,31 @@ jobs:
           }
           & $makensisPath "/DVERSION=$version" "/DRELEASE_DIR=$release" "/DOUTPUT_DIR=$output" "/DICON_FILE=$icon" "ui\flutter\windows\installer\ponydownloader.nsi"
           Get-ChildItem $output
+
+      - name: Sign and verify Windows installer
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          if (-not $env:PFX_PATH -or -not $env:SIGNTOOL_PATH) { throw 'code-signing setup did not run' }
+          $output = Join-Path (Get-Location) 'ui\flutter\build\windows\Output'
+          $installers = @(Get-ChildItem $output -Filter '*.exe' -File)
+          if ($installers.Count -eq 0) { throw "no NSIS installer under $output" }
+          foreach ($installer in $installers) {
+            & $env:SIGNTOOL_PATH sign /fd SHA256 /f $env:PFX_PATH /p $env:SIGN_PASSWORD /d 'PonyDownloader Installer' "$($installer.FullName)"
+          }
+          $release = Join-Path (Get-Location) 'ui\flutter\build\windows\x64\runner\Release'
+          $app = Join-Path $release 'PonyDownloader.exe'
+          $appSignature = Get-AuthenticodeSignature $app
+          if (-not $appSignature.SignerCertificate -or $appSignature.SignerCertificate.Subject -notlike '*CN=Mutantcat Working Group*') {
+            throw "$app lost its signature ($($appSignature.Status))"
+          }
+          foreach ($installer in $installers) {
+            $signature = Get-AuthenticodeSignature $installer.FullName
+            if (-not $signature.SignerCertificate -or $signature.SignerCertificate.Subject -notlike '*CN=Mutantcat Working Group*') {
+              throw "$($installer.Name) lost its signature ($($signature.Status))"
+            }
+            echo "signed $($installer.Name)"
+          }
 
       - uses: actions/upload-artifact@v4
         with:
@@ -152,6 +227,7 @@ jobs:
           app="$products/PonyDownloader.app"
           codesign --force --deep --sign - --timestamp=none "$app"
           codesign --verify --deep --strict "$app"
+          codesign -dv "$app" 2>&1 | grep -q 'Signature=adhoc'
 
           cd "$products"
           dmg_root=PonyDownloaderDmgRoot
@@ -159,9 +235,31 @@ jobs:
           mkdir -p "$dmg_root"
           cp -R PonyDownloader.app "$dmg_root/"
           ln -s /Applications "$dmg_root/Applications"
+          codesign --force --deep --sign - --timestamp=none "$dmg_root/PonyDownloader.app"
           hdiutil create -volname PonyDownloader -srcfolder "$dmg_root" -ov -format UDZO "PonyDownloader-v${version}-macos-${ARCH}.dmg"
           codesign --sign - "PonyDownloader-v${version}-macos-${ARCH}.dmg"
           rm -rf "$dmg_root"
+
+      - name: Verify macOS DMG
+        env:
+          ARCH: ${{ matrix.arch }}
+        run: |
+          set -euo pipefail
+          version="${TAG#v}"
+          products=ui/flutter/build/macos/Build/Products/Release
+          dmg="$products/PonyDownloader-v${version}-macos-${ARCH}.dmg"
+          codesign --verify --strict --verbose=2 "$dmg"
+          codesign -dv "$dmg" 2>&1 | grep -q 'Signature=adhoc'
+          hdiutil verify "$dmg"
+          mount="$(mktemp -d)"
+          hdiutil attach -nobrowse -readonly -mountpoint "$mount" "$dmg"
+          test -L "$mount/Applications"
+          test -d "$mount/PonyDownloader.app"
+          # The bundled binary has to be ad-hoc signed too, not just the image.
+          codesign --verify --deep --strict "$mount/PonyDownloader.app"
+          codesign -dv "$mount/PonyDownloader.app" 2>&1 | grep -q 'Signature=adhoc'
+          hdiutil detach "$mount"
+          rmdir "$mount"
 
       - uses: actions/upload-artifact@v4
         with:
