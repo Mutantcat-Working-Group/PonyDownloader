@@ -854,11 +854,21 @@ func TestFetcher_InitialIgnoredRangeUsesResponseSize(t *testing.T) {
 	replacement := bytes.Repeat([]byte("replacement"), 24*1024)
 	var rangeRequests atomic.Int32
 
+	// Hold the Resolve body open until Start returns. Otherwise the background
+	// prefetch can finish first and the fetcher legitimately takes the "Resolve
+	// already downloaded everything" shortcut, which never sends the Range
+	// probe this test is about.
+	released := make(chan struct{}, 1)
+
 	server := httptest.NewServer(gohttp.HandlerFunc(func(w gohttp.ResponseWriter, r *gohttp.Request) {
 		w.Header().Set(base.HttpHeaderAcceptRanges, base.HttpHeaderBytes)
 		if r.Header.Get(base.HttpHeaderRange) == "" {
 			w.Header().Set(base.HttpHeaderContentLength, fmt.Sprintf("%d", len(resolvePayload)))
 			w.WriteHeader(gohttp.StatusOK)
+			if flusher, ok := w.(gohttp.Flusher); ok {
+				flusher.Flush()
+			}
+			<-released
 			_, _ = w.Write(resolvePayload)
 			return
 		}
@@ -869,6 +879,12 @@ func TestFetcher_InitialIgnoredRangeUsesResponseSize(t *testing.T) {
 		_, _ = w.Write(replacement)
 	}))
 	defer server.Close()
+	defer func() {
+		select {
+		case released <- struct{}{}:
+		default:
+		}
+	}()
 
 	f := buildFetcher()
 	if err := f.Resolve(&base.Request{URL: server.URL + "/ignored-range.data"}, &base.Options{
@@ -883,6 +899,7 @@ func TestFetcher_InitialIgnoredRangeUsesResponseSize(t *testing.T) {
 	if err := f.Start(); err != nil {
 		t.Fatal(err)
 	}
+	released <- struct{}{}
 	if err := f.Wait(); err != nil {
 		t.Fatal(err)
 	}
