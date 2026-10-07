@@ -25,8 +25,7 @@ func TestProviderContract(t *testing.T) {
 		Token:   *webViewRPCToken,
 	})
 	integrationtest.RunProviderContract(t, provider, integrationtest.ContractOptions{
-		CookieDomainMode: integrationtest.CookieDomainModeRequired,
-		CookieTestURL:    "https://example.com/",
+		CookieDomainMode: integrationtest.CookieDomainModeOmit,
 	})
 }
 

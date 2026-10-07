@@ -22,8 +22,24 @@ permissions:
 
 jobs:
   windows:
-    name: Windows x64 NSIS installer
-    runs-on: windows-latest
+    name: Windows ${{ matrix.arch }} NSIS installer
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            goarch: amd64
+            flutter_arch: x64
+            runner: windows-latest
+            flutter_channel: stable
+            flutter_version: "3.41.6"
+          - arch: arm64
+            goarch: arm64
+            flutter_arch: arm64
+            runner: windows-11-arm
+            flutter_channel: main
+            flutter_version: "7e1c8868"
     steps:
       - name: Enable long paths on Windows
         shell: pwsh
@@ -39,13 +55,40 @@ jobs:
 
       - uses: subosito/flutter-action@v2
         with:
-          channel: stable
-          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: ${{ matrix.flutter_channel }}
+          flutter-version: ${{ matrix.flutter_version }}
 
-      - name: Build Windows app
+      - name: Install llvm-mingw-ucrt-aarch64 (ARM64 only)
+        if: matrix.arch == 'arm64'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $ver = "20251202"
+          $url = "https://github.com/mstorsjo/llvm-mingw/releases/download/$ver/llvm-mingw-$ver-ucrt-aarch64.zip"
+          $zip = "$env:RUNNER_TEMP\llvm.zip"
+          $extract = "$env:RUNNER_TEMP\extract"
+          $target = "C:\clangarm64"
+
+          curl -L $url -o $zip
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue $extract, $target
+          New-Item -ItemType Directory -Force -Path $extract | Out-Null
+
+          tar -xf $zip -C $extract
+          Move-Item (Get-ChildItem $extract)[0].FullName $target
+
+          $b = "$target\bin"
+          "CC=$b\clang.exe"        | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "CXX=$b\clang++.exe"     | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "CLANGARM64_BIN=$b"       | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "CGO_ENABLED=1"           | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "CLANGARM64_ROOT=$target" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          $b | Out-File -FilePath $env:GITHUB_PATH -Append -Encoding utf8
+
+      - name: Build Windows app (${{ matrix.arch }})
         shell: pwsh
         env:
           CL: "/D_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS"
+          GOARCH: ${{ matrix.goarch }}
         run: |
           $ErrorActionPreference = 'Stop'
           $version = $env:TAG -replace '^v', ''
@@ -57,15 +100,26 @@ jobs:
           cd ui/flutter
           flutter build windows --release --dart-define=UPDATE_CHANNEL=windowsInstaller
 
-          $release = Join-Path (Get-Location) 'build\windows\x64\runner\Release'
-          $runtimeDlls = @(
-            "$env:ProgramFiles\Git\mingw64\bin\libstdc++-6.dll",
-            "$env:ProgramFiles\Git\mingw64\bin\libgcc_s_seh-1.dll",
-            "$env:ProgramFiles\Git\mingw64\bin\libwinpthread-1.dll",
-            "$env:SystemRoot\System32\msvcp140.dll",
-            "$env:SystemRoot\System32\vcruntime140.dll",
-            "$env:SystemRoot\System32\vcruntime140_1.dll"
-          )
+          $release = Join-Path (Get-Location) "build\windows\${{ matrix.flutter_arch }}\runner\Release"
+          if ($env:CLANGARM64_ROOT) {
+            $runtimeDlls = @(
+              "$env:CLANGARM64_ROOT\bin\libstdc++-6.dll",
+              "$env:CLANGARM64_ROOT\bin\libgcc_s_seh-1.dll",
+              "$env:CLANGARM64_ROOT\bin\libwinpthread-1.dll",
+              "$env:SystemRoot\System32\msvcp140.dll",
+              "$env:SystemRoot\System32\vcruntime140.dll",
+              "$env:SystemRoot\System32\vcruntime140_1.dll"
+            )
+          } else {
+            $runtimeDlls = @(
+              "$env:ProgramFiles\Git\mingw64\bin\libstdc++-6.dll",
+              "$env:ProgramFiles\Git\mingw64\bin\libgcc_s_seh-1.dll",
+              "$env:ProgramFiles\Git\mingw64\bin\libwinpthread-1.dll",
+              "$env:SystemRoot\System32\msvcp140.dll",
+              "$env:SystemRoot\System32\vcruntime140.dll",
+              "$env:SystemRoot\System32\vcruntime140_1.dll"
+            )
+          }
           foreach ($dll in $runtimeDlls) {
             if (Test-Path $dll) {
               Copy-Item $dll $release -Force
@@ -107,7 +161,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           if (-not $env:PFX_PATH -or -not $env:SIGNTOOL_PATH) { throw 'code-signing setup did not run' }
-          $release = Join-Path (Get-Location) 'ui\flutter\build\windows\x64\runner\Release'
+          $release = Join-Path (Get-Location) "ui\flutter\build\windows\${{ matrix.flutter_arch }}\runner\Release"
           $targets = @()
           $targets += Get-ChildItem $release -Filter 'PonyDownloader.exe' -File
           $targets += Get-ChildItem $release -Filter '*.dll' -File
@@ -132,7 +186,7 @@ jobs:
         run: |
           $version = $env:TAG -replace '^v', ''
           $root = Get-Location
-          $release = Join-Path $root 'ui\flutter\build\windows\x64\runner\Release'
+          $release = Join-Path $root "ui\flutter\build\windows\${{ matrix.flutter_arch }}\runner\Release"
           $output = Join-Path $root 'ui\flutter\build\windows\Output'
           $icon = Join-Path $root 'ui\flutter\assets\icon\icon.ico'
           $makensis = Get-Command makensis -ErrorAction SilentlyContinue
@@ -155,7 +209,7 @@ jobs:
           foreach ($installer in $installers) {
             & $env:SIGNTOOL_PATH sign /fd SHA256 /f $env:PFX_PATH /p $env:SIGN_PASSWORD /d 'PonyDownloader Installer' "$($installer.FullName)"
           }
-          $release = Join-Path (Get-Location) 'ui\flutter\build\windows\x64\runner\Release'
+          $release = Join-Path (Get-Location) "ui\flutter\build\windows\${{ matrix.flutter_arch }}\runner\Release"
           $app = Join-Path $release 'PonyDownloader.exe'
           $appSignature = Get-AuthenticodeSignature $app
           if (-not $appSignature.SignerCertificate -or $appSignature.SignerCertificate.Subject -notlike '*CN=Mutantcat Working Group*') {
@@ -171,7 +225,7 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: windows-installer
+          name: windows-installer-${{ matrix.arch }}
           path: ui/flutter/build/windows/Output/
 
   macos:
