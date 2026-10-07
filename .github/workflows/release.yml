@@ -6,16 +6,16 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        # Iterations use the current date without -1/-2 suffixes: v1.0.20260925, v1.0.20260926, ...
+        # Iterations use the current date without -1/-2 suffixes: v1.0.20260926, v1.0.20261007, ...
         description: "Release tag to build, e.g. v1.0.20260925"
         required: false
-        default: "v1.0.20260926"
+        default: "v1.0.20261007"
 
 env:
   GO_VERSION: "1.25.4"
   FLUTTER_VERSION: "3.41.6"
   # Version strategy: advance the date each iteration, never append -1/-2.
-  TAG: ${{ github.event.release.tag_name || inputs.tag || 'v1.0.20260926' }}
+  TAG: ${{ github.event.release.tag_name || inputs.tag || 'v1.0.20261007' }}
 
 permissions:
   contents: write
@@ -369,6 +369,7 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.TAG }}
+          name: PonyDownloader ${{ env.TAG }}
           files: |
             release-assets/*.exe
             release-assets/*.dmg

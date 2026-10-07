@@ -8,7 +8,7 @@ Unicode true
 !define APP_EXE "PonyDownloader.exe"
 
 !ifndef VERSION
-  !define VERSION "1.0.20260926"
+  !define VERSION "1.0.20261007"
 !endif
 !ifndef RELEASE_DIR
   !error "RELEASE_DIR must be defined"
@@ -46,6 +46,12 @@ BrandingText "${APP_NAME} v${VERSION} - ${APP_PUBLISHER}"
 
 !insertmacro MUI_LANGUAGE "SimpChinese"
 !insertmacro MUI_LANGUAGE "English"
+
+; The bundled language files ship their own "Nullsoft Install System" branding
+; string, which wins over BrandingText once a language is loaded. Pin the footer
+; per language so the product name and version are always shown instead.
+LangString ^Branding ${LANG_SIMPCHINESE} "${APP_NAME} v${VERSION} - ${APP_PUBLISHER}"
+LangString ^Branding ${LANG_ENGLISH} "${APP_NAME} v${VERSION} - ${APP_PUBLISHER}"
 
 Section "Install"
   SetOutPath "$INSTDIR"
