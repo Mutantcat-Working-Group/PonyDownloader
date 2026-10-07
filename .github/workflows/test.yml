@@ -210,6 +210,8 @@ jobs:
           channel: ${{ matrix.flutter_channel || 'stable' }}
           flutter-version: ${{ matrix.flutter_version || env.FLUTTER_VERSION }}
       - if: runner.os == 'Windows'
+        env:
+          CL: "/D_SILENCE_EXPERIMENTAL_COROUTINE_DEPRECATION_WARNINGS"
         run: |
           go build -tags nosqlite -ldflags="-w -s" -buildmode=c-shared -o ui/flutter/windows/libgopeed.dll github.com/GopeedLab/gopeed/bind/desktop
           cd ui/flutter
